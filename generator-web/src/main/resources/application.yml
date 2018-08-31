@@ -1,0 +1,82 @@
+server:
+  port: 1234
+  servlet:
+      context-path: /generator
+tomcat:
+    remote-ip-header: x-forward-for
+    uri-encoding: UTF-8
+    max-threads: 10
+    background-processor-delay: 30
+spring:
+    banner:
+      charset: UTF-8
+    mail:
+      port: 587
+      auth: true
+      default-encoding: UTF-8
+      host: smtp.gmail.com
+      username: moshowgame@gmail.com
+      pasword: Tqiqs6622gg
+      #port: 25
+      #protocol: smtp
+      #host: smtp.126.com
+      #username: moshowwork@126.com
+      #pasword: moshow6622s
+      #port: 25
+      #protocol: smtp
+      #host: smtp.qq.com
+      #username: 804461110@qq.com
+      #pasword: ivrsxysxwdaobcgh
+      properties:
+        smtp:
+          auth: true
+          starttls:
+           enable: false
+           required: false
+    http:
+      encoding:
+        force: true
+        charset: UTF-8
+    application:
+        name: spring-boot-code-generator
+    freemarker:
+        request-context-attribute: request
+        suffix: .ftl
+        content-type: text/html
+        enabled: true
+        cache: false
+        charset: UTF-8
+        allow-request-override: false
+        expose-request-attributes: true
+        expose-session-attributes: true
+        expose-spring-macro-helpers: true
+        #template-loader-path: classpath:/templates/
+    jpa:
+      show-sql: true
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      dialect: org.hibernate.dialect.MySQL5Dialect
+      properties:
+        hibernate:
+          hbm2ddl:
+            auto: update
+    datasource:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.jdbc.Driver
+        driver-class-name: com.mysql.jdbc.Driver
+        platform: mysql
+        url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: root
+        password: root
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        filters: stat,wall,log4j
+    mvc:
+      static-path-pattern: /static/**
