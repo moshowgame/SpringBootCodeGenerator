@@ -8,9 +8,8 @@
 import java.io.Serializable;
 import javax.persistence.*;
 import lombok.Data;
-<#if importDdate>
 import java.util.Date;
-</#if>
+import java.util.List;
 
 /**
 *  ${classInfo.classComment}

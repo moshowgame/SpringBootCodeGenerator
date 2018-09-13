@@ -6,9 +6,8 @@
     </#list>
 </#if>
 import java.io.Serializable;
-<#if importDdate>
 import java.util.Date;
-</#if>
+import java.util.List;
 
 /**
 *  ${classInfo.classComment}
