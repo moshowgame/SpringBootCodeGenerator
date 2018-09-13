@@ -59,7 +59,13 @@ public class TableParseUtil {
             }
             if (classCommentTmp!=null && classCommentTmp.trim().length()>0) {
                 classComment = classCommentTmp;
+            }else{
+                //修复表备注为空问题
+                classComment = className;
             }
+        }else{
+            //修复表备注为空问题
+            classComment = className;
         }
 
         // field List
@@ -124,6 +130,9 @@ public class TableParseUtil {
                             commentTmp = commentTmp.substring(commentTmp.indexOf("'")+1, commentTmp.lastIndexOf("'"));
                         }
                         fieldComment = commentTmp;
+                    }else{
+                        //修复comment不存在导致报错的问题
+                        fieldComment = columnName;
                     }
 
                     FieldInfo fieldInfo = new FieldInfo();

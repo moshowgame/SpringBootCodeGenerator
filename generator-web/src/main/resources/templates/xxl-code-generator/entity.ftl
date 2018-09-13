@@ -21,7 +21,7 @@ import java.util.Date;
 @Data
 @Table(name="${classInfo.tableName}")
 public class ${classInfo.className} implements Serializable {
-    private static final long serialVersionUID = 42L;
+    private static final long serialVersionUID = 1L;
 
 <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
 <#list classInfo.fieldList as fieldItem >
