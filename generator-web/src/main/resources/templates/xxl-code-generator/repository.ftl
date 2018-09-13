@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 /**
 *  ${classInfo.classComment}
 *
-*  Created by xuxueli on '${.now?string('yyyy-MM-dd HH:mm:ss')}'.
+*  Created by by-health on '${.now?string('yyyy-MM-dd HH:mm:ss')}'.
 */
 @Repository
 public interface ${classInfo.className}Respotory extends JpaRepository<${classInfo.className},Integer> {
