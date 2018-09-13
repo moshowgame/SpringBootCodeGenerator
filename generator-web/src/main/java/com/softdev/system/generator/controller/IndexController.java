@@ -8,6 +8,7 @@ import freemarker.template.TemplateException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,7 +27,7 @@ import java.util.Map;
 public class IndexController {
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
-    @Resource
+    @Autowired
     private FreemarkerTool freemarkerTool;
 
     @RequestMapping("/")
@@ -64,6 +65,8 @@ public class IndexController {
 
             result.put("entity_code", freemarkerTool.processString("xxl-code-generator/entity.ftl", params));
             result.put("repository_code", freemarkerTool.processString("xxl-code-generator/repository.ftl", params));
+
+            result.put("jpacontroller_code", freemarkerTool.processString("xxl-code-generator/jpacontroller.ftl", params));
 
             // 计算,生成代码行数
             int lineNum = 0;

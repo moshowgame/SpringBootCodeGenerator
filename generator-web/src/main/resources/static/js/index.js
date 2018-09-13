@@ -30,7 +30,18 @@ $(function () {
     var model_ide;
     var entity_ide;
     var repository_ide;
+    var jpacontroller_ide;
     function initCodeArea(){
+        jpacontroller_ide = CodeMirror.fromTextArea(document.getElementById("jpacontroller_ide"), {
+            lineNumbers: true,
+            matchBrackets: true,
+            mode: "text/x-java",
+            lineWrapping:true,
+            readOnly:true,
+            foldGutter: true,
+            gutters:["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+        });
+        jpacontroller_ide.setSize('auto','auto');
 
         // controller_ide
         controller_ide = CodeMirror.fromTextArea(document.getElementById("controller_ide"), {
@@ -173,6 +184,9 @@ $(function () {
 
                             repository_ide.setValue(data.data.repository_code);
                             repository_ide.setSize('auto','auto');
+
+                            jpacontroller_ide.setValue(data.data.jpacontroller_code);
+                            jpacontroller_ide.setSize('auto','auto');
                         }
                     });
                 } else {

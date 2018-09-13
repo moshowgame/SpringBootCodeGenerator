@@ -51,7 +51,36 @@ CREATE TABLE `userinfo` (
                                 </ul>
                             </div>
                         </div>
+                        <#-- JPA生成代码 -->
+                            <div class="nav-tabs-custom">
+                                <!-- Tabs within a box -->
+                                <ul class="nav nav-tabs pull-right">
+                                    <li class="pull-left header">JPA版生成代码</li>
 
+                                    <li><a href="#entity" data-toggle="tab">Entity</a></li>
+                                    <li><a href="#repository" data-toggle="tab">Repository</a></li>
+                                    <li><a href="#jpacontroller" data-toggle="tab">JpaController</a></li>
+
+                                </ul>
+                                <div class="tab-content no-padding">
+
+                                    <div class="chart tab-pane active" id="entity">
+                                        <div class="box-body">
+                                            Entity：<textarea id="entity_ide" ></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="chart tab-pane active" id="repository" >
+                                        <div class="box-body ">
+                                            Repository：<textarea id="repository_ide" ></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="chart tab-pane active" id="jpacontroller" >
+                                        <div class="box-body ">
+                                            Repository：<textarea id="jpacontroller_ide" ></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                         <#-- Mybatis生成代码 -->
                         <div class="nav-tabs-custom">
@@ -100,30 +129,7 @@ CREATE TABLE `userinfo` (
                                 </div>
                             </div>
                         </div>
-                        <#-- JPA生成代码 -->
-                        <div class="nav-tabs-custom">
-                            <!-- Tabs within a box -->
-                            <ul class="nav nav-tabs pull-right">
-                                <li class="pull-left header">JPA版生成代码</li>
 
-                                <li><a href="#entity" data-toggle="tab">Entity</a></li>
-                                <li><a href="#repository" data-toggle="tab">Repository</a></li>
-
-                            </ul>
-                            <div class="tab-content no-padding">
-
-                                <div class="chart tab-pane active" id="entity">
-                                    <div class="box-body">
-                                        Entity：<textarea id="entity_ide" ></textarea>
-                                    </div>
-                                </div>
-                                <div class="chart tab-pane active" id="repository" >
-                                    <div class="box-body ">
-                                        Repository：<textarea id="repository_ide" ></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
 
                     </div>
