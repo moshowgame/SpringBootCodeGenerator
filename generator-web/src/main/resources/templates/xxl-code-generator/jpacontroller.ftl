@@ -1,12 +1,12 @@
-import org.springframework.stereotype.RestController;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.PageRequest;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +35,8 @@ public class ${classInfo.className}Controller {
     */
     @RequestMapping("/delete")
     public Object delete(int id){
-        return ${classInfo.className?uncap_first}Respository.deleteById(id);
+         ${classInfo.className?uncap_first}Respository.deleteById(id);
+        return 1;
     }
 
     /**
@@ -54,18 +55,18 @@ public class ${classInfo.className}Controller {
                                     @RequestParam(required = false, defaultValue = "0") int pageNumber,
                                     @RequestParam(required = false, defaultValue = "10") int pageSize) {
 
-//创建匹配器，即如何使用查询条件
+            //创建匹配器，即如何使用查询条件
             ExampleMatcher matcher = ExampleMatcher.matching() //构建对象
                     //这里追加查询处理方式。例如xxx字段采用“包含”的方式查询
                     //.withMatcher("xxx", GenericPropertyMatchers.contains())
             ;
 
             //创建实例
-            Example<${classInfo.className}> ex = Example.of(${classInfo.className?uncap_first}, matcher);
+            Example<${classInfo.className}> example = Example.of(${classInfo.className?uncap_first}, matcher);
             //分页构造
             Pageable pageable = PageRequest.of(pageNumber,pageSize);
 
-            return ${classInfo.className?uncap_first}Respository.findAll(matcher, pageable);
+            return ${classInfo.className?uncap_first}Respository.findAll(example, pageable);
     }
 
 }

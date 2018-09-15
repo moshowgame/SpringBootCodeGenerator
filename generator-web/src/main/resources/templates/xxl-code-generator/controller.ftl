@@ -14,7 +14,7 @@ import java.util.Map;
 * Created by by-health on '${.now?string('yyyy-MM-dd HH:mm:ss')}'.
 */
 @Controller
-public class ConfController {
+public class ${classInfo.className}Controller {
 
     @Resource
     private ${classInfo.className}Service ${classInfo.className?uncap_first}Service;

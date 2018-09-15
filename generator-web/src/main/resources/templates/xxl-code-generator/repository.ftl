@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 *  Created by by-health on '${.now?string('yyyy-MM-dd HH:mm:ss')}'.
 */
 @Repository
-public interface ${classInfo.className}Respotory extends JpaRepository<${classInfo.className},Integer> {
+public interface ${classInfo.className}Respository extends JpaRepository<${classInfo.className},Integer> {
 
 
 
