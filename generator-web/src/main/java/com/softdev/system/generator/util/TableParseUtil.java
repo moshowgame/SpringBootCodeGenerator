@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author xuxueli 2018-05-02 21:10:45
+ * @modify zhengk/moshow 20180913
  */
 public class TableParseUtil {
 
@@ -106,6 +107,7 @@ public class TableParseUtil {
                     // field class
                     columnLine = columnLine.substring(columnLine.indexOf("`")+1).trim();	// int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
                     String fieldClass = Object.class.getSimpleName();
+                    //2018-9-16 zhengk 补充char/clob/blob/json等类型，如果类型未知，默认为String
                     if (columnLine.startsWith("int") || columnLine.startsWith("tinyint") || columnLine.startsWith("smallint")) {
                         fieldClass = Integer.TYPE.getSimpleName();
                     } else if (columnLine.startsWith("bigint")) {
@@ -116,10 +118,13 @@ public class TableParseUtil {
                         fieldClass = Double.TYPE.getSimpleName();
                     } else if (columnLine.startsWith("datetime") || columnLine.startsWith("timestamp")) {
                         fieldClass = Date.class.getSimpleName();
-                    } else if (columnLine.startsWith("varchar") || columnLine.startsWith("text")) {
+                    } else if (columnLine.startsWith("varchar") || columnLine.startsWith("text")|| columnLine.startsWith("char")
+                            || columnLine.startsWith("clob")||columnLine.startsWith("blob")||columnLine.startsWith("json")) {
                         fieldClass = String.class.getSimpleName();
-                    } else if (columnLine.startsWith("decimal")) {
+                    } else if (columnLine.startsWith("decimal")||columnLine.startsWith("number")) {
                         fieldClass = BigDecimal.class.getSimpleName();
+                    } else {
+                        fieldClass = String.class.getSimpleName();
                     }
 
                     // field comment
