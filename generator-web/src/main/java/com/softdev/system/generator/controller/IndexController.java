@@ -64,6 +64,7 @@ public class IndexController {
             result.put("model_code", freemarkerTool.processString("xxl-code-generator/model.ftl", params));
 
             result.put("entity_code", freemarkerTool.processString("xxl-code-generator/entity.ftl", params));
+            result.put("swaggerui_code", freemarkerTool.processString("xxl-code-generator/swaggerui.ftl", params));
             result.put("repository_code", freemarkerTool.processString("xxl-code-generator/repository.ftl", params));
 
             result.put("jpacontroller_code", freemarkerTool.processString("xxl-code-generator/jpacontroller.ftl", params));
@@ -76,7 +77,7 @@ public class IndexController {
                 }
             }
             logger.info("生成代码行数：{}", lineNum);
-
+            logger.info("生成代码数据：{}", result);
             return new ReturnT<Map<String, String>>(result);
         } catch (IOException | TemplateException e) {
             logger.error(e.getMessage(), e);

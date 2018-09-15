@@ -55,11 +55,8 @@ public class ${classInfo.className}Controller {
                                     @RequestParam(required = false, defaultValue = "0") int pageNumber,
                                     @RequestParam(required = false, defaultValue = "10") int pageSize) {
 
-            //创建匹配器，即如何使用查询条件
-            ExampleMatcher matcher = ExampleMatcher.matching() //构建对象
-                    //这里追加查询处理方式。例如xxx字段采用“包含”的方式查询
-                    //.withMatcher("xxx", GenericPropertyMatchers.contains())
-            ;
+            //创建匹配器，需要查询条件请修改此处代码
+            ExampleMatcher matcher = ExampleMatcher.matchingAll();
 
             //创建实例
             Example<${classInfo.className}> example = Example.of(${classInfo.className?uncap_first}, matcher);

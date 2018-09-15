@@ -31,17 +31,9 @@ $(function () {
     var entity_ide;
     var repository_ide;
     var jpacontroller_ide;
+    var swaggerui_ide;
     function initCodeArea(){
-        jpacontroller_ide = CodeMirror.fromTextArea(document.getElementById("jpacontroller_ide"), {
-            lineNumbers: true,
-            matchBrackets: true,
-            mode: "text/x-java",
-            lineWrapping:true,
-            readOnly:true,
-            foldGutter: true,
-            gutters:["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
-        });
-        jpacontroller_ide.setSize('auto','auto');
+
 
         // controller_ide
         controller_ide = CodeMirror.fromTextArea(document.getElementById("controller_ide"), {
@@ -136,6 +128,28 @@ $(function () {
             gutters:["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
         });
         repository_ide.setSize('auto','auto');
+
+        jpacontroller_ide = CodeMirror.fromTextArea(document.getElementById("jpacontroller_ide"), {
+            lineNumbers: true,
+            matchBrackets: true,
+            mode: "text/x-java",
+            lineWrapping:true,
+            readOnly:true,
+            foldGutter: true,
+            gutters:["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+        });
+        jpacontroller_ide.setSize('auto','auto');
+
+        swaggerui_ide = CodeMirror.fromTextArea(document.getElementById("swaggerui_ide"), {
+            lineNumbers: true,
+            matchBrackets: true,
+            mode: "text/x-java",
+            lineWrapping:true,
+            readOnly:true,
+            foldGutter: true,
+            gutters:["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+        });
+        swaggerui_ide.setSize('auto','auto');
     }
 
     initCodeArea();
@@ -187,6 +201,10 @@ $(function () {
 
                             jpacontroller_ide.setValue(data.data.jpacontroller_code);
                             jpacontroller_ide.setSize('auto','auto');
+
+                            console.log(data.data.swaggerui_code);
+                            swaggerui_ide.setValue(data.data.swaggerui_code);
+                            swaggerui_ide.setSize('auto','auto');
                         }
                     });
                 } else {

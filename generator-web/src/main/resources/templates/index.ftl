@@ -60,6 +60,7 @@ CREATE TABLE `userinfo` (
                                     <li><a href="#entity" data-toggle="tab">Entity</a></li>
                                     <li><a href="#repository" data-toggle="tab">Repository</a></li>
                                     <li><a href="#jpacontroller" data-toggle="tab">JpaController</a></li>
+                                    <li><a href="#swaggerui" data-toggle="tab">Swagger-UI</a></li>
 
                                 </ul>
                                 <div class="tab-content no-padding">
@@ -76,7 +77,12 @@ CREATE TABLE `userinfo` (
                                     </div>
                                     <div class="chart tab-pane active" id="jpacontroller" >
                                         <div class="box-body ">
-                                            Repository：<textarea id="jpacontroller_ide" ></textarea>
+                                            Controller：<textarea id="jpacontroller_ide" ></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="chart tab-pane active" id="swaggerui" >
+                                        <div class="box-body ">
+                                            Swagger-UI：<textarea id="swaggerui_ide" ></textarea>
                                         </div>
                                     </div>
                                 </div>
