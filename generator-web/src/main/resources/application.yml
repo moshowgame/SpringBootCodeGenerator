@@ -10,29 +10,6 @@ tomcat:
 spring:
     banner:
       charset: UTF-8
-    mail:
-      port: 587
-      auth: true
-      default-encoding: UTF-8
-      host: smtp.gmail.com
-      username: moshowgame@gmail.com
-      pasword: Tqiqs6622gg
-      #port: 25
-      #protocol: smtp
-      #host: smtp.126.com
-      #username: moshowwork@126.com
-      #pasword: moshow6622s
-      #port: 25
-      #protocol: smtp
-      #host: smtp.qq.com
-      #username: 804461110@qq.com
-      #pasword: ivrsxysxwdaobcgh
-      properties:
-        smtp:
-          auth: true
-          starttls:
-           enable: false
-           required: false
     http:
       encoding:
         force: true
