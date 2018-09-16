@@ -29,7 +29,7 @@ public class TableParseUtil {
         if (tableSql==null || tableSql.trim().length()==0) {
             throw new CodeGenerateException("Table structure can not be empty.");
         }
-        tableSql = tableSql.trim();
+        tableSql = tableSql.trim().replaceAll("'","`").replaceAll("\"","`").toLowerCase();
 
         // table Name
         String tableName = null;
@@ -43,6 +43,9 @@ public class TableParseUtil {
 
         if (tableName.contains("`")) {
             tableName = tableName.substring(tableName.indexOf("`")+1, tableName.lastIndexOf("`"));
+        }else{
+            //空格开头的，需要替换掉\n\t空格
+            tableName=tableName.replaceAll(" ","").replaceAll("\n","").replaceAll("\t","");
         }
 
         // class Name
@@ -91,13 +94,22 @@ public class TableParseUtil {
         String[] fieldLineList = fieldListTmp.split(",");
         if (fieldLineList.length > 0) {
             for (String columnLine :fieldLineList) {
-                columnLine = columnLine.trim();		                                        // `userid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-                if (columnLine.startsWith("`")){
+                columnLine = columnLine.replaceAll("\n","").replaceAll("\t","").trim();		                                        // `userid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+                if (!columnLine.startsWith("CONSTRAINT")&&!columnLine.startsWith("USING")
+                        &&!columnLine.startsWith("STORAGE")&&!columnLine.startsWith("PCTINCREASE")
+                        &&!columnLine.startsWith("BUFFER_POOL")&&!columnLine.startsWith("TABLESPACE")){
 
                     // column Name
-                    columnLine = columnLine.substring(1);			                        // userid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-                    String columnName = columnLine.substring(0, columnLine.indexOf("`"));	// userid
-
+                    columnLine = columnLine.substring(1);
+                    //2018-9-16 zhengkai 支持'符号以及空格的oracle语句// userid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+                    String columnName = "";
+                    if(columnLine.indexOf("`")>-1) {
+                        columnLine.substring(0, columnLine.indexOf("`"));
+                    }else if(columnLine.indexOf("'")>-1){
+                        columnName = columnLine.substring(0, columnLine.indexOf("'"));
+                    }else{
+                        columnName = columnLine.substring(0, columnLine.indexOf(" "));
+                    }
                     // field Name
                     String fieldName = StringUtils.lowerCaseFirst(StringUtils.underlineToCamelCase(columnName));
                     if (fieldName.contains("_")) {
