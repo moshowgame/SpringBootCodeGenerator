@@ -110,7 +110,7 @@ public class TableParseUtil {
                     //2018-9-16 zhengkai 支持'符号以及空格的oracle语句// userid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
                     String columnName = "";
                     if(columnLine.indexOf("`")>-1) {
-                        columnLine.substring(0, columnLine.indexOf("`"));
+                        columnName = columnLine.substring(0, columnLine.indexOf("`"));
                     }else if(columnLine.indexOf("'")>-1){
                         columnName = columnLine.substring(0, columnLine.indexOf("'"));
                     }else{
