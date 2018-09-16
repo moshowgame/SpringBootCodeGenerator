@@ -47,7 +47,10 @@ public class TableParseUtil {
             //空格开头的，需要替换掉\n\t空格
             tableName=tableName.replaceAll(" ","").replaceAll("\n","").replaceAll("\t","");
         }
-
+        //优化对byeas`.`ct_bd_customerdiscount这种命名的支持
+        if(tableName.contains("`.`")){
+            tableName=tableName.substring(tableName.indexOf("`.`")+3);
+        }
         // class Name
         String className = StringUtils.upperCaseFirst(StringUtils.underlineToCamelCase(tableName));
         if (className.contains("_")) {
@@ -95,12 +98,15 @@ public class TableParseUtil {
         if (fieldLineList.length > 0) {
             for (String columnLine :fieldLineList) {
                 columnLine = columnLine.replaceAll("\n","").replaceAll("\t","").trim();		                                        // `userid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-                if (!columnLine.startsWith("CONSTRAINT")&&!columnLine.startsWith("USING")
-                        &&!columnLine.startsWith("STORAGE")&&!columnLine.startsWith("PCTINCREASE")
-                        &&!columnLine.startsWith("BUFFER_POOL")&&!columnLine.startsWith("TABLESPACE")){
+                if (!columnLine.contains("constraint")&&!columnLine.contains("using")
+                        &&!columnLine.contains("storage")&&!columnLine.contains("pctincrease")
+                        &&!columnLine.contains("buffer_pool")&&!columnLine.contains("tablespace")
+                        &&!columnLine.contains("primary")){
 
                     // column Name
                     columnLine = columnLine.substring(1);
+                    //如果是oracle的number(x,x)，可能出现最后分割残留的,x)，这里做排除处理
+                    if(columnLine.length()<5) continue;
                     //2018-9-16 zhengkai 支持'符号以及空格的oracle语句// userid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
                     String columnName = "";
                     if(columnLine.indexOf("`")>-1) {

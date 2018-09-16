@@ -24,7 +24,7 @@ public class StringUtils {
      * @return
      */
     public static String lowerCaseFirst(String str) {
-        return str.substring(0, 1).toLowerCase() + str.substring(1);
+        return (str!=null&str.length()>1)?str.substring(0, 1).toLowerCase() + str.substring(1):"";
     }
 
     /**
