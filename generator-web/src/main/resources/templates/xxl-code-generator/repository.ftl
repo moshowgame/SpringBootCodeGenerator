@@ -13,11 +13,10 @@ import org.springframework.stereotype.Repository;
 
 /**
 *  ${classInfo.classComment}
-*
-*  Created by by-health on '${.now?string('yyyy-MM-dd HH:mm:ss')}'.
+* @author ${authorName} ${.now?string('yyyy-MM-dd')}
 */
 @Repository
-public interface ${classInfo.className}Respository extends JpaRepository<${classInfo.className},Integer> {
+public interface ${classInfo.className}Repository extends JpaRepository<${classInfo.className},Integer> {
 
 
 

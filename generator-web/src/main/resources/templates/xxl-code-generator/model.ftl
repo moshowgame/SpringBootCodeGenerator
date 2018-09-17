@@ -11,8 +11,7 @@ import java.util.List;
 
 /**
 *  ${classInfo.classComment}
-*
-*  Created by by-health on '${.now?string('yyyy-MM-dd HH:mm:ss')}'.
+* @author ${authorName} ${.now?string('yyyy-MM-dd')}
 */
 public class ${classInfo.className} implements Serializable {
     private static final long serialVersionUID = 42L;

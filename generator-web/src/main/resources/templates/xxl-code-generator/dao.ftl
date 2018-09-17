@@ -5,8 +5,7 @@ import java.util.List;
 
 /**
 * ${classInfo.classComment}
-*
-* Created by by-health on '${.now?string('yyyy-MM-dd HH:mm:ss')}'.
+* @author ${authorName} ${.now?string('yyyy-MM-dd')}
 */
 @Component
 public interface ${classInfo.className}Dao {

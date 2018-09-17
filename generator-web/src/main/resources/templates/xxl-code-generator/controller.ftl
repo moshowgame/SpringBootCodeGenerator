@@ -10,8 +10,7 @@ import java.util.Map;
 
 /**
 * ${classInfo.classComment}
-*
-* Created by by-health on '${.now?string('yyyy-MM-dd HH:mm:ss')}'.
+* @author ${authorName} ${.now?string('yyyy-MM-dd')}
 */
 @Controller
 public class ${classInfo.className}Controller {

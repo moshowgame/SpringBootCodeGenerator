@@ -8,8 +8,7 @@ import java.util.Map;
 
 /**
 * ${classInfo.classComment}
-*
-* Created by by-health on '${.now?string('yyyy-MM-dd HH:mm:ss')}'.
+* @author ${authorName} ${.now?string('yyyy-MM-dd')}
 */
 @Service
 public class ${classInfo.className}ServiceImpl implements ${classInfo.className}Service {

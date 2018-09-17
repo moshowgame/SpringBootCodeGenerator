@@ -12,8 +12,7 @@ import java.util.Map;
 
 /**
 * ${classInfo.classComment}
-*
-* Created by by-health on '${.now?string('yyyy-MM-dd HH:mm:ss')}'.
+* @author ${authorName} ${.now?string('yyyy-MM-dd')}
 */
 @RestController
 @RequestMapping("/${classInfo.className?uncap_first}")
@@ -25,7 +24,7 @@ public class ${classInfo.className}Controller {
     /**
     * 新增或编辑
     */
-    @RequestMapping("/save")
+    @PostMapping("/save")
     public Object save(${classInfo.className} ${classInfo.className?uncap_first}){
         return ${classInfo.className?uncap_first}Respository.save(${classInfo.className?uncap_first});
     }
@@ -33,27 +32,37 @@ public class ${classInfo.className}Controller {
     /**
     * 删除
     */
-    @RequestMapping("/delete")
+    @GetMapping("/delete")
     public Object delete(int id){
-         ${classInfo.className?uncap_first}Respository.deleteById(id);
-        return 1;
+        Optional<${classInfo.className}> ${classInfo.className?uncap_first}=${classInfo.className?uncap_first}Respository.findById(id);
+        if(${classInfo.className?uncap_first}.isPresent()){
+            ${classInfo.className?uncap_first}Respository.deleteById(id);
+            return ApiReturnUtil.success("删除成功");
+        }else{
+            return ApiReturnUtil.error("没有找到该对象");
+        }
     }
 
     /**
     * 查询
     */
-    @RequestMapping("/find")
+    @GetMapping("/find")
     public Object load(int id){
-        return ${classInfo.className?uncap_first}Respository.findById(id);
+        Optional<${classInfo.className}> ${classInfo.className?uncap_first}=${classInfo.className?uncap_first}Respository.findById(id);
+        if(${classInfo.className?uncap_first}.isPresent()){
+            return ApiReturnUtil.success(${classInfo.className?uncap_first}.get());
+        }else{
+            return ApiReturnUtil.error("没有找到该对象");
+        }
     }
 
     /**
     * 分页查询
     */
-    @RequestMapping("/list")
+    @PostMapping("/list")
     public Object list(${classInfo.className} ${classInfo.className?uncap_first},
-                                    @RequestParam(required = false, defaultValue = "0") int pageNumber,
-                                    @RequestParam(required = false, defaultValue = "10") int pageSize) {
+                        @RequestParam(required = false, defaultValue = "0") int pageNumber,
+                        @RequestParam(required = false, defaultValue = "10") int pageSize) {
 
             //创建匹配器，需要查询条件请修改此处代码
             ExampleMatcher matcher = ExampleMatcher.matchingAll();
