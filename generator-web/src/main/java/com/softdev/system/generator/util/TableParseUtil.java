@@ -41,6 +41,9 @@ public class TableParseUtil {
             throw new CodeGenerateException("Table structure anomaly.");
         }
 
+        //新增处理create table if not exists members情况
+        if (tableName.contains("if not exists")) tableName=tableName.replaceAll("if not exists","");
+
         if (tableName.contains("`")) {
             tableName = tableName.substring(tableName.indexOf("`")+1, tableName.lastIndexOf("`"));
         }else{
@@ -50,6 +53,9 @@ public class TableParseUtil {
         //优化对byeas`.`ct_bd_customerdiscount这种命名的支持
         if(tableName.contains("`.`")){
             tableName=tableName.substring(tableName.indexOf("`.`")+3);
+        }else if(tableName.contains(".")){
+            //优化对likeu.members这种命名的支持
+            tableName=tableName.substring(tableName.indexOf(".")+1);
         }
         // class Name
         String className = StringUtils.upperCaseFirst(StringUtils.underlineToCamelCase(tableName));
@@ -103,19 +109,14 @@ public class TableParseUtil {
                         &&!columnLine.contains("buffer_pool")&&!columnLine.contains("tablespace")
                         &&!columnLine.contains("primary")){
 
-                    // column Name
-                    columnLine = columnLine.substring(1);
                     //如果是oracle的number(x,x)，可能出现最后分割残留的,x)，这里做排除处理
                     if(columnLine.length()<5) continue;
                     //2018-9-16 zhengkai 支持'符号以及空格的oracle语句// userid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
                     String columnName = "";
-                    if(columnLine.indexOf("`")>-1) {
-                        columnName = columnLine.substring(0, columnLine.indexOf("`"));
-                    }else if(columnLine.indexOf("'")>-1){
-                        columnName = columnLine.substring(0, columnLine.indexOf("'"));
-                    }else{
-                        columnName = columnLine.substring(0, columnLine.indexOf(" "));
-                    }
+                    columnLine=columnLine.replaceAll("`"," ").replaceAll("\""," ").replaceAll("'","").replaceAll("  "," ").trim();
+                    //如果遇到username varchar(65) default '' not null,这种情况，判断第一个空格是否比第一个引号前
+                    columnName = columnLine.substring(0, columnLine.indexOf(" "));
+
                     // field Name
                     String fieldName = StringUtils.lowerCaseFirst(StringUtils.underlineToCamelCase(columnName));
                     if (fieldName.contains("_")) {
