@@ -13,7 +13,7 @@
     <li role="presentation"><a href="http://blog.csdn.net/moshowgame">大狼狗CSDN</a></li>
     <li role="presentation"><a href="http://github.com/moshowgame/SpringBootCodeGenerator">GitHub</a></li>-->
 </head>
-<body>
+<body style="background-color: #e9ecef">
 
     <div class="container">
         <nav class="navbar navbar-dark bg-primary">
