@@ -1,8 +1,12 @@
-![image](https://img.shields.io/badge/SpringBoot-%E2%98%85%E2%98%85%E2%98%85-green.svg)
-![image](https://img.shields.io/badge/CodeGenerator-%E2%98%85%E2%98%85%E2%98%85-green.svg)
+![image](https://img.shields.io/badge/SpringBoot2-%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%85-brightgreen.svg)
+![image](https://img.shields.io/badge/Freemarker-%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%85-brightgreen.svg)
+![image](https://img.shields.io/badge/CodeGenerator-%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%85-brightgreen.svg)
+[![Build Status](https://travis-ci.org/moshowgame/SpringBootCodeGenerator.svg?branch=master)](https://travis-ci.org/moshowgame/SpringBootCodeGenerator)
+<br>
+
 SpringBootCodeGenerator
 ----
-基于SpringBoot2+xxl-codegenerator的代码生成器。用DDL语句生成JPA/JdbcTemplate/Mybatis相关代码，目前以JPA的为主，各大模板也在陆续优化。
+基于SpringBoot2+Freemarker的代码生成器。用DDL语句生成JPA/JdbcTemplate/Mybatis相关代码，目前以JPA的为主，各大模板也在陆续优化。
 <br><br>
 感谢bejson三叔将他部署在http://java.bejson.com/generator上
 <br><br>
@@ -12,6 +16,7 @@ SpringBootCodeGenerator
 <tr><td>CSDN博客</td> <td>http://blog.csdn.net/moshowgame</td></tr>
 <tr><td></td> <td></td></tr>
 <tr><td>更新日期</td> <td>更新内容</td></tr>
+<tr><td>20180918<td>优化SQL类型推断。优化PrimaryKey判断。修复jpacontroller中Repository拼写错误问题。</td></tr>
 <tr><td>20180917<td>全新首页，静态文件全部采用CDN。新增jdbcTemplate模块。</td></tr>
 <tr><td>20180916-2<td>优化oracle支持，优化DDL语句中"或者'或者空格的支持。</td></tr>
 <tr><td>20180916-1<td>补充char/clob/blob/json等类型，如果类型未知，默认为String。</td></tr>

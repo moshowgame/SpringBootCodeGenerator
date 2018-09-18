@@ -19,14 +19,14 @@ import java.util.Map;
 public class ${classInfo.className}Controller {
 
     @Autowired
-    private ${classInfo.className}Respository ${classInfo.className?uncap_first}Respository;
+    private ${classInfo.className}Repository ${classInfo.className?uncap_first}Repository;
 
     /**
     * 新增或编辑
     */
     @PostMapping("/save")
     public Object save(${classInfo.className} ${classInfo.className?uncap_first}){
-        return ${classInfo.className?uncap_first}Respository.save(${classInfo.className?uncap_first});
+        return ${classInfo.className?uncap_first}Repository.save(${classInfo.className?uncap_first});
     }
 
     /**
@@ -34,9 +34,9 @@ public class ${classInfo.className}Controller {
     */
     @GetMapping("/delete")
     public Object delete(int id){
-        Optional<${classInfo.className}> ${classInfo.className?uncap_first}=${classInfo.className?uncap_first}Respository.findById(id);
+        Optional<${classInfo.className}> ${classInfo.className?uncap_first}=${classInfo.className?uncap_first}Repository.findById(id);
         if(${classInfo.className?uncap_first}.isPresent()){
-            ${classInfo.className?uncap_first}Respository.deleteById(id);
+            ${classInfo.className?uncap_first}Repository.deleteById(id);
             return ApiReturnUtil.success("删除成功");
         }else{
             return ApiReturnUtil.error("没有找到该对象");
@@ -48,7 +48,7 @@ public class ${classInfo.className}Controller {
     */
     @GetMapping("/find")
     public Object load(int id){
-        Optional<${classInfo.className}> ${classInfo.className?uncap_first}=${classInfo.className?uncap_first}Respository.findById(id);
+        Optional<${classInfo.className}> ${classInfo.className?uncap_first}=${classInfo.className?uncap_first}Repository.findById(id);
         if(${classInfo.className?uncap_first}.isPresent()){
             return ApiReturnUtil.success(${classInfo.className?uncap_first}.get());
         }else{
@@ -72,7 +72,7 @@ public class ${classInfo.className}Controller {
             //分页构造
             Pageable pageable = PageRequest.of(pageNumber,pageSize);
 
-            return ${classInfo.className?uncap_first}Respository.findAll(example, pageable);
+            return ${classInfo.className?uncap_first}Repository.findAll(example, pageable);
     }
 
 }

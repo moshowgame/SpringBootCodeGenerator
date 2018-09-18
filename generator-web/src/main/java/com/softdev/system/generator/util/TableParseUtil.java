@@ -102,12 +102,16 @@ public class TableParseUtil {
 
         String[] fieldLineList = fieldListTmp.split(",");
         if (fieldLineList.length > 0) {
+            int i=0;//i为了解决primary key关键字出现的地方，出现在前3行，一般和id有关
             for (String columnLine :fieldLineList) {
-                columnLine = columnLine.replaceAll("\n","").replaceAll("\t","").trim();		                                        // `userid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+                i++;
+                columnLine = columnLine.replaceAll("\n","").replaceAll("\t","").trim();
+                // `userid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+                // 2018-9-18 zhengk 修改为contains，提升匹配率和匹配不按照规矩出牌的语句
                 if (!columnLine.contains("constraint")&&!columnLine.contains("using")
                         &&!columnLine.contains("storage")&&!columnLine.contains("pctincrease")
                         &&!columnLine.contains("buffer_pool")&&!columnLine.contains("tablespace")
-                        &&!columnLine.contains("primary")){
+                        &&!(columnLine.contains("primary")&&i>3)){
 
                     //如果是oracle的number(x,x)，可能出现最后分割残留的,x)，这里做排除处理
                     if(columnLine.length()<5) continue;
@@ -127,20 +131,20 @@ public class TableParseUtil {
                     columnLine = columnLine.substring(columnLine.indexOf("`")+1).trim();	// int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
                     String fieldClass = Object.class.getSimpleName();
                     //2018-9-16 zhengk 补充char/clob/blob/json等类型，如果类型未知，默认为String
-                    if (columnLine.startsWith("int") || columnLine.startsWith("tinyint") || columnLine.startsWith("smallint")) {
+                    if (columnLine.contains("int") || columnLine.contains("tinyint") || columnLine.contains("smallint")) {
                         fieldClass = Integer.TYPE.getSimpleName();
-                    } else if (columnLine.startsWith("bigint")) {
+                    } else if (columnLine.contains("bigint")) {
                         fieldClass = Long.TYPE.getSimpleName();
-                    } else if (columnLine.startsWith("float")) {
+                    } else if (columnLine.contains("float")) {
                         fieldClass = Float.TYPE.getSimpleName();
-                    } else if (columnLine.startsWith("double")) {
+                    } else if (columnLine.contains("double")) {
                         fieldClass = Double.TYPE.getSimpleName();
-                    } else if (columnLine.startsWith("datetime") || columnLine.startsWith("timestamp")) {
+                    } else if (columnLine.contains("datetime") || columnLine.contains("timestamp")) {
                         fieldClass = Date.class.getSimpleName();
-                    } else if (columnLine.startsWith("varchar") || columnLine.startsWith("text")|| columnLine.startsWith("char")
-                            || columnLine.startsWith("clob")||columnLine.startsWith("blob")||columnLine.startsWith("json")) {
+                    } else if (columnLine.contains("varchar") || columnLine.contains("text")|| columnLine.contains("char")
+                            || columnLine.contains("clob")||columnLine.contains("blob")||columnLine.contains("json")) {
                         fieldClass = String.class.getSimpleName();
-                    } else if (columnLine.startsWith("decimal")||columnLine.startsWith("number")) {
+                    } else if (columnLine.contains("decimal")||columnLine.contains("number")) {
                         fieldClass = BigDecimal.class.getSimpleName();
                     } else {
                         fieldClass = String.class.getSimpleName();
