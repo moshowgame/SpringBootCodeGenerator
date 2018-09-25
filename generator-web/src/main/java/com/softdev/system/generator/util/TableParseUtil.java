@@ -29,7 +29,7 @@ public class TableParseUtil {
         if (tableSql==null || tableSql.trim().length()==0) {
             throw new CodeGenerateException("Table structure can not be empty.");
         }
-        tableSql = tableSql.trim().replaceAll("'","`").replaceAll("\"","`").toLowerCase();
+        tableSql = tableSql.trim().replaceAll("'","`").replaceAll("\"","`").replaceAll("，",",").toLowerCase();
 
         // table Name
         String tableName = null;
@@ -65,10 +65,11 @@ public class TableParseUtil {
 
         // class Comment
         String classComment = null;
-        if (tableSql.contains("COMMENT=")) {
-            String classCommentTmp = tableSql.substring(tableSql.lastIndexOf("COMMENT=")+8).trim();
-            if (classCommentTmp.contains("'") || classCommentTmp.indexOf("'")!=classCommentTmp.lastIndexOf("'")) {
-                classCommentTmp = classCommentTmp.substring(classCommentTmp.indexOf("'")+1, classCommentTmp.lastIndexOf("'"));
+        //mysql是comment=,pgsql/oracle是comment on table,
+        if (tableSql.contains("comment=")) {
+            String classCommentTmp = tableSql.substring(tableSql.lastIndexOf("comment=")+8).replaceAll("`","").trim();
+            if (classCommentTmp.indexOf(" ")!=classCommentTmp.lastIndexOf(" ")) {
+                classCommentTmp = classCommentTmp.substring(classCommentTmp.indexOf(" ")+1, classCommentTmp.lastIndexOf(" "));
             }
             if (classCommentTmp!=null && classCommentTmp.trim().length()>0) {
                 classComment = classCommentTmp;
@@ -76,22 +77,35 @@ public class TableParseUtil {
                 //修复表备注为空问题
                 classComment = className;
             }
+        }else if(tableSql.contains("comment on table")) {
+            //COMMENT ON TABLE CT_BAS_FEETYPE IS 'CT_BAS_FEETYPE';
+            String classCommentTmp = tableSql.substring(tableSql.lastIndexOf("comment on table")+17).trim();
+            //证明这是一个常规的COMMENT ON TABLE  xxx IS 'xxxx'
+            if (classCommentTmp.contains("`")) {
+                classCommentTmp = classCommentTmp.substring(classCommentTmp.indexOf("`")+1);
+                classCommentTmp = classCommentTmp.substring(0,classCommentTmp.indexOf("`"));
+                classComment = classCommentTmp;
+            }else{
+                //非常规的没法分析
+                classComment = tableName;
+            }
         }else{
             //修复表备注为空问题
-            classComment = className;
+            classComment = tableName;
         }
 
         // field List
         List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
 
+        // 正常( ) 内的一定是字段相关的定义。
         String fieldListTmp = tableSql.substring(tableSql.indexOf("(")+1, tableSql.lastIndexOf(")"));
 
-        // replave "," by "，" in comment
-        Matcher matcher = Pattern.compile("\\ COMMENT '(.*?)\\'").matcher(fieldListTmp);     // "\\{(.*?)\\}"
+        // 匹配 comment，替换备注里的小逗号, 防止不小心被当成切割符号切割
+        Matcher matcher = Pattern.compile("\\ comment '(.*?)\\'").matcher(fieldListTmp);     // "\\{(.*?)\\}"
         while(matcher.find()){
 
             String commentTmp = matcher.group();
-            commentTmp = commentTmp.replaceAll("\\ COMMENT '|\\'", "");      // "\\{|\\}"
+            commentTmp = commentTmp.replaceAll("\\ comment '|\\'", "");      // "\\{|\\}"
 
             if (commentTmp.contains(",")) {
                 String commentTmpFinal = commentTmp.replaceAll(",", "，");
@@ -150,14 +164,24 @@ public class TableParseUtil {
                         fieldClass = String.class.getSimpleName();
                     }
 
-                    // field comment
+                    // field comment，MySQL的一般位于field行，而pgsql和oralce多位于后面。
                     String fieldComment = null;
-                    if (columnLine.contains("COMMENT")) {
-                        String commentTmp = fieldComment = columnLine.substring(columnLine.indexOf("COMMENT")+7).trim();	// '用户ID',
-                        if (commentTmp.contains("'") || commentTmp.indexOf("'")!=commentTmp.lastIndexOf("'")) {
-                            commentTmp = commentTmp.substring(commentTmp.indexOf("'")+1, commentTmp.lastIndexOf("'"));
+                    if (columnLine.contains("comment")) {
+                        String commentTmp = columnLine.substring(columnLine.indexOf("comment")+7).trim();	// '用户ID',
+                        if (commentTmp.contains("`") || commentTmp.indexOf("`")!=commentTmp.lastIndexOf("`")) {
+                            commentTmp = commentTmp.substring(commentTmp.indexOf("`")+1, commentTmp.lastIndexOf("`"));
                         }
                         fieldComment = commentTmp;
+                    }else if(tableSql.contains("comment on column")&&tableSql.contains("."+columnName+" is `")){
+                        //新增对pgsql/oracle的字段备注支持
+                        //COMMENT ON COLUMN public.check_info.check_name IS '检查者名称';
+                        Matcher columnCommentMatcher = Pattern.compile("."+columnName+" is `").matcher(tableSql);     // "\\{(.*?)\\}"
+                        while(columnCommentMatcher.find()){
+                            String columnCommentTmp = columnCommentMatcher.group();
+                            System.out.println(columnCommentTmp);
+                            fieldComment = tableSql.substring(tableSql.indexOf(columnCommentTmp)+columnCommentTmp.length()).trim();
+                            fieldComment = fieldComment.substring(0,fieldComment.indexOf("`")).trim();
+                        }
                     }else{
                         //修复comment不存在导致报错的问题
                         fieldComment = columnName;
@@ -175,7 +199,7 @@ public class TableParseUtil {
         }
 
         if (fieldList.size() < 1) {
-            throw new CodeGenerateException("Table structure anomaly.");
+            throw new CodeGenerateException("表结构分析失败，请检查语句或者提交issue给我");
         }
 
         ClassInfo codeJavaInfo = new ClassInfo();

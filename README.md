@@ -6,9 +6,9 @@
 
 SpringBootCodeGenerator
 ----
-基于SpringBoot2+Freemarker的代码生成器。用DDL语句生成JPA/JdbcTemplate/Mybatis相关代码，目前以JPA的为主，各大模板也在陆续优化。
+基于SpringBoot2+Freemarker的代码生成器，用DDL语句生成JPA/JdbcTemplate/Mybatis相关代码，支持mysql/oracle/pgsql三大数据库。目前以JPA的为主，各大模板也在陆续优化。欢迎大家提交模板和交流想法！
 <br><br>
-感谢bejson三叔将他部署在http://java.bejson.com/generator上
+另外，感谢bejson三叔将他部署在http://java.bejson.com/generator上
 <br><br>
 <table><tbody>
 <tr><td>访问路径</td> <td>http://127.0.0.1:1234/generator</td></tr>
@@ -16,6 +16,7 @@ SpringBootCodeGenerator
 <tr><td>CSDN博客</td> <td>http://blog.csdn.net/moshowgame</td></tr>
 <tr><td></td> <td></td></tr>
 <tr><td>更新日期</td> <td>更新内容</td></tr>
+<tr><td>20180925<td>优化SQL表和字段备注的推断，包括pgsql/oralce的comment on column/table情况处理等。</td></tr>
 <tr><td>20180918<td>优化SQL类型推断。优化PrimaryKey判断。修复jpacontroller中Repository拼写错误问题。</td></tr>
 <tr><td>20180917<td>全新首页，静态文件全部采用CDN。新增jdbcTemplate模块。</td></tr>
 <tr><td>20180916-2<td>优化oracle支持，优化DDL语句中"或者'或者空格的支持。</td></tr>
@@ -24,6 +25,16 @@ SpringBootCodeGenerator
 <tr><td>20180913<td>修复字段没有描述以及类型为DATE型导致的问题。新增JPA的Controller模板。</td></tr>
 <tr><td>20180831<td>初始化项目。新增JPA系列Entity+Repository模板。</td></tr>
 </tbody></table>
+
+<table><tbody>
+<tr><td>类名</td> <td>说明</td></tr>
+<tr><td>tableName</td> <td>sql中的表名</td></tr>
+<tr><td>className</td> <td>java类名</td></tr>
+<tr><td>classComment</td> <td>java类备注</td></tr>
+<tr><td>fieldName</td> <td>字段名</td></tr>
+<tr><td>fieldComment</td> <td>字段备注</td></tr>
+</tbody></table>
+
 <img src="./codegenerator1.png">
 <img src="./codegenerator2.png">
 <img src="./codegenerator3.png">
