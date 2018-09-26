@@ -6,7 +6,7 @@
 
 SpringBootCodeGenerator
 ----
-基于SpringBoot2+Freemarker的代码生成器，用DDL SQL语句生成JPA/JdbcTemplate/Mybatis相关代码，支持mysql/oracle/pgsql三大数据库。目前以JPA的为主，各大模板也在陆续优化。欢迎大家提交模板和交流想法！
+基于SpringBoot2+Freemarker的代码生成器，用DDL SQL语句生成JPA/JdbcTemplate/Mybatis/BeetlSQL相关代码，支持mysql/oracle/pgsql三大数据库。目前以JPA的为主，各大模板也在陆续优化。欢迎大家提交模板和交流想法！
 <br><br>
 另外，感谢bejson三叔将他部署在http://java.bejson.com/generator上
 <br><br>
