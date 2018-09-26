@@ -138,5 +138,23 @@ $(function () {
             genCodeArea.setSize('auto', 'auto');
         }
     });
+    $('#beetlcontroller').click(function ()  {
+        if(!$.isEmptyObject(codeData)) {
+            genCodeArea.setValue(codeData.beetlcontroller);
+            genCodeArea.setSize('auto', 'auto');
+        }
+    });
+    $('#beetlmd').click(function ()  {
+        if(!$.isEmptyObject(codeData)) {
+            genCodeArea.setValue(codeData.beetlmd);
+            genCodeArea.setSize('auto', 'auto');
+        }
+    });
+    $('#beetlentity').click(function ()  {
+        if(!$.isEmptyObject(codeData)) {
+            genCodeArea.setValue(codeData.beetlentity);
+            genCodeArea.setSize('auto', 'auto');
+        }
+    });
 
 });

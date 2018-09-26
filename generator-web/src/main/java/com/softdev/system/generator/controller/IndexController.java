@@ -75,6 +75,10 @@ public class IndexController {
             result.put("jtdao", freemarkerTool.processString("xxl-code-generator/jtdao.ftl", params));
             result.put("jtdaoimpl", freemarkerTool.processString("xxl-code-generator/jtdaoimpl.ftl", params));
 
+            result.put("beetlmd", freemarkerTool.processString("xxl-code-generator/beetlmd.ftl", params));
+            result.put("beetlentity", freemarkerTool.processString("xxl-code-generator/beetlentity.ftl", params));
+            result.put("beetlcontroller", freemarkerTool.processString("xxl-code-generator/beetlcontroller.ftl", params));
+
             // 计算,生成代码行数
             int lineNum = 0;
             for (Map.Entry<String, String> item: result.entrySet()) {

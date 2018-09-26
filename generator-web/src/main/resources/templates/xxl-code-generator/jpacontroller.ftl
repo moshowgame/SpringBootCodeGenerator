@@ -47,7 +47,7 @@ public class ${classInfo.className}Controller {
     * 查询
     */
     @GetMapping("/find")
-    public Object load(int id){
+    public Object find(int id){
         Optional<${classInfo.className}> ${classInfo.className?uncap_first}=${classInfo.className?uncap_first}Repository.findById(id);
         if(${classInfo.className?uncap_first}.isPresent()){
             return ApiReturnUtil.success(${classInfo.className?uncap_first}.get());
