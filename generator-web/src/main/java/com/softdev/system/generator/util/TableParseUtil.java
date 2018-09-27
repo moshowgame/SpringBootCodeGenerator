@@ -93,7 +93,8 @@ public class TableParseUtil {
             //修复表备注为空问题
             classComment = tableName;
         }
-
+        //如果备注跟;混在一起，需要替换掉
+        classComment=classComment.replaceAll(";","");
         // field List
         List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
 
@@ -101,11 +102,12 @@ public class TableParseUtil {
         String fieldListTmp = tableSql.substring(tableSql.indexOf("(")+1, tableSql.lastIndexOf(")"));
 
         // 匹配 comment，替换备注里的小逗号, 防止不小心被当成切割符号切割
-        Matcher matcher = Pattern.compile("\\ comment '(.*?)\\'").matcher(fieldListTmp);     // "\\{(.*?)\\}"
+        Matcher matcher = Pattern.compile("\\ comment `(.*?)\\`").matcher(fieldListTmp);     // "\\{(.*?)\\}"
         while(matcher.find()){
 
             String commentTmp = matcher.group();
-            commentTmp = commentTmp.replaceAll("\\ comment '|\\'", "");      // "\\{|\\}"
+            //2018-9-27 zhengk 不替换，只处理，支持COMMENT评论里面多种注释
+            //commentTmp = commentTmp.replaceAll("\\ comment `|\\`", " ");      // "\\{|\\}"
 
             if (commentTmp.contains(",")) {
                 String commentTmpFinal = commentTmp.replaceAll(",", "，");
@@ -122,7 +124,7 @@ public class TableParseUtil {
                 columnLine = columnLine.replaceAll("\n","").replaceAll("\t","").trim();
                 // `userid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
                 // 2018-9-18 zhengk 修改为contains，提升匹配率和匹配不按照规矩出牌的语句
-                if (!columnLine.contains("constraint")&&!columnLine.contains("using")
+                if (!columnLine.contains("constraint")&&!columnLine.contains("using")&&!columnLine.contains("unique")
                         &&!columnLine.contains("storage")&&!columnLine.contains("pctincrease")
                         &&!columnLine.contains("buffer_pool")&&!columnLine.contains("tablespace")
                         &&!(columnLine.contains("primary")&&i>3)){
@@ -170,6 +172,10 @@ public class TableParseUtil {
                         String commentTmp = columnLine.substring(columnLine.indexOf("comment")+7).trim();	// '用户ID',
                         if (commentTmp.contains("`") || commentTmp.indexOf("`")!=commentTmp.lastIndexOf("`")) {
                             commentTmp = commentTmp.substring(commentTmp.indexOf("`")+1, commentTmp.lastIndexOf("`"));
+                        }
+                        //解决最后一句是评论，无主键且连着)的问题:album_id int(3) default '1' null comment '相册id：0 代表头像 1代表照片墙')
+                        if(commentTmp.contains(")")){
+                            commentTmp = commentTmp.substring(0, commentTmp.lastIndexOf(")"));
                         }
                         fieldComment = commentTmp;
                     }else if(tableSql.contains("comment on column")&&tableSql.contains("."+columnName+" is `")){

@@ -8,7 +8,7 @@ SpringBootCodeGenerator
 ----
 基于SpringBoot2+Freemarker的代码生成器，用DDL SQL语句生成JPA/JdbcTemplate/Mybatis/BeetlSQL相关代码，支持mysql/oracle/pgsql三大数据库。目前以JPA的为主，各大模板也在陆续优化。欢迎大家提交模板和交流想法！
 <br><br>
-另外，感谢bejson三叔将他部署在http://java.bejson.com/generator上
+另外，感谢bejson三叔将他部署在http://java.bejson.com/generator上，成为besjon专供工具。
 <br><br>
 <table><tbody>
 <tr><td>访问路径</td> <td>http://127.0.0.1:1234/generator</td></tr>
@@ -16,7 +16,8 @@ SpringBootCodeGenerator
 <tr><td>CSDN博客</td> <td>http://blog.csdn.net/moshowgame</td></tr>
 <tr><td></td> <td></td></tr>
 <tr><td>更新日期</td> <td>更新内容</td></tr>
-<tr><td>20180926<td>全新BeetlSQL模块，以及一些小细节优化。</td></tr>
+<tr><td>20180927<td>优化COMMENT提取逻辑，支持多种复杂情况的注释（感谢@raodeming的反馈）。</td></tr>
+<tr><td>20180926<td>全新BeetlSQL模块，以及一些小细节优化（感谢@三叔同事的建议）。</td></tr>
 <tr><td>20180925<td>优化SQL表和字段备注的推断，包括pgsql/oralce的comment on column/table情况处理等。</td></tr>
 <tr><td>20180918<td>优化SQL类型推断。优化PrimaryKey判断。修复jpacontroller中Repository拼写错误问题。</td></tr>
 <tr><td>20180917<td>全新首页，静态文件全部采用CDN。新增jdbcTemplate模块。</td></tr>
