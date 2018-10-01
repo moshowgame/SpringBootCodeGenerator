@@ -38,7 +38,8 @@
 <#-- jquery.slimscroll -->
 <script src="https://cdn.bootcss.com/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
 <#-- layer -->
-<script src="https://cdn.bootcss.com/layer/3.1.0/layer.js"></script>
+<#--<script src="https://cdn.bootcss.com/layer/3.1.0/layer.js"></script>-->
+<#--<script src="http://res.layui.com/layui/dist/layui.js""></script>-->
 <script src="https://cdn.bootcss.com/codemirror/5.38.0/codemirror.min.js"></script>
 <script src="https://cdn.bootcss.com/codemirror/5.38.0/addon/display/placeholder.min.js"></script>
 <script src="https://cdn.bootcss.com/codemirror/5.38.0/mode/clike/clike.min.js"></script>
