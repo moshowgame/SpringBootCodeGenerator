@@ -79,6 +79,9 @@ public class IndexController {
             result.put("beetlentity", freemarkerTool.processString("xxl-code-generator/beetlentity.ftl", params));
             result.put("beetlcontroller", freemarkerTool.processString("xxl-code-generator/beetlcontroller.ftl", params));
 
+            result.put("elementui", freemarkerTool.processString("xxl-code-generator/element-ui.ftl", params));
+            result.put("bootstrap", freemarkerTool.processString("xxl-code-generator/bootstrap.ftl", params));
+
             // 计算,生成代码行数
             int lineNum = 0;
             for (Map.Entry<String, String> item: result.entrySet()) {

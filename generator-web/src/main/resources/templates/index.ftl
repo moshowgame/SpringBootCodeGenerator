@@ -30,7 +30,7 @@
 <div class="jumbotron">
     <div class="container">
         <h1>Spring Boot Code Generator!</h1>
-            基于<code>SpringBoot2</code>+<code>Freemarker</code>的代码生成器，用<code>DDL SQL</code>语句生成<code>JPA</code>/<code>JdbcTemplate</code>/<code>Mybatis</code>/<code>BeetlSQL</code>相关代码，支持<code>mysql</code>/<code>oracle</code>/<code>pgsql</code>三大数据库。目前以<code>JPA</code>的为主，各大模板也在陆续优化。欢迎大家提交模板和交流想法，如果发现有SQL语句不能识别，请<a href="https://github.com/moshowgame/SpringBootCodeGenerator/issues">留言</a>给我分析，谢谢！
+            基于<code>SpringBoot2</code>+<code>Freemarker</code>的代码生成器，用<code>DDL SQL</code>语句生成<code>JPA</code>/<code>JdbcTemplate</code>/<code>Mybatis</code>/<code>BeetlSQL</code>相关代码，支持<code>mysql</code>/<code>oracle</code>/<code>pgsql</code>三大数据库。以<code>释放双手</code>为目的，各大模板也在陆续补充和优化。欢迎大家多多提交模板和交流想法，如果发现有SQL语句不能识别，请<a href="https://github.com/moshowgame/SpringBootCodeGenerator/issues">留言</a>给我分析，谢谢！
         </p>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -84,6 +84,17 @@ CREATE TABLE `userinfo` (
             </div>
             <div class="btn-group mr-2" role="group" aria-label="First group">
                 <button type="button" class="btn btn-default" id="swaggerui">swagger-ui</button>
+                <button type="button" class="btn btn-default" id="element-ui">element-ui</button>
+                <button type="button" class="btn btn-default" id="bootstrap">bootstrap</button>
+            </div>
+        </div>
+        <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text" id="btnGroupAddon">JPA</div>
+                </div>
+            </div>
+            <div class="btn-group mr-2" role="group" aria-label="First group">
                 <button type="button" class="btn btn-default" id="entity">entity</button>
                 <button type="button" class="btn btn-default" id="repository">repository</button>
                 <button type="button" class="btn btn-default" id="jpacontroller">controller</button>

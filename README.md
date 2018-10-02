@@ -6,7 +6,7 @@
 
 SpringBootCodeGenerator
 ----
-基于SpringBoot2+Freemarker的代码生成器，用DDL SQL语句生成JPA/JdbcTemplate/Mybatis/BeetlSQL相关代码，支持mysql/oracle/pgsql三大数据库。目前以JPA的为主，各大模板也在陆续优化。欢迎大家提交模板和交流想法！
+基于SpringBoot2+Freemarker的代码生成器，用DDL SQL语句生成JPA/JdbcTemplate/Mybatis/BeetlSQL相关代码，支持mysql/oracle/pgsql三大数据库。以释放双手为目的，各大模板也在陆续补充和优化。欢迎大家提交模板和交流想法！
 <br><br>
 另外，感谢bejson三叔将他部署在http://java.bejson.com/generator上，成为besjon专供工具。
 <br><br>
@@ -16,6 +16,7 @@ SpringBootCodeGenerator
 <tr><td>CSDN博客</td> <td>http://blog.csdn.net/moshowgame</td></tr>
 <tr><td></td> <td></td></tr>
 <tr><td>更新日期</td> <td>更新内容</td></tr>
+<tr><td>20181003<td>新增element-ui/bootstrap生成。</td></tr>
 <tr><td>20181002<td>修复公共CDN之Layer.js404问题，导致项目无法生成。</td></tr>
 <tr><td>20180927<td>优化COMMENT提取逻辑，支持多种复杂情况的注释（感谢@raodeming的反馈）。</td></tr>
 <tr><td>20180926<td>全新BeetlSQL模块，以及一些小细节优化（感谢@三叔同事的建议）。</td></tr>

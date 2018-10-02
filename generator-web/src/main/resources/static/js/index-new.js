@@ -159,5 +159,17 @@ $(function () {
             genCodeArea.setSize('auto', 'auto');
         }
     });
+    $('#bootstrap').click(function ()  {
+        if(!$.isEmptyObject(codeData)) {
+            genCodeArea.setValue(codeData.bootstrap);
+            genCodeArea.setSize('auto', 'auto');
+        }
+    });
+    $('#element-ui').click(function ()  {
+        if(!$.isEmptyObject(codeData)) {
+            genCodeArea.setValue(codeData.elementui);
+            genCodeArea.setSize('auto', 'auto');
+        }
+    });
 
 });
