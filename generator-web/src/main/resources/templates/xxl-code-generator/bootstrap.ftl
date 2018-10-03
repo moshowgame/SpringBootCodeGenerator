@@ -4,7 +4,7 @@
         <#list classInfo.fieldList as fieldItem >
             <div class="form-group">
                 <label for="${fieldItem.fieldName}Label">${fieldItem.fieldComment}</label>
-                <input type="input" class="form-control" id="${fieldItem.fieldName}" name="${fieldItem.fieldName}}" placeholder="请输入${fieldItem.fieldComment}">
+                <input type="input" class="form-control" id="${fieldItem.fieldName}" name="${fieldItem.fieldName}" placeholder="请输入${fieldItem.fieldComment}">
             </div>
         </#list>
     </#if>
