@@ -43,7 +43,7 @@ $(function () {
             dataType: "json",
             success: function (data) {
                 if (data.code == 200) {
-                    /*layer.open({
+                    layer.open({
                         icon: '1',
                         content: "代码生成成功",
                         end: function () {
@@ -53,15 +53,15 @@ $(function () {
                             genCodeArea.setSize('auto', 'auto');
 
                         }
-                    });*/
+                    });
                     codeData = data.data;
                     genCodeArea.setValue(codeData.swaggerui);
                     genCodeArea.setSize('auto', 'auto');
                 } else {
-                    /*layer.open({
+                    layer.open({
                         icon: '2',
                         content: (data.msg || '代码生成失败')
-                    });*/
+                    });
                 }
             }
         });

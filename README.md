@@ -16,6 +16,7 @@ SpringBootCodeGenerator
 <tr><td>CSDN博客</td> <td>http://blog.csdn.net/moshowgame</td></tr>
 <tr><td></td> <td></td></tr>
 <tr><td>更新日期</td> <td>更新内容</td></tr>
+<tr><td>20181010<td>CDN变更，修复CDN不稳定导致网页js报错问题。</td></tr>
 <tr><td>20181003<td>新增element-ui/bootstrap生成。</td></tr>
 <tr><td>20181002<td>修复公共CDN之Layer.js404问题，导致项目无法生成。</td></tr>
 <tr><td>20180927<td>优化COMMENT提取逻辑，支持多种复杂情况的注释（感谢@raodeming的反馈）。</td></tr>
