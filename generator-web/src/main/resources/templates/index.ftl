@@ -79,7 +79,7 @@ CREATE TABLE `userinfo` (
         <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <div class="input-group-text" id="btnGroupAddon">JPA</div>
+                    <div class="input-group-text" id="btnGroupAddon">UI</div>
                 </div>
             </div>
             <div class="btn-group mr-2" role="group" aria-label="First group">

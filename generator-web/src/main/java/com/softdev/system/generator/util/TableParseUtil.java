@@ -102,7 +102,7 @@ public class TableParseUtil {
         String fieldListTmp = tableSql.substring(tableSql.indexOf("(")+1, tableSql.lastIndexOf(")"));
 
         // 匹配 comment，替换备注里的小逗号, 防止不小心被当成切割符号切割
-        Matcher matcher = Pattern.compile("\\ comment `(.*?)\\`").matcher(fieldListTmp);     // "\\{(.*?)\\}"
+        Matcher matcher = Pattern.compile("comment `(.*?)\\`").matcher(fieldListTmp);     // "\\{(.*?)\\}"
         while(matcher.find()){
 
             String commentTmp = matcher.group();
@@ -114,8 +114,24 @@ public class TableParseUtil {
                 fieldListTmp = fieldListTmp.replace(matcher.group(), commentTmpFinal);
             }
         }
-
-
+        //2018-10-18 zhengkai 新增支持double(10, 2)等类型中有英文逗号的特殊情况
+        Matcher matcher2 = Pattern.compile("\\`(.*?)\\`").matcher(fieldListTmp);     // "\\{(.*?)\\}"
+        while(matcher2.find()){
+            String commentTmp2 = matcher2.group();
+            if (commentTmp2.contains(",")) {
+                String commentTmpFinal = commentTmp2.replaceAll(",", "，").replaceAll("\\(", "（").replaceAll("\\)", "）");
+                fieldListTmp = fieldListTmp.replace(matcher2.group(), commentTmpFinal);
+            }
+        }
+        //2018-10-18 zhengkai 新增支持double(10, 2)等类型中有英文逗号的特殊情况
+        Matcher matcher3 = Pattern.compile("\\((.*?)\\)").matcher(fieldListTmp);     // "\\{(.*?)\\}"
+        while(matcher3.find()){
+            String commentTmp3 = matcher3.group();
+            if (commentTmp3.contains(",")) {
+                String commentTmpFinal = commentTmp3.replaceAll(",", "，");
+                fieldListTmp = fieldListTmp.replace(matcher3.group(), commentTmpFinal);
+            }
+        }
         String[] fieldLineList = fieldListTmp.split(",");
         if (fieldLineList.length > 0) {
             int i=0;//i为了解决primary key关键字出现的地方，出现在前3行，一般和id有关
@@ -175,7 +191,7 @@ public class TableParseUtil {
                         }
                         //解决最后一句是评论，无主键且连着)的问题:album_id int(3) default '1' null comment '相册id：0 代表头像 1代表照片墙')
                         if(commentTmp.contains(")")){
-                            commentTmp = commentTmp.substring(0, commentTmp.lastIndexOf(")"));
+                            commentTmp = commentTmp.substring(0, commentTmp.lastIndexOf(")")+1);
                         }
                         fieldComment = commentTmp;
                     }else if(tableSql.contains("comment on column")&&tableSql.contains("."+columnName+" is `")){
