@@ -1,0 +1,4 @@
+rootProject.name = 'SpringBootCodeGenerator'
+include ':generator-web'
+
+project(':generator-web').projectDir = "$rootDir/generator-web" as File
