@@ -25,11 +25,11 @@
 
 
 		<!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
-		<dependency>
+		<!--<dependency>
 			<groupId>com.sun.mail</groupId>
 			<artifactId>javax.mail</artifactId>
 			<version>1.6.1</version>
-		</dependency>
+		</dependency>-->
 
 
 		<!-- spring-data-jpa -->

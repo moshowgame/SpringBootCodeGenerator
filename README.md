@@ -6,9 +6,9 @@
 
 SpringBootCodeGenerator
 ----
-基于SpringBoot2+Freemarker的代码生成器，用DDL SQL语句生成JPA/JdbcTemplate/Mybatis/BeetlSQL相关代码，支持mysql/oracle/pgsql三大数据库。以释放双手为目的，各大模板也在陆续补充和优化。欢迎大家提交模板和交流想法！
+基于SpringBoot2+Freemarker的代码生成器，用DDL SQL语句生成JPA/JdbcTemplate/Mybatis/BeetlSQL相关代码，支持mysql/oracle/pgsql等三大数据库。以释放双手为目的，各大模板也在陆续补充和优化。欢迎大家提交模板和交流想法！
 <br><br>
-另外，感谢bejson三叔将他部署在http://java.bejson.com/generator上，成为besjon专供工具。
+另外，感谢bejson三叔将他部署在 http://java.bejson.com/generator 上，目前是besjon专供工具。
 <br><br>
 <table><tbody>
 <tr><td>访问路径</td> <td>http://127.0.0.1:1234/generator</td></tr>
@@ -16,7 +16,8 @@ SpringBootCodeGenerator
 <tr><td>CSDN博客</td> <td>http://blog.csdn.net/moshowgame</td></tr>
 <tr><td></td> <td></td></tr>
 <tr><td>更新日期</td> <td>更新内容</td></tr>
-<tr><td>20181018<td>支持doublt(x,x)的类型，以及comment里面包含一些特殊字符的处理（感谢@tanwubo的反馈）。</td></tr>
+<tr><td>20181108<td>修复非字段描述"KEY FK_xxxx (xxxx)"导致生成KEY字段情况（感谢@tornadoorz反馈）。</td></tr>
+<tr><td>20181018<td>支持double(x,x)的类型，以及comment里面包含一些特殊字符的处理（感谢@tanwubo的反馈）。</td></tr>
 <tr><td>20181010<td>CDN变更，修复CDN不稳定导致网页js报错问题。</td></tr>
 <tr><td>20181003<td>新增element-ui/bootstrap生成。</td></tr>
 <tr><td>20181002<td>修复公共CDN之Layer.js404问题，导致项目无法生成。</td></tr>

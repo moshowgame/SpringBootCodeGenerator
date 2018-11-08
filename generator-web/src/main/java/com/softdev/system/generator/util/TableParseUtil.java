@@ -140,7 +140,8 @@ public class TableParseUtil {
                 columnLine = columnLine.replaceAll("\n","").replaceAll("\t","").trim();
                 // `userid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
                 // 2018-9-18 zhengk 修改为contains，提升匹配率和匹配不按照规矩出牌的语句
-                if (!columnLine.contains("constraint")&&!columnLine.contains("using")&&!columnLine.contains("unique")
+                // 2018-11-8 zhengkai 修复tornadoorz反馈的KEY FK_permission_id (permission_id),KEY FK_role_id (role_id)情况
+                if (!columnLine.contains("key ")&&!columnLine.contains("constraint")&&!columnLine.contains("using")&&!columnLine.contains("unique")
                         &&!columnLine.contains("storage")&&!columnLine.contains("pctincrease")
                         &&!columnLine.contains("buffer_pool")&&!columnLine.contains("tablespace")
                         &&!(columnLine.contains("primary")&&i>3)){
