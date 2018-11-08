@@ -1,19 +1,19 @@
 package com.softdev.system.generator.controller;
 
+import com.softdev.system.generator.common.Constants;
 import com.softdev.system.generator.entity.ClassInfo;
 import com.softdev.system.generator.entity.ReturnT;
+import com.softdev.system.generator.intergration.GeneratorService;
 import com.softdev.system.generator.util.CodeGeneratorTool;
 import com.softdev.system.generator.util.FreemarkerTool;
 import freemarker.template.TemplateException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,11 +23,13 @@ import java.util.Map;
  * @author zhengk/moshow
  */
 @Controller
+@Slf4j
 public class IndexController {
-    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
-
     @Autowired
     private FreemarkerTool freemarkerTool;
+
+    @Autowired
+    private GeneratorService generatorService;
 
     @RequestMapping("/")
     public String index() {
@@ -89,12 +91,16 @@ public class IndexController {
                     lineNum += StringUtils.countMatches(item.getValue(), "\n");
                 }
             }
-            logger.info("生成代码行数：{}", lineNum);
-            logger.info("生成代码数据：{}", result);
-            return new ReturnT<Map<String, String>>(result);
+            log.info("生成代码行数：{}", lineNum);
+            result.put(Constants.CLASS_NAME, classInfo.getClassName());
+            result.put(Constants.PACKAGE_NAME, packageName);
+            result.put(Constants.MAPPER_NAME, freemarkerTool.processString("xxl-code-generator/mybatis.ftl", params));
+            result.put(Constants.SERVICE_IMPL_NAME, freemarkerTool.processString("xxl-code-generator/service_impl.ftl", params));
+            generatorService.generateFile(result);
+            return new ReturnT(result);
         } catch (IOException | TemplateException e) {
-            logger.error(e.getMessage(), e);
-            return new ReturnT<Map<String, String>>(ReturnT.FAIL_CODE, "表结构解析失败"+e.getMessage());
+            log.error(e.getMessage(), e);
+            return new ReturnT(ReturnT.FAIL_CODE, "表结构解析失败"+e.getMessage());
         }
 
     }
