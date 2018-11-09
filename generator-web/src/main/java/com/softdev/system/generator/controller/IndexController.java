@@ -60,13 +60,16 @@ public class IndexController {
             params.put("packageName", packageName);
 
             // result
-            Map<String, String> result = new HashMap<String, String>();
+            Map<String, String> result = new HashMap<>();
+            String mapperValue = freemarkerTool.processString("xxl-code-generator/mybatis.ftl", params);
+            String serviceValue = freemarkerTool.processString("xxl-code-generator/service.ftl", params);
+            String serviceImplValue = freemarkerTool.processString("xxl-code-generator/service_impl.ftl", params);
 
             result.put("controller", freemarkerTool.processString("xxl-code-generator/controller.ftl", params));
-            result.put("service", freemarkerTool.processString("xxl-code-generator/service.ftl", params));
-            result.put("service_impl", freemarkerTool.processString("xxl-code-generator/service_impl.ftl", params));
             result.put("dao", freemarkerTool.processString("xxl-code-generator/dao.ftl", params));
-            result.put("mybatis", freemarkerTool.processString("xxl-code-generator/mybatis.ftl", params));
+            result.put("service_impl", serviceImplValue);
+            result.put("service", serviceValue);
+            result.put("mybatis", mapperValue);
             result.put("model", freemarkerTool.processString("xxl-code-generator/model.ftl", params));
 
             result.put("entity", freemarkerTool.processString("xxl-code-generator/entity.ftl", params));
@@ -92,10 +95,11 @@ public class IndexController {
                 }
             }
             log.info("生成代码行数：{}", lineNum);
+
             result.put(Constants.CLASS_NAME, classInfo.getClassName());
             result.put(Constants.PACKAGE_NAME, packageName);
-            result.put(Constants.MAPPER_NAME, freemarkerTool.processString("xxl-code-generator/mybatis.ftl", params));
-            result.put(Constants.SERVICE_IMPL_NAME, freemarkerTool.processString("xxl-code-generator/service_impl.ftl", params));
+            result.put(Constants.MAPPER_NAME, mapperValue);
+            result.put(Constants.SERVICE_IMPL_NAME, serviceImplValue);
             generatorService.generateFile(result);
             return new ReturnT(result);
         } catch (IOException | TemplateException e) {

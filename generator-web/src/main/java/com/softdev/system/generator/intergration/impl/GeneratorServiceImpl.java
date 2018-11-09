@@ -6,7 +6,6 @@ import com.softdev.system.generator.intergration.GeneratorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -34,7 +33,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                     className + "_" + Constants.SERVICE_NAME + Constants.JAVA_POSTFIX,
                     result.get(Constants.SERVICE_NAME));
             directoryGenerator.generateFile(packageName + "." + Constants.SERVICE_IMPL_NAME,
-                    className + "_" + Constants.SERVICE_IMPL_NAME + Constants.JAVA_POSTFIX,
+                    className + "_" + Constants.SERVICE_NAME + "_" + Constants.SERVICE_IMPL_NAME + Constants.JAVA_POSTFIX,
                     result.get(Constants.SERVICE_IMPL_NAME));
             directoryGenerator.generateFile(packageName + "." + Constants.MODEL_NAME,
                     className + "_" + Constants.MODEL_NAME + Constants.JAVA_POSTFIX,
