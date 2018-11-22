@@ -90,7 +90,8 @@ public class IndexController {
                 }
             }
             logger.info("生成代码行数：{}", lineNum);
-            logger.info("生成代码数据：{}", result);
+            //测试环境可自行开启
+            //logger.info("生成代码数据：{}", result);
             return new ReturnT<Map<String, String>>(result);
         } catch (IOException | TemplateException e) {
             logger.error(e.getMessage(), e);

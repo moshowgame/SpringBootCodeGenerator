@@ -164,7 +164,8 @@ public class TableParseUtil {
                     columnLine = columnLine.substring(columnLine.indexOf("`")+1).trim();	// int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
                     String fieldClass = Object.class.getSimpleName();
                     //2018-9-16 zhengk 补充char/clob/blob/json等类型，如果类型未知，默认为String
-                    if (columnLine.contains("int") || columnLine.contains("tinyint") || columnLine.contains("smallint")) {
+                    //2018-11-22 lshz0088 处理字段类型的时候，不严谨columnLine.contains(" int") 类似这种的，可在前后适当加一些空格之类的加以区分，否则当我的字段包含这些字符的时候，产生类型判断问题。
+                    if (columnLine.contains(" int") || columnLine.contains("tinyint") || columnLine.contains("smallint")) {
                         fieldClass = Integer.TYPE.getSimpleName();
                     } else if (columnLine.contains("bigint")) {
                         fieldClass = Long.TYPE.getSimpleName();
@@ -174,12 +175,32 @@ public class TableParseUtil {
                         fieldClass = Double.TYPE.getSimpleName();
                     } else if (columnLine.contains("datetime") || columnLine.contains("timestamp")) {
                         fieldClass = Date.class.getSimpleName();
-                    } else if (columnLine.contains("varchar") || columnLine.contains("text")|| columnLine.contains("char")
+                    } else if (columnLine.contains("varchar") || columnLine.contains(" text")|| columnLine.contains("char")
                             || columnLine.contains("clob")||columnLine.contains("blob")||columnLine.contains("json")) {
                         fieldClass = String.class.getSimpleName();
-                    } else if (columnLine.contains("decimal")||columnLine.contains("number")) {
-                        fieldClass = BigDecimal.class.getSimpleName();
-                    } else {
+                    } else if (columnLine.contains("decimal")||columnLine.contains(" number")) {
+                        //2018-11-22 lshz0088 建议对number类型增加int，long，BigDecimal的区分判断
+                        //如果startKh大于等于0，则表示有设置取值范围
+                        int startKh=columnLine.indexOf("(");
+                        if(startKh>=0){
+                            int endKh=columnLine.indexOf(")",startKh);
+                            String[] fanwei=columnLine.substring(startKh+1,endKh).split("，");
+                            if("0".equals(fanwei[1])){
+                                //如果没有小数位数
+                                int length=Integer.valueOf(fanwei[0]);
+                                if(length<=9){
+                                    fieldClass = Integer.class.getSimpleName();
+                                }else{
+                                    fieldClass = Long.class.getSimpleName();
+                                }
+                            }else{
+                                //有小数位数一律使用BigDecimal
+                                fieldClass = BigDecimal.class.getSimpleName();
+                            }
+                        }else{
+                            fieldClass = BigDecimal.class.getSimpleName();
+                        }
+                    }else {
                         fieldClass = String.class.getSimpleName();
                     }
 
@@ -198,7 +219,8 @@ public class TableParseUtil {
                     }else if(tableSql.contains("comment on column")&&tableSql.contains("."+columnName+" is `")){
                         //新增对pgsql/oracle的字段备注支持
                         //COMMENT ON COLUMN public.check_info.check_name IS '检查者名称';
-                        Matcher columnCommentMatcher = Pattern.compile("."+columnName+" is `").matcher(tableSql);     // "\\{(.*?)\\}"
+                        //2018-11-22 lshz0088 正则表达式的点号前面应该加上两个反斜杠，否则会认为是任意字符
+                        Matcher columnCommentMatcher = Pattern.compile("\\."+columnName+" is `").matcher(tableSql);     // "\\{(.*?)\\}"
                         while(columnCommentMatcher.find()){
                             String columnCommentTmp = columnCommentMatcher.group();
                             System.out.println(columnCommentTmp);
