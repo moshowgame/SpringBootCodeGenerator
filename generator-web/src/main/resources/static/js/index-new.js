@@ -33,12 +33,13 @@ $(function () {
     $('#btnGenCode').click(function ()  {
 
         var tableSql = ddlSqlArea.getValue();
-
         $.ajax({
             type: 'POST',
             url: base_url + "/genCode",
             data: {
-                "tableSql": tableSql
+                "tableSql": tableSql,
+                "packageName":$("#packageName").val(),
+                "authorName":$("#authorName").val()
             },
             dataType: "json",
             success: function (data) {
@@ -54,9 +55,6 @@ $(function () {
 
                         }
                     });
-                    codeData = data.data;
-                    genCodeArea.setValue(codeData.swaggerui);
-                    genCodeArea.setSize('auto', 'auto');
                 } else {
                     layer.open({
                         icon: '2',
@@ -168,6 +166,18 @@ $(function () {
     $('#element-ui').click(function ()  {
         if(!$.isEmptyObject(codeData)) {
             genCodeArea.setValue(codeData.elementui);
+            genCodeArea.setSize('auto', 'auto');
+        }
+    });
+    $('#pluscontroller').click(function ()  {
+        if(!$.isEmptyObject(codeData)) {
+            genCodeArea.setValue(codeData.pluscontroller);
+            genCodeArea.setSize('auto', 'auto');
+        }
+    });
+    $('#plusmapper').click(function ()  {
+        if(!$.isEmptyObject(codeData)) {
+            genCodeArea.setValue(codeData.plusmapper);
             genCodeArea.setSize('auto', 'auto');
         }
     });

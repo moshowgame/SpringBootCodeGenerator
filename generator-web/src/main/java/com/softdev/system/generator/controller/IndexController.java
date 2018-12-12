@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,27 +59,32 @@ public class IndexController {
             // result
             Map<String, String> result = new HashMap<String, String>();
 
+            //UI
+            result.put("swaggerui", freemarkerTool.processString("xxl-code-generator/swagger-ui.ftl", params));
+            result.put("elementui", freemarkerTool.processString("xxl-code-generator/element-ui.ftl", params));
+            result.put("bootstrap", freemarkerTool.processString("xxl-code-generator/bootstrap.ftl", params));
+
+            //mybatis old
             result.put("controller", freemarkerTool.processString("xxl-code-generator/controller.ftl", params));
             result.put("service", freemarkerTool.processString("xxl-code-generator/service.ftl", params));
             result.put("service_impl", freemarkerTool.processString("xxl-code-generator/service_impl.ftl", params));
             result.put("dao", freemarkerTool.processString("xxl-code-generator/dao.ftl", params));
             result.put("mybatis", freemarkerTool.processString("xxl-code-generator/mybatis.ftl", params));
             result.put("model", freemarkerTool.processString("xxl-code-generator/model.ftl", params));
-
+            //jpa
             result.put("entity", freemarkerTool.processString("xxl-code-generator/entity.ftl", params));
-            result.put("swaggerui", freemarkerTool.processString("xxl-code-generator/swagger-ui.ftl", params));
             result.put("repository", freemarkerTool.processString("xxl-code-generator/repository.ftl", params));
             result.put("jpacontroller", freemarkerTool.processString("xxl-code-generator/jpacontroller.ftl", params));
-
+            //jdbc template
             result.put("jtdao", freemarkerTool.processString("xxl-code-generator/jtdao.ftl", params));
             result.put("jtdaoimpl", freemarkerTool.processString("xxl-code-generator/jtdaoimpl.ftl", params));
-
+            //beetsql
             result.put("beetlmd", freemarkerTool.processString("xxl-code-generator/beetlmd.ftl", params));
             result.put("beetlentity", freemarkerTool.processString("xxl-code-generator/beetlentity.ftl", params));
             result.put("beetlcontroller", freemarkerTool.processString("xxl-code-generator/beetlcontroller.ftl", params));
-
-            result.put("elementui", freemarkerTool.processString("xxl-code-generator/element-ui.ftl", params));
-            result.put("bootstrap", freemarkerTool.processString("xxl-code-generator/bootstrap.ftl", params));
+            //mybatis plus
+            result.put("pluscontroller", freemarkerTool.processString("xxl-code-generator/pluscontroller.ftl", params));
+            result.put("plusmapper", freemarkerTool.processString("xxl-code-generator/plusmapper.ftl", params));
 
             // 计算,生成代码行数
             int lineNum = 0;

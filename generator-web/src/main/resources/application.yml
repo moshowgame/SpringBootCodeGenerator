@@ -7,6 +7,7 @@ tomcat:
     uri-encoding: UTF-8
     max-threads: 10
     background-processor-delay: 30
+    basedir: ${user.home}/tomcat/
 spring:
     banner:
       charset: UTF-8

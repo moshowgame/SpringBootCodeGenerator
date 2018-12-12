@@ -14,7 +14,7 @@
     <!-- Ionicons -->
     <link href="//cdn.staticfile.org/ionicons/4.1.2/css/ionicons.min.css" rel="stylesheet">
 
-    <link href="//cdn.staticfile.org/codemirror/5.38.0/codemirror.min.css" rel="stylesheet">
+    <link href="//cdn.staticfile.org/codemirror/5.42.0/codemirror.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,11 +37,11 @@
     <script src="//cdn.staticfile.org/fastclick/1.0.6/fastclick.min.js"></script>
     <script src="//cdn.staticfile.org/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
     <script src="//cdn.staticfile.org/layer/2.3/layer.js"></script>
-    <script src="//cdn.staticfile.org/codemirror/5.38.0/codemirror.min.js"></script>
-    <script src="//cdn.staticfile.org/codemirror/5.38.0/addon/display/placeholder.min.js"></script>
-    <script src="//cdn.staticfile.org/codemirror/5.38.0/mode/clike/clike.min.js"></script>
-    <script src="//cdn.staticfile.org/codemirror/5.38.0/mode/sql/sql.min.js"></script>
-    <script src="//cdn.staticfile.org/codemirror/5.38.0/mode/xml/xml.min.js"></script>
+    <script src="//cdn.staticfile.org/codemirror/5.42.0/codemirror.min.js"></script>
+    <script src="//cdn.staticfile.org/codemirror/5.42.0/addon/display/placeholder.min.js"></script>
+    <script src="//cdn.staticfile.org/codemirror/5.42.0/mode/clike/clike.min.js"></script>
+    <script src="//cdn.staticfile.org/codemirror/5.42.0/mode/sql/sql.min.js"></script>
+    <script src="//cdn.staticfile.org/codemirror/5.42.0/mode/xml/xml.min.js"></script>
 </#macro>
 
 
