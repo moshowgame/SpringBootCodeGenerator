@@ -1,7 +1,6 @@
 package com.softdev.system.generator.util;
 
 
-
 import com.softdev.system.generator.entity.ClassInfo;
 import com.softdev.system.generator.entity.FieldInfo;
 
@@ -185,9 +184,17 @@ public class TableParseUtil {
                         if(startKh>=0){
                             int endKh=columnLine.indexOf(")",startKh);
                             String[] fanwei=columnLine.substring(startKh+1,endKh).split("，");
-                            if("0".equals(fanwei[1])){
-                                //如果没有小数位数
+                            //2019-1-5 zhengk 修复@arthaschan反馈的超出范围错误
+                            //System.out.println("fanwei"+ JSON.toJSONString(fanwei));
+                            //                            //number(20,6) fanwei["20","6"]
+                            //                            //number(0,6) fanwei["0","6"]
+                            //                            //number(20,0) fanwei["20","0"]
+                            //                            //number(20) fanwei["20"]
+                            //如果括号里是1位或者2位且第二位为0，则进行特殊处理。只有有小数位，都设置为BigDecimal。
+                            if((fanwei.length>1&&"0".equals(fanwei[1]))||fanwei.length==1){
                                 int length=Integer.valueOf(fanwei[0]);
+                                if(fanwei.length>1) length=Integer.valueOf(fanwei[1]);
+                                //数字范围9位及一下用Integer，大的用Long
                                 if(length<=9){
                                     fieldClass = Integer.class.getSimpleName();
                                 }else{

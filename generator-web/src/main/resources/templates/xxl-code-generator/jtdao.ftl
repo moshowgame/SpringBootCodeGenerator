@@ -5,7 +5,7 @@ import java.util.List;
 * ${classInfo.classComment}
 * @author ${authorName} ${.now?string('yyyy-MM-dd')}
 */
-public interface IAccountDAO {
+public interface I${classInfo.className}DAO {
 
     int add(${classInfo.classComment} ${classInfo.className?uncap_first});
 

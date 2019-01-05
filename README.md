@@ -16,6 +16,7 @@ SpringBootCodeGenerator
 <tr><td>CSDN博客</td> <td>http://blog.csdn.net/moshowgame</td></tr>
 <tr><td></td> <td></td></tr>
 <tr><td>更新日期</td> <td>更新内容</td></tr>
+<tr><td>20190106<td>修复处理number/decimal(x,x)类型的逻辑（感谢@arthaschan的反馈），修复JdbcTemplates模板两处错误（感谢@everflourish的反馈）。</td></tr>
 <tr><td>20181212<td>首页UI优化，新增MybatisPlus模块（感谢@三叔同事的建议），修复作者名和包名获取失败问题（感谢@Yanch1994的反馈）。</td></tr>
 <tr><td>20181122<td>优化正则表达式点号的处理，优化处理字段类型，对number类型增加int，long，BigDecimal的区分判断（感谢@lshz0088的指导）。</td></tr>
 <tr><td>20181108<td>修复非字段描述"KEY FK_xxxx (xxxx)"导致生成KEY字段情况（感谢@tornadoorz反馈）。</td></tr>
