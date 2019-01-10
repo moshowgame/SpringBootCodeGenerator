@@ -7,14 +7,14 @@ import java.util.List;
 */
 public interface I${classInfo.className}DAO {
 
-    int add(${classInfo.classComment} ${classInfo.className?uncap_first});
+    int add(${classInfo.className} ${classInfo.className?uncap_first});
 
-    int update(${classInfo.classComment} ${classInfo.className?uncap_first});
+    int update(${classInfo.className} ${classInfo.className?uncap_first});
 
     int delete(int id);
 
-    ${classInfo.classComment} findById(int id);
+    ${classInfo.className} findById(int id);
 
-    List<${classInfo.classComment}> findAllList(Map<String,Object> param);
+    List<${classInfo.className}> findAllList(Map<String,Object> param);
 
 }
