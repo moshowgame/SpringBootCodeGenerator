@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
@@ -35,11 +36,9 @@ public class IndexController {
 
     @RequestMapping("/genCode")
     @ResponseBody
-    public ReturnT<Map<String, String>> codeGenerate(String tableSql,String authorName,String packageName) {
-
-        if(StringUtils.isBlank(authorName)) authorName="大狼狗";
-
-        if(StringUtils.isBlank(packageName)) packageName="com.softdev.system";
+    public ReturnT<Map<String, String>> codeGenerate(String tableSql,
+                                                     @RequestParam(required = false, defaultValue = "大狼狗") String authorName,
+                                                     @RequestParam(required = false, defaultValue = "com.softdev.system")String packageName) {
 
         try {
 
