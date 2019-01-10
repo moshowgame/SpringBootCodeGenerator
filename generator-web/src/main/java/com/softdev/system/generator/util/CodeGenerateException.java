@@ -6,16 +6,23 @@ package com.softdev.system.generator.util;
 public class CodeGenerateException extends RuntimeException {
     private static final long serialVersionUID = 42L;
 
-    public CodeGenerateException(String msg) {
-        super(msg);
+    public CodeGenerateException() {
     }
 
-    public CodeGenerateException(String msg, Throwable cause) {
-        super(msg, cause);
+    public CodeGenerateException(String message) {
+        super(message);
+    }
+
+    public CodeGenerateException(String message, Throwable cause) {
+        super(message, cause);
     }
 
     public CodeGenerateException(Throwable cause) {
         super(cause);
     }
 
+    public CodeGenerateException(String message, Throwable cause, boolean enableSuppression,
+                                 boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
 }

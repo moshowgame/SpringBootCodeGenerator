@@ -5,6 +5,7 @@ import com.softdev.system.generator.entity.ReturnT;
 import com.softdev.system.generator.util.CodeGeneratorTool;
 import com.softdev.system.generator.util.FreemarkerTool;
 import freemarker.template.TemplateException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +23,9 @@ import java.util.Map;
  * spring boot code generator
  * @author zhengk/moshow
  */
+@Slf4j
 @Controller
 public class IndexController {
-    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
     private FreemarkerTool freemarkerTool;
@@ -92,12 +93,12 @@ public class IndexController {
                     lineNum += StringUtils.countMatches(item.getValue(), "\n");
                 }
             }
-            logger.info("生成代码行数：{}", lineNum);
+            log.info("生成代码行数：{}", lineNum);
             //测试环境可自行开启
             //logger.info("生成代码数据：{}", result);
             return new ReturnT<>(result);
         } catch (IOException | TemplateException e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return new ReturnT<>(ReturnT.FAIL_CODE, "表结构解析失败" + e.getMessage());
         }
 

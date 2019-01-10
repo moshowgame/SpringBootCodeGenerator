@@ -3,6 +3,7 @@ package com.softdev.system.generator.util;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,9 @@ import java.util.Map;
  *
  * @author xuxueli 2018-05-02 19:56:00
  */
+@Slf4j
 @Component
 public class FreemarkerTool {
-    private static final Logger logger = LoggerFactory.getLogger(CodeGeneratorTool.class);
 
     @Autowired
     private Configuration configuration;

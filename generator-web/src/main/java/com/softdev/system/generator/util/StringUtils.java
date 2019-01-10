@@ -1,13 +1,5 @@
 package com.softdev.system.generator.util;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.bean.copier.CopyOptions;
-import com.alibaba.fastjson.JSON;
-import com.softdev.system.generator.entity.ClassInfo;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * string tool
  *
