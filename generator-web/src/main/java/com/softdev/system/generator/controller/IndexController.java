@@ -60,9 +60,9 @@ public class IndexController {
             Map<String, String> result = new HashMap<>();
 
             //UI
-            result.put("swaggerui", freemarkerTool.processString("xxl-code-generator/swaggerui/swagger-ui.ftl", params));
-            result.put("elementui", freemarkerTool.processString("xxl-code-generator/swaggerui/element-ui.ftl", params));
-            result.put("bootstrap", freemarkerTool.processString("xxl-code-generator/swaggerui/bootstrap.ftl", params));
+            result.put("swagger-ui", freemarkerTool.processString("xxl-code-generator/swaggerui/swagger-ui.ftl", params));
+            result.put("element-ui", freemarkerTool.processString("xxl-code-generator/swaggerui/element-ui.ftl", params));
+            result.put("bootstrap-ui", freemarkerTool.processString("xxl-code-generator/swaggerui/bootstrap.ftl", params));
 
             //mybatis old
             result.put("controller", freemarkerTool.processString("xxl-code-generator/mybatis/controller.ftl", params));
