@@ -44,20 +44,20 @@ public class IndexController {
         try {
 
             if (StringUtils.isBlank(tableSql)) {
-                return new ReturnT<Map<String, String>>(ReturnT.FAIL_CODE, "表结构信息不可为空");
+                return new ReturnT<>(ReturnT.FAIL_CODE, "表结构信息不可为空");
             }
 
             // parse table
             ClassInfo classInfo = CodeGeneratorTool.processTableIntoClassInfo(tableSql);
 
             // code genarete
-            Map<String, Object> params = new HashMap<String, Object>();
+            Map<String, Object> params = new HashMap<>(3);
             params.put("classInfo", classInfo);
             params.put("authorName", authorName);
             params.put("packageName", packageName);
 
             // result
-            Map<String, String> result = new HashMap<String, String>();
+            Map<String, String> result = new HashMap<>();
 
             //UI
             result.put("swaggerui", freemarkerTool.processString("xxl-code-generator/swagger-ui.ftl", params));
@@ -96,10 +96,10 @@ public class IndexController {
             logger.info("生成代码行数：{}", lineNum);
             //测试环境可自行开启
             //logger.info("生成代码数据：{}", result);
-            return new ReturnT<Map<String, String>>(result);
+            return new ReturnT<>(result);
         } catch (IOException | TemplateException e) {
             logger.error(e.getMessage(), e);
-            return new ReturnT<Map<String, String>>(ReturnT.FAIL_CODE, "表结构解析失败"+e.getMessage());
+            return new ReturnT<>(ReturnT.FAIL_CODE, "表结构解析失败" + e.getMessage());
         }
 
     }
