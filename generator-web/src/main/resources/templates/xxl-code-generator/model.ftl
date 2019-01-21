@@ -20,6 +20,9 @@ public class ${classInfo.className} implements Serializable {
 </#if>
 
 <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
+    public ${classInfo.className}() {
+    }
+
 <#list classInfo.fieldList as fieldItem>
     public ${fieldItem.fieldClass} get${fieldItem.fieldName?cap_first}() {
         return ${fieldItem.fieldName};
