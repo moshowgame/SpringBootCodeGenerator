@@ -60,11 +60,9 @@
                             icon: '1',
                             content: "代码生成成功",
                             end: function () {
-
                                 codeData = data.data;
-                                genCodeArea.setValue(codeData.swaggerui);
+                                genCodeArea.setValue(codeData.beetlentity);
                                 genCodeArea.setSize('auto', 'auto');
-
                             }
                         });
                     } else {
@@ -79,117 +77,10 @@
         /**
          * 按钮事件组
          */
-        $('#swaggerui').click(function ()  {
-            if(!$.isEmptyObject(codeData)){
-                genCodeArea.setValue(codeData.swaggerui);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#entity').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.entity);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#repository').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.repository);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#jpacontroller').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.jpacontroller);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#model').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.model);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#mybatis').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.mybatis);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#dao').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.dao);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#service').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.service);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#service_impl').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.service_impl);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#controller').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.controller);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#jtdao').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.jtdao);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#jtdaoimpl').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.jtdaoimpl);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#beetlcontroller').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.beetlcontroller);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#beetlmd').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.beetlmd);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#beetlentity').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.beetlentity);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#bootstrap').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.bootstrap);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#element-ui').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.elementui);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#pluscontroller').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.pluscontroller);
-                genCodeArea.setSize('auto', 'auto');
-            }
-        });
-        $('#plusmapper').click(function ()  {
-            if(!$.isEmptyObject(codeData)) {
-                genCodeArea.setValue(codeData.plusmapper);
+        $('.generator').bind('click', function () {
+            if (!$.isEmptyObject(codeData)) {
+                var id = this.id;
+                genCodeArea.setValue(codeData[id]);
                 genCodeArea.setSize('auto', 'auto');
             }
         });
@@ -246,8 +137,8 @@ CREATE TABLE `userinfo` (
                     </div>
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-default" id="model">entity(set/get)</button>
-                    <button type="button" class="btn btn-default" id="beetlentity">entity(lombok)</button>
+                    <button type="button" class="btn btn-default generator" id="model">entity(set/get)</button>
+                    <button type="button" class="btn btn-default generator" id="beetlentity">entity(lombok)</button>
                 </div>
             </div>
             <div class="btn-toolbar col-md-7" role="toolbar" aria-label="Toolbar with button groups">
@@ -257,11 +148,11 @@ CREATE TABLE `userinfo` (
                     </div>
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-default" id="mybatis">mybatis</button>
-                    <button type="button" class="btn btn-default" id="dao">dao</button>
-                    <button type="button" class="btn btn-default" id="service">service</button>
-                    <button type="button" class="btn btn-default" id="service_impl">service_impl</button>
-                    <button type="button" class="btn btn-default" id="controller">controller</button>
+                    <button type="button" class="btn btn-default generator" id="mybatis">mybatis</button>
+                    <button type="button" class="btn btn-default generator" id="dao">dao</button>
+                    <button type="button" class="btn btn-default generator" id="service">service</button>
+                    <button type="button" class="btn btn-default generator" id="service_impl">service_impl</button>
+                    <button type="button" class="btn btn-default generator" id="controller">controller</button>
                 </div>
             </div>
         </div>
@@ -274,8 +165,8 @@ CREATE TABLE `userinfo` (
                     </div>
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-default" id="plusmapper">mapper</button>
-                    <button type="button" class="btn btn-default" id="pluscontroller">controller</button>
+                    <button type="button" class="btn btn-default generator" id="plusmapper">mapper</button>
+                    <button type="button" class="btn btn-default generator" id="pluscontroller">controller</button>
                 </div>
             </div>
 
@@ -286,9 +177,9 @@ CREATE TABLE `userinfo` (
                     </div>
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-default" id="swaggerui">swagger-ui</button>
-                    <button type="button" class="btn btn-default" id="element-ui">element-ui</button>
-                    <button type="button" class="btn btn-default" id="bootstrap">bootstrap-ui</button>
+                    <button type="button" class="btn btn-default generator" id="swagger-ui">swagger-ui</button>
+                    <button type="button" class="btn btn-default generator" id="element-ui">element-ui</button>
+                    <button type="button" class="btn btn-default generator" id="bootstrap-ui">bootstrap-ui</button>
                 </div>
             </div>
         </div>
@@ -301,8 +192,8 @@ CREATE TABLE `userinfo` (
                     </div>
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-default" id="beetlmd">beetlmd</button>
-                    <button type="button" class="btn btn-default" id="beetlcontroller">beetlcontroller</button>
+                    <button type="button" class="btn btn-default generator" id="beetlmd">beetlmd</button>
+                    <button type="button" class="btn btn-default generator" id="beetlcontroller">beetlcontroller</button>
                 </div>
             </div>
             <div class="btn-toolbar col-md-5" role="toolbar" aria-label="Toolbar with button groups">
@@ -312,9 +203,9 @@ CREATE TABLE `userinfo` (
                     </div>
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-default" id="entity">jpa-entity</button>
-                    <button type="button" class="btn btn-default" id="repository">repository</button>
-                    <button type="button" class="btn btn-default" id="jpacontroller">controller</button>
+                    <button type="button" class="btn btn-default generator" id="entity">jpa-entity</button>
+                    <button type="button" class="btn btn-default generator" id="repository">repository</button>
+                    <button type="button" class="btn btn-default generator" id="jpacontroller">controller</button>
                 </div>
             </div>
         </div>
@@ -326,8 +217,8 @@ CREATE TABLE `userinfo` (
                     </div>
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-default" id="jtdaoimpl">daoimpl</button>
-                    <button type="button" class="btn btn-default" id="jtdao">dao</button>
+                    <button type="button" class="btn btn-default generator" id="jtdaoimpl">daoimpl</button>
+                    <button type="button" class="btn btn-default generator" id="jtdao">dao</button>
                 </div>
             </div>
         </div>

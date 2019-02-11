@@ -1,11 +1,14 @@
 package com.softdev.system.generator.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
  * common return
  * @author xuxueli 2015-12-4 16:32:31
  */
+@Data
 public class ReturnT<T> implements Serializable {
 	public static final long serialVersionUID = 42L;
 
@@ -27,23 +30,4 @@ public class ReturnT<T> implements Serializable {
 		this.data = data;
 	}
 	
-	public int getCode() {
-		return code;
-	}
-	public void setCode(int code) {
-		this.code = code;
-	}
-	public String getMsg() {
-		return msg;
-	}
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
-	public T getData() {
-		return data;
-	}
-	public void setData(T data) {
-		this.data = data;
-	}
-
 }

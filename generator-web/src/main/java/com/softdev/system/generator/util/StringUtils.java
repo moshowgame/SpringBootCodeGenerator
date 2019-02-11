@@ -1,13 +1,5 @@
 package com.softdev.system.generator.util;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.bean.copier.CopyOptions;
-import com.alibaba.fastjson.JSON;
-import com.softdev.system.generator.entity.ClassInfo;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * string tool
  *
@@ -32,7 +24,8 @@ public class StringUtils {
      * @return
      */
     public static String lowerCaseFirst(String str) {
-        return (str!=null&str.length()>1)?str.substring(0, 1).toLowerCase() + str.substring(1):"";
+        //2019-2-10 解决StringUtils.lowerCaseFirst潜在的NPE异常@liutf
+        return (str!=null&&str.length()>1)?str.substring(0, 1).toLowerCase() + str.substring(1):"";
     }
 
     /**
@@ -63,25 +56,6 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-        /*String tableSql="comment on column check_info is `体检信息` ,comment on column check_xxxxx is `体检信息xx` ";
-        String fieldName="check_info";
-        String fieldComment="aaa";
-        Matcher columnCommentMatcher = Pattern.compile(fieldName+" is `").matcher(tableSql);     // "\\{(.*?)\\}"
-        while(columnCommentMatcher.find()){
-            String columnCommentTmp = columnCommentMatcher.group();
-            System.out.println(columnCommentTmp);
-            fieldComment = tableSql.substring(tableSql.indexOf(columnCommentTmp)+columnCommentTmp.length()).trim();
-            fieldComment = fieldComment.substring(0,fieldComment.indexOf("`")).trim();
-        }
-        System.out.println(fieldComment);*/
-        /*ClassInfo classInfo=new ClassInfo();
-        classInfo.setClassComment("xxxx");
-        classInfo.setTableName("2b");
-        ClassInfo newInfo=new ClassInfo();
-        classInfo.setClassName("bbbb");
-        classInfo.setTableName("3b");
-        //以new为主
-        BeanUtil.copyProperties(classInfo,newInfo,true, CopyOptions.create());
-        System.out.println(JSON.toJSONString(newInfo));*/
+
     }
 }

@@ -16,6 +16,8 @@ SpringBootCodeGenerator
 <tr><td>CSDN博客</td> <td>http://blog.csdn.net/moshowgame</td></tr>
 <tr><td></td> <td></td></tr>
 <tr><td>更新日期</td> <td>更新内容</td></tr>
+<tr><td>20190211<td>提交gitignore，解决StringUtils.lowerCaseFirst潜在的NPE异常，校验修改为@RequestParam参数校验，lombok之@Data和@Slf4j优化，fix JdbcDAO模板类名显示为中文问题，WebMvcConfig整合MessageConverter，模板代码分类（感谢@liutf和@tfgzs的pull request）。</td></tr>
+<tr><td>20190210<td>实体生成规则切换为包装类型，不再采用基本数据类型，为实体类生成添加显示的默认构造方法（感谢@h2so的pull request）。</td></tr>
 <tr><td>20190106<td>修复处理number/decimal(x,x)类型的逻辑（感谢@arthaschan的反馈），修复JdbcTemplates模板两处错误（感谢@everflourish的反馈）。</td></tr>
 <tr><td>20181212<td>首页UI优化，新增MybatisPlus模块（感谢@三叔同事的建议），修复作者名和包名获取失败问题（感谢@Yanch1994的反馈）。</td></tr>
 <tr><td>20181122<td>优化正则表达式点号的处理，优化处理字段类型，对number类型增加int，long，BigDecimal的区分判断（感谢@lshz0088的指导）。</td></tr>

@@ -3,8 +3,6 @@ package com.softdev.system.generator.util;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +17,6 @@ import java.util.Map;
  */
 @Component
 public class FreemarkerTool {
-    private static final Logger logger = LoggerFactory.getLogger(CodeGeneratorTool.class);
 
     @Autowired
     private Configuration configuration;

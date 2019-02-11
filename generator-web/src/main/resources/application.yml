@@ -9,6 +9,10 @@ tomcat:
     background-processor-delay: 30
     basedir: ${user.home}/tomcat/
 spring:
+    cloud:
+      nacos:
+        discovery:
+          server-addr: 127.0.0.1:8848
     banner:
       charset: UTF-8
     http:

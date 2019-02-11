@@ -5,12 +5,12 @@ import com.softdev.system.generator.entity.ReturnT;
 import com.softdev.system.generator.util.CodeGeneratorTool;
 import com.softdev.system.generator.util.FreemarkerTool;
 import freemarker.template.TemplateException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
@@ -22,8 +22,8 @@ import java.util.Map;
  * @author zhengk/moshow
  */
 @Controller
+@Slf4j
 public class IndexController {
-    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
     private FreemarkerTool freemarkerTool;
@@ -35,16 +35,17 @@ public class IndexController {
 
     @RequestMapping("/genCode")
     @ResponseBody
-    public ReturnT<Map<String, String>> codeGenerate(String tableSql,String authorName,String packageName) {
+    public ReturnT<Map<String, String>> codeGenerate(String tableSql,
+                                                     //2019-2-10 liutf 修改为@RequestParam参数校验
+                                                     @RequestParam(required = false, defaultValue = "大狼狗") String authorName,
+                                                     @RequestParam(required = false, defaultValue = "com.softdev.system")String packageName
+    ) {
 
-        if(StringUtils.isBlank(authorName)) authorName="大狼狗";
-
-        if(StringUtils.isBlank(packageName)) packageName="com.softdev.system";
 
         try {
 
             if (StringUtils.isBlank(tableSql)) {
-                return new ReturnT<Map<String, String>>(ReturnT.FAIL_CODE, "表结构信息不可为空");
+                return new ReturnT<>(ReturnT.FAIL_CODE, "表结构信息不可为空");
             }
 
             // parse table
@@ -60,31 +61,30 @@ public class IndexController {
             Map<String, String> result = new HashMap<String, String>();
 
             //UI
-            result.put("swaggerui", freemarkerTool.processString("xxl-code-generator/swagger-ui.ftl", params));
-            result.put("elementui", freemarkerTool.processString("xxl-code-generator/element-ui.ftl", params));
-            result.put("bootstrap", freemarkerTool.processString("xxl-code-generator/bootstrap.ftl", params));
-
+            result.put("swagger-ui", freemarkerTool.processString("code-generator/ui/swagger-ui.ftl", params));
+            result.put("element-ui", freemarkerTool.processString("code-generator/ui/element-ui.ftl", params));
+            result.put("bootstrap-ui", freemarkerTool.processString("code-generator/ui/bootstrap-ui.ftl", params));
             //mybatis old
-            result.put("controller", freemarkerTool.processString("xxl-code-generator/controller.ftl", params));
-            result.put("service", freemarkerTool.processString("xxl-code-generator/service.ftl", params));
-            result.put("service_impl", freemarkerTool.processString("xxl-code-generator/service_impl.ftl", params));
-            result.put("dao", freemarkerTool.processString("xxl-code-generator/dao.ftl", params));
-            result.put("mybatis", freemarkerTool.processString("xxl-code-generator/mybatis.ftl", params));
-            result.put("model", freemarkerTool.processString("xxl-code-generator/model.ftl", params));
+            result.put("controller", freemarkerTool.processString("code-generator/mybatis/controller.ftl", params));
+            result.put("service", freemarkerTool.processString("code-generator/mybatis/service.ftl", params));
+            result.put("service_impl", freemarkerTool.processString("code-generator/mybatis/service_impl.ftl", params));
+            result.put("dao", freemarkerTool.processString("code-generator/mybatis/dao.ftl", params));
+            result.put("mybatis", freemarkerTool.processString("code-generator/mybatis/mybatis.ftl", params));
+            result.put("model", freemarkerTool.processString("code-generator/mybatis/model.ftl", params));
             //jpa
-            result.put("entity", freemarkerTool.processString("xxl-code-generator/entity.ftl", params));
-            result.put("repository", freemarkerTool.processString("xxl-code-generator/repository.ftl", params));
-            result.put("jpacontroller", freemarkerTool.processString("xxl-code-generator/jpacontroller.ftl", params));
+            result.put("entity", freemarkerTool.processString("code-generator/jpa/entity.ftl", params));
+            result.put("repository", freemarkerTool.processString("code-generator/jpa/repository.ftl", params));
+            result.put("jpacontroller", freemarkerTool.processString("code-generator/jpa/jpacontroller.ftl", params));
             //jdbc template
-            result.put("jtdao", freemarkerTool.processString("xxl-code-generator/jtdao.ftl", params));
-            result.put("jtdaoimpl", freemarkerTool.processString("xxl-code-generator/jtdaoimpl.ftl", params));
+            result.put("jtdao", freemarkerTool.processString("code-generator/jdbc-template/jtdao.ftl", params));
+            result.put("jtdaoimpl", freemarkerTool.processString("code-generator/jdbc-template/jtdaoimpl.ftl", params));
             //beetsql
-            result.put("beetlmd", freemarkerTool.processString("xxl-code-generator/beetlmd.ftl", params));
-            result.put("beetlentity", freemarkerTool.processString("xxl-code-generator/beetlentity.ftl", params));
-            result.put("beetlcontroller", freemarkerTool.processString("xxl-code-generator/beetlcontroller.ftl", params));
+            result.put("beetlmd", freemarkerTool.processString("code-generator/beetlsql/beetlmd.ftl", params));
+            result.put("beetlentity", freemarkerTool.processString("code-generator/beetlsql/beetlentity.ftl", params));
+            result.put("beetlcontroller", freemarkerTool.processString("code-generator/beetlsql/beetlcontroller.ftl", params));
             //mybatis plus
-            result.put("pluscontroller", freemarkerTool.processString("xxl-code-generator/pluscontroller.ftl", params));
-            result.put("plusmapper", freemarkerTool.processString("xxl-code-generator/plusmapper.ftl", params));
+            result.put("pluscontroller", freemarkerTool.processString("code-generator/mybatis-plus/pluscontroller.ftl", params));
+            result.put("plusmapper", freemarkerTool.processString("code-generator/mybatis-plus/plusmapper.ftl", params));
 
             // 计算,生成代码行数
             int lineNum = 0;
@@ -93,13 +93,13 @@ public class IndexController {
                     lineNum += StringUtils.countMatches(item.getValue(), "\n");
                 }
             }
-            logger.info("生成代码行数：{}", lineNum);
+            log.info("生成代码行数：{}", lineNum);
             //测试环境可自行开启
-            //logger.info("生成代码数据：{}", result);
-            return new ReturnT<Map<String, String>>(result);
+            //log.info("生成代码数据：{}", result);
+            return new ReturnT<>(result);
         } catch (IOException | TemplateException e) {
-            logger.error(e.getMessage(), e);
-            return new ReturnT<Map<String, String>>(ReturnT.FAIL_CODE, "表结构解析失败"+e.getMessage());
+            log.error(e.getMessage(), e);
+            return new ReturnT<>(ReturnT.FAIL_CODE, "表结构解析失败"+e.getMessage());
         }
 
     }
