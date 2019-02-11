@@ -165,13 +165,13 @@ public class TableParseUtil {
                     //2018-9-16 zhengk 补充char/clob/blob/json等类型，如果类型未知，默认为String
                     //2018-11-22 lshz0088 处理字段类型的时候，不严谨columnLine.contains(" int") 类似这种的，可在前后适当加一些空格之类的加以区分，否则当我的字段包含这些字符的时候，产生类型判断问题。
                     if (columnLine.contains(" int") || columnLine.contains("tinyint") || columnLine.contains("smallint")) {
-                        fieldClass = Integer.TYPE.getSimpleName();
+                        fieldClass = Integer.class.getSimpleName();
                     } else if (columnLine.contains("bigint")) {
-                        fieldClass = Long.TYPE.getSimpleName();
+                        fieldClass = Long.class.getSimpleName();
                     } else if (columnLine.contains("float")) {
-                        fieldClass = Float.TYPE.getSimpleName();
+                        fieldClass = Float.class.getSimpleName();
                     } else if (columnLine.contains("double")) {
-                        fieldClass = Double.TYPE.getSimpleName();
+                        fieldClass = Double.class.getSimpleName();
                     } else if (columnLine.contains("datetime") || columnLine.contains("timestamp")) {
                         fieldClass = Date.class.getSimpleName();
                     } else if (columnLine.contains("varchar") || columnLine.contains(" text")|| columnLine.contains("char")
