@@ -26,32 +26,38 @@ public class ${classInfo.className}Controller {
     */
     @PostMapping("/save")
     public Object save(${classInfo.className} ${classInfo.className?uncap_first}){
-        return ${classInfo.className?uncap_first}Mapper.insert(${classInfo.className?uncap_first});
+        ${classInfo.className} ${classInfo.className?uncap_first} = ${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("id",id))
+        if(${classInfo.className?uncap_first}!=null){
+            ${classInfo.className?uncap_first}Mapper.updateById(${classInfo.className?uncap_first});
+        }else{
+            ${classInfo.className?uncap_first}Mapper.insert(${classInfo.className?uncap_first});
+        }
+        return ${returnUtil}.success(${classInfo.className?uncap_first});
     }
 
     /**
     * 删除
     */
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public Object delete(int id){
         ${classInfo.className} ${classInfo.className?uncap_first} = ${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("id",id))
         if(${classInfo.className?uncap_first}!=null){
-            return ApiReturnUtil.success(${classInfo.className?uncap_first});
+            return ${returnUtil}.success(${classInfo.className?uncap_first});
         }else{
-            return ApiReturnUtil.error("没有找到该对象");
+            return ${returnUtil}.error("没有找到该对象");
         }
     }
 
     /**
     * 查询
     */
-    @GetMapping("/find")
+    @PostMapping("/find")
     public Object find(int id){
         ${classInfo.className} ${classInfo.className?uncap_first} = ${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("id",id))
         if(${classInfo.className?uncap_first}!=null){
-            return ApiReturnUtil.success(${classInfo.className?uncap_first});
+            return ${returnUtil}.success(${classInfo.className?uncap_first});
         }else{
-            return ApiReturnUtil.error("没有找到该对象");
+            return ${returnUtil}.error("没有找到该对象");
         }
     }
 
@@ -69,7 +75,7 @@ public class ${classInfo.className}Controller {
         //执行分页
         IPage<${classInfo.className}> pageList = certPersonMapper.selectPage(page, queryWrapperw);
         //返回结果
-        return ApiReturnUtil.success(pageList);
+        return ${returnUtil}.success(pageList);
     }
 
 }

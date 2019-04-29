@@ -36,27 +36,27 @@ public class ${classInfo.className}Controller {
     /**
     * 删除
     */
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public Object delete(int id){
         Optional<${classInfo.className}> ${classInfo.className?uncap_first}=${classInfo.className?uncap_first}Repository.findById(id);
         if(${classInfo.className?uncap_first}.isPresent()){
             ${classInfo.className?uncap_first}Repository.deleteById(id);
-            return ApiReturnUtil.success("删除成功");
+            return ${returnUtil}.success("删除成功");
         }else{
-            return ApiReturnUtil.error("没有找到该对象");
+            return ${returnUtil}.error("没有找到该对象");
         }
     }
 
     /**
     * 查询
     */
-    @GetMapping("/find")
+    @PostMapping("/find")
     public Object find(int id){
         Optional<${classInfo.className}> ${classInfo.className?uncap_first}=${classInfo.className?uncap_first}Repository.findById(id);
         if(${classInfo.className?uncap_first}.isPresent()){
-            return ApiReturnUtil.success(${classInfo.className?uncap_first}.get());
+            return ${returnUtil}.success(${classInfo.className?uncap_first}.get());
         }else{
-            return ApiReturnUtil.error("没有找到该对象");
+            return ${returnUtil}.error("没有找到该对象");
         }
     }
 

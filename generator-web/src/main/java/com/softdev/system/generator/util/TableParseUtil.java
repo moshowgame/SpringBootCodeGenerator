@@ -133,20 +133,25 @@ public class TableParseUtil {
         }
         String[] fieldLineList = fieldListTmp.split(",");
         if (fieldLineList.length > 0) {
-            int i=0;//i为了解决primary key关键字出现的地方，出现在前3行，一般和id有关
+            int i=0;
+            //i为了解决primary key关键字出现的地方，出现在前3行，一般和id有关
             for (String columnLine :fieldLineList) {
                 i++;
                 columnLine = columnLine.replaceAll("\n","").replaceAll("\t","").trim();
                 // `userid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
                 // 2018-9-18 zhengk 修改为contains，提升匹配率和匹配不按照规矩出牌的语句
                 // 2018-11-8 zhengkai 修复tornadoorz反馈的KEY FK_permission_id (permission_id),KEY FK_role_id (role_id)情况
-                if (!columnLine.contains("key ")&&!columnLine.contains("constraint")&&!columnLine.contains("using")&&!columnLine.contains("unique")
-                        &&!columnLine.contains("storage")&&!columnLine.contains("pctincrease")
+                // 2019-2-22 zhengkai 要在条件中使用复杂的表达式
+                // 2019-4-29 zhengkai 优化对普通和特殊storage关键字的判断（感谢@AhHeadFloating的反馈 ）
+                boolean specialFlag=(!columnLine.contains("key ")&&!columnLine.contains("constraint")&&!columnLine.contains("using")&&!columnLine.contains("unique")
+                        &&!(columnLine.contains("primary")&&columnLine.indexOf("storage")+3>columnLine.indexOf("("))
+                        &&!columnLine.contains("pctincrease")
                         &&!columnLine.contains("buffer_pool")&&!columnLine.contains("tablespace")
-                        &&!(columnLine.contains("primary")&&i>3)){
+                        &&!(columnLine.contains("primary")&&i>3));
 
+                if (specialFlag){
                     //如果是oracle的number(x,x)，可能出现最后分割残留的,x)，这里做排除处理
-                    if(columnLine.length()<5) continue;
+                    if(columnLine.length()<5) {continue;}
                     //2018-9-16 zhengkai 支持'符号以及空格的oracle语句// userid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
                     String columnName = "";
                     columnLine=columnLine.replaceAll("`"," ").replaceAll("\""," ").replaceAll("'","").replaceAll("  "," ").trim();
@@ -160,7 +165,8 @@ public class TableParseUtil {
                     }
 
                     // field class
-                    columnLine = columnLine.substring(columnLine.indexOf("`")+1).trim();	// int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+                    columnLine = columnLine.substring(columnLine.indexOf("`")+1).trim();
+                    // int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
                     String fieldClass = Object.class.getSimpleName();
                     //2018-9-16 zhengk 补充char/clob/blob/json等类型，如果类型未知，默认为String
                     //2018-11-22 lshz0088 处理字段类型的时候，不严谨columnLine.contains(" int") 类似这种的，可在前后适当加一些空格之类的加以区分，否则当我的字段包含这些字符的时候，产生类型判断问题。
@@ -192,8 +198,10 @@ public class TableParseUtil {
                             //                            //number(20) fanwei["20"]
                             //如果括号里是1位或者2位且第二位为0，则进行特殊处理。只有有小数位，都设置为BigDecimal。
                             if((fanwei.length>1&&"0".equals(fanwei[1]))||fanwei.length==1){
-                                int length=Integer.valueOf(fanwei[0]);
-                                if(fanwei.length>1) length=Integer.valueOf(fanwei[1]);
+                                int length=Integer.parseInt(fanwei[0]);
+                                if(fanwei.length>1) {
+                                    length=Integer.valueOf(fanwei[1]);
+                                }
                                 //数字范围9位及一下用Integer，大的用Long
                                 if(length<=9){
                                     fieldClass = Integer.class.getSimpleName();
@@ -213,8 +221,23 @@ public class TableParseUtil {
 
                     // field comment，MySQL的一般位于field行，而pgsql和oralce多位于后面。
                     String fieldComment = null;
-                    if (columnLine.contains("comment")) {
-                        String commentTmp = columnLine.substring(columnLine.indexOf("comment")+7).trim();	// '用户ID',
+                    if(tableSql.contains("comment on column")&&(tableSql.contains("."+columnName+" is ")||tableSql.contains(".`"+columnName+"` is"))){
+                        //新增对pgsql/oracle的字段备注支持
+                        //COMMENT ON COLUMN public.check_info.check_name IS '检查者名称';
+                        //2018-11-22 lshz0088 正则表达式的点号前面应该加上两个反斜杠，否则会认为是任意字符
+                        //2019-4-29 zhengkai 优化对oracle注释comment on column的支持（@liukex）
+                        tableSql=tableSql.replaceAll(".`"+columnName+"` is","."+columnName+" is");
+                        Matcher columnCommentMatcher = Pattern.compile("\\."+columnName+" is `").matcher(tableSql);
+                        fieldComment=columnName;
+                        while(columnCommentMatcher.find()){
+                            String columnCommentTmp = columnCommentMatcher.group();
+                            System.out.println(columnCommentTmp);
+                            fieldComment = tableSql.substring(tableSql.indexOf(columnCommentTmp)+columnCommentTmp.length()).trim();
+                            fieldComment = fieldComment.substring(0,fieldComment.indexOf("`")).trim();
+                        }
+                    }else if (columnLine.contains("comment")) {
+                        String commentTmp = columnLine.substring(columnLine.indexOf("comment")+7).trim();
+                        // '用户ID',
                         if (commentTmp.contains("`") || commentTmp.indexOf("`")!=commentTmp.lastIndexOf("`")) {
                             commentTmp = commentTmp.substring(commentTmp.indexOf("`")+1, commentTmp.lastIndexOf("`"));
                         }
@@ -223,17 +246,6 @@ public class TableParseUtil {
                             commentTmp = commentTmp.substring(0, commentTmp.lastIndexOf(")")+1);
                         }
                         fieldComment = commentTmp;
-                    }else if(tableSql.contains("comment on column")&&tableSql.contains("."+columnName+" is `")){
-                        //新增对pgsql/oracle的字段备注支持
-                        //COMMENT ON COLUMN public.check_info.check_name IS '检查者名称';
-                        //2018-11-22 lshz0088 正则表达式的点号前面应该加上两个反斜杠，否则会认为是任意字符
-                        Matcher columnCommentMatcher = Pattern.compile("\\."+columnName+" is `").matcher(tableSql);     // "\\{(.*?)\\}"
-                        while(columnCommentMatcher.find()){
-                            String columnCommentTmp = columnCommentMatcher.group();
-                            System.out.println(columnCommentTmp);
-                            fieldComment = tableSql.substring(tableSql.indexOf(columnCommentTmp)+columnCommentTmp.length()).trim();
-                            fieldComment = fieldComment.substring(0,fieldComment.indexOf("`")).trim();
-                        }
                     }else{
                         //修复comment不存在导致报错的问题
                         fieldComment = columnName;

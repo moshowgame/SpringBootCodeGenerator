@@ -38,7 +38,8 @@ public class IndexController {
     public ReturnT<Map<String, String>> codeGenerate(String tableSql,
                                                      //2019-2-10 liutf 修改为@RequestParam参数校验
                                                      @RequestParam(required = false, defaultValue = "大狼狗") String authorName,
-                                                     @RequestParam(required = false, defaultValue = "com.softdev.system")String packageName
+                                                     @RequestParam(required = false, defaultValue = "com.softdev.system")String packageName,
+                                                     @RequestParam(required = false, defaultValue = "ApiReturnUtil")String returnUtil
     ) {
 
 
@@ -56,6 +57,7 @@ public class IndexController {
             params.put("classInfo", classInfo);
             params.put("authorName", authorName);
             params.put("packageName", packageName);
+            params.put("returnUtil", returnUtil);
 
             // result
             Map<String, String> result = new HashMap<String, String>();

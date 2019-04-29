@@ -51,6 +51,7 @@
                 data: {
                     "tableSql": tableSql,
                     "packageName":$("#packageName").val(),
+                    "returnUtil":$("#returnUtil").val(),
                     "authorName":$("#authorName").val()
                 },
                 dataType: "json",
@@ -117,6 +118,12 @@
                 <span class="input-group-text">包名路径</span>
             </div>
             <input type="text" class="form-control" id="packageName" name="packageName" placeholder="com.softdev.system">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">返回封装</span>
+            </div>
+            <input type="text" class="form-control" id="returnUtil" name="returnUtil" placeholder="ApiReturnObject">
         </div>
         <textarea id="ddlSqlArea" placeholder="请输入表结构信息..." class="form-control btn-lg" style="height: 250px;">
 CREATE TABLE `userinfo` (
