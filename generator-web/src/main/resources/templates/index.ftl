@@ -229,6 +229,18 @@ CREATE TABLE `userinfo` (
                 </div>
             </div>
         </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="btn-toolbar col-md-5" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="btn btn-secondary disabled" id="btnGroupAddon">DTO</div>
+                    </div>
+                </div>
+                <div class="btn-group" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-default generator" id="beetlentitydto">entitydto(lombok+swagger)</button>
+                </div>
+            </div>
+        </div>
         <hr>
         <textarea id="genCodeArea" class="form-control btn-lg" ></textarea>
     </div>
