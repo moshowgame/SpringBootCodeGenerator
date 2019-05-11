@@ -7,39 +7,43 @@ import java.util.List;
 * ${classInfo.classComment}
 * @author ${authorName} ${.now?string('yyyy-MM-dd')}
 */
-@Component
+@Repository
 public interface ${classInfo.className}Dao {
 
     /**
     * 新增
+    * @param ${classInfo.className}Entity
     */
-    public int insert(@Param("${classInfo.className?uncap_first}") ${classInfo.className} ${classInfo.className?uncap_first});
+    public Integer insert(@Param("${classInfo.className?uncap_first}") ${classInfo.className}Entity ${classInfo.className?uncap_first});
 
     /**
     * 删除
+    * @param id
     */
-    public int delete(@Param("id") int id);
+    public Integer delete(@Param("id") Integer id);
 
     /**
     * 更新
+    * @param ${classInfo.className}Entity
     */
-    public int update(@Param("${classInfo.className?uncap_first}") ${classInfo.className} ${classInfo.className?uncap_first});
+    public Integer update(@Param("${classInfo.className?uncap_first}") ${classInfo.className}Entity ${classInfo.className?uncap_first});
 
     /**
-    * Load查询
+    * 根据主键查询一个实体
+    * @param id
     */
-    public ${classInfo.className} load(@Param("id") int id);
+    public ${classInfo.className}Entity selectByPrimaryKey(@Param("id") Integer id);
 
     /**
     * 分页查询Data
+    * @param offset
+    * @param pageSize
     */
-	public List<${classInfo.className}> pageList(@Param("offset") int offset,
-                                                 @Param("pagesize") int pagesize);
+    public List<${classInfo.className}Entity> pageList(@Param("offset") Integer offset, @Param("pageSize") Integer pageSize);
 
     /**
     * 分页查询Count
     */
-    public int pageListCount(@Param("offset") int offset,
-                             @Param("pagesize") int pagesize);
+    public Integer pageListCount();
 
 }
