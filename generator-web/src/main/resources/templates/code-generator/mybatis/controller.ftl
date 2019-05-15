@@ -21,6 +21,7 @@ public class ${classInfo.className}Controller {
     /**
     * 新增
     */
+
     @RequestMapping("/insert")
     @ResponseBody
     public ReturnT<String> insert(${classInfo.className} ${classInfo.className?uncap_first}){
