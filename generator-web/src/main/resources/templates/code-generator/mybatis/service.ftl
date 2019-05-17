@@ -2,7 +2,8 @@ import java.util.Map;
 
 /**
 * ${classInfo.classComment}
-* @author ${authorName} ${.now?string('yyyy-MM-dd')}
+* @author ${authorName}
+* @date ${.now?string('yyyy/MM/dd')}
 */
 public interface ${classInfo.className}Service {
 
@@ -22,7 +23,7 @@ public interface ${classInfo.className}Service {
     public ReturnT<String> update(${classInfo.className} ${classInfo.className?uncap_first});
 
     /**
-    * Load查询
+    * 根據主鍵 id 查詢
     */
     public ${classInfo.className} load(int id);
 

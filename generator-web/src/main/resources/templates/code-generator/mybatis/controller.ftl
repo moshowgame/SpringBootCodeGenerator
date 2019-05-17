@@ -51,16 +51,20 @@ public class ${classInfo.className}Controller {
     }
 
     /**
-    * Load查询
-    */
+    * [查詢] 根據主鍵 id 查詢
+    * @author ${authorName}
+    * @date ${.now?string('yyyy/MM/dd')}
+    **/
     @RequestMapping("/load")
     public ReturnT<String> load(int id){
         return ${classInfo.className?uncap_first}Service.load(id);
     }
 
     /**
-    * 分页查询
-    */
+    * [查詢] 分頁查詢
+    * @author ${authorName}
+    * @date ${.now?string('yyyy/MM/dd')}
+    **/
     @RequestMapping("/pageList")
     public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") int offset,
                                         @RequestParam(required = false, defaultValue = "10") int pagesize) {
