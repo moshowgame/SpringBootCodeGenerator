@@ -70,7 +70,7 @@ public class IndexController {
             result.put("controller", freemarkerTool.processString("code-generator/mybatis/controller.ftl", params));
             result.put("service", freemarkerTool.processString("code-generator/mybatis/service.ftl", params));
             result.put("service_impl", freemarkerTool.processString("code-generator/mybatis/service_impl.ftl", params));
-            result.put("dao", freemarkerTool.processString("code-generator/mybatis/dao.ftl", params));
+            result.put("mapper", freemarkerTool.processString("code-generator/mybatis/mapper.ftl", params));
             result.put("mybatis", freemarkerTool.processString("code-generator/mybatis/mybatis.ftl", params));
             result.put("model", freemarkerTool.processString("code-generator/mybatis/model.ftl", params));
             //jpa

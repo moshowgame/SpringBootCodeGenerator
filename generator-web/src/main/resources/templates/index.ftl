@@ -156,7 +156,7 @@ CREATE TABLE `userinfo` (
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
                     <button type="button" class="btn btn-default generator" id="mybatis">mybatis</button>
-                    <button type="button" class="btn btn-default generator" id="dao">mapper</button>
+                    <button type="button" class="btn btn-default generator" id="mapper">mapper</button>
                     <button type="button" class="btn btn-default generator" id="service">service</button>
                     <button type="button" class="btn btn-default generator" id="service_impl">service_impl</button>
                     <button type="button" class="btn btn-default generator" id="controller">controller</button>
