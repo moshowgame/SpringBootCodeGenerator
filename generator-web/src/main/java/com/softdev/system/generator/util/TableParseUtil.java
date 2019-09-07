@@ -24,7 +24,7 @@ public class TableParseUtil {
      * @param tableSql
      * @return
      */
-    public static ClassInfo processTableIntoClassInfo(String tableSql) throws IOException {
+    public static ClassInfo processTableIntoClassInfo(String tableSql, boolean isUnderLineToCamelCase) throws IOException {
         if (tableSql==null || tableSql.trim().length()==0) {
             throw new CodeGenerateException("Table structure can not be empty.");
         }
@@ -159,9 +159,15 @@ public class TableParseUtil {
                     columnName = columnLine.substring(0, columnLine.indexOf(" "));
 
                     // field Name
-                    String fieldName = StringUtils.lowerCaseFirst(StringUtils.underlineToCamelCase(columnName));
-                    if (fieldName.contains("_")) {
-                        fieldName = fieldName.replaceAll("_", "");
+//                    2019-09-08 yj 添加是否下划线转换为驼峰的判断
+                    String fieldName;
+                    if(isUnderLineToCamelCase){
+                        fieldName = StringUtils.lowerCaseFirst(StringUtils.underlineToCamelCase(columnName));
+                        if (fieldName.contains("_")) {
+                            fieldName = fieldName.replaceAll("_", "");
+                        }
+                    }else {
+                        fieldName = StringUtils.lowerCaseFirst(columnName);
                     }
 
                     // field class
