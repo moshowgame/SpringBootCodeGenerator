@@ -16,7 +16,8 @@ SpringBootCodeGenerator
 <tr><td>CSDN博客</td> <td>http://blog.csdn.net/moshowgame</td></tr>
 <tr><td></td> <td></td></tr>
 <tr><td>更新日期</td> <td>更新内容</td></tr>
-<tr><td>20190910<td>1.修复mapper接口load方法，但是xml中方法不匹配问题 2.移除mapper中CRUD时的@param 注解，会影响xml的解析（感谢@caojiantao的反馈）。3.优化MyBatis的xml文件对Oracle的支持。（感谢@wylove1992的反馈） 4.新增对boolean的处理（感谢@violinxsc的反馈）以及优化tinyint类型生成boolean类型问题（感谢@hahaYhui的反馈） </td></tr>   
+<tr><td>20190910-2<td>优化以及更新Maven依赖，减少打包体积。 </td></tr>   
+<tr><td>20190910-1<td>1.修复mapper接口load方法，但是xml中方法不匹配问题 2.移除mapper中CRUD时的@param 注解，会影响xml的解析（感谢@caojiantao的反馈）。3.优化MyBatis的xml文件对Oracle的支持。（感谢@wylove1992的反馈） 4.新增对boolean的处理（感谢@violinxsc的反馈）以及优化tinyint类型生成boolean类型问题（感谢@hahaYhui的反馈） </td></tr>   
 <tr><td>20190909<td>添加是否下划线转换为驼峰的选择（感谢@youngking28 的pull request）。</td></tr>   
 <tr><td>20190518<td>1.优化注释 2.修改 mybatis模板中 controller注解 3.修改 mybatis模板中 dao文件使用为 mapper文件 4.修改 mybatis模板中 service实现类中的一个 bug 5.修改 index.ftl文件中 mybatis模板的 dao -> mapper（感谢@unqin的pull request）</td></tr>
 <tr><td>20190511<td>优化mybatis模块的dao和xml模板，修改dao接口注解为@Repository，所有dao参数改为包装类，删除update语句最后的UpdateTime = NOW()，修改dao接口文件的方法注释使其更符合javaDoc的标准，修改insert语句增加插入行主键的返回，修改load的方法名为selectByPrimaryKey，修改xml的update语句新增动态if判空，修改xml的insert语句新增动态插入判空，更符合mybatisGenerator标准（感谢@Archer-Wen的贡献 ）。</td></tr>
