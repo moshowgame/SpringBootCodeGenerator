@@ -52,7 +52,8 @@
                     "tableSql": tableSql,
                     "packageName":$("#packageName").val(),
                     "returnUtil":$("#returnUtil").val(),
-                    "authorName":$("#authorName").val()
+                    "authorName":$("#authorName").val(),
+                    "isUnderLineToCamelCase":$("#isUnderLineToCamelCase").val()
                 },
                 dataType: "json",
                 success: function (data) {
@@ -137,6 +138,14 @@
                 <span class="input-group-text">返回封装</span>
             </div>
             <input type="text" class="form-control" id="returnUtil" name="returnUtil" placeholder="ApiReturnObject">
+            <div class="input-group-prepend">
+                <span class="input-group-text">是否下划线转换为驼峰</span>
+            </div>
+            <select type="text" class="form-control" id="isUnderLineToCamelCase"
+                    name="isUnderLineToCamelCase">
+                <option value="true">转换</option>
+                <option value="false">不转换</option>
+            </select>
         </div>
         <textarea id="ddlSqlArea" placeholder="请输入表结构信息..." class="form-control btn-lg" style="height: 250px;">
 CREATE TABLE `userinfo` (

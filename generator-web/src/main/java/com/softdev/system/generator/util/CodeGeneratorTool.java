@@ -19,8 +19,8 @@ public class CodeGeneratorTool {
 	 * @param tableSql
 	 * @return
 	 */
-	public static ClassInfo processTableIntoClassInfo(String tableSql) throws IOException {
-		return TableParseUtil.processTableIntoClassInfo(tableSql);
+	public static ClassInfo processTableIntoClassInfo(String tableSql, boolean isUnderLineToCamelCase) throws IOException {
+		return TableParseUtil.processTableIntoClassInfo(tableSql, isUnderLineToCamelCase);
 	}
 
 }

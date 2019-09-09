@@ -39,7 +39,8 @@ public class IndexController {
                                                      //2019-2-10 liutf 修改为@RequestParam参数校验
                                                      @RequestParam(required = false, defaultValue = "大狼狗") String authorName,
                                                      @RequestParam(required = false, defaultValue = "com.softdev.system")String packageName,
-                                                     @RequestParam(required = false, defaultValue = "ApiReturnUtil")String returnUtil
+                                                     @RequestParam(required = false, defaultValue = "ApiReturnUtil")String returnUtil,
+                                                     @RequestParam(required = false, defaultValue = "true")boolean isUnderLineToCamelCase
     ) {
 
 
@@ -50,7 +51,7 @@ public class IndexController {
             }
 
             // parse table
-            ClassInfo classInfo = CodeGeneratorTool.processTableIntoClassInfo(tableSql);
+            ClassInfo classInfo = CodeGeneratorTool.processTableIntoClassInfo(tableSql, isUnderLineToCamelCase);
 
             // code genarete
             Map<String, Object> params = new HashMap<String, Object>();
