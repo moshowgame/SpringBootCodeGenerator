@@ -14,7 +14,7 @@
     <sql id="Base_Column_List">
         <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
             <#list classInfo.fieldList as fieldItem >
-                `${fieldItem.columnName}`<#if fieldItem_has_next>,</#if>
+                ${fieldItem.columnName}<#if fieldItem_has_next>,</#if>
             </#list>
         </#if>
     </sql>
@@ -24,9 +24,9 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
                 <#list classInfo.fieldList as fieldItem >
-                    <#if fieldItem.columnName != "id_" >
+                    <#if fieldItem.columnName != "id" >
                         ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}
-                        `${fieldItem.columnName}`<#if fieldItem_has_next>,</#if>
+                        ${fieldItem.columnName}<#if fieldItem_has_next>,</#if>
                         ${r"</if>"}
                     </#if>
                 </#list>
@@ -35,7 +35,7 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
                 <#list classInfo.fieldList as fieldItem >
-                    <#if fieldItem.columnName != "id_" >
+                    <#if fieldItem.columnName != "id" >
                     <#--<#if fieldItem.columnName="addtime" || fieldItem.columnName="updatetime" >
                     ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}
                         NOW()<#if fieldItem_has_next>,</#if>
@@ -53,26 +53,26 @@
 
     <delete id="delete" >
         DELETE FROM ${classInfo.tableName}
-        WHERE `id_` = ${r"#{id}"}
+        WHERE id = ${r"#{id}"}
     </delete>
 
     <update id="update" parameterType="${packageName}.entity.${classInfo.className}Entity">
         UPDATE ${classInfo.tableName}
         <set>
             <#list classInfo.fieldList as fieldItem >
-                <#if fieldItem.columnName != "id_" && fieldItem.columnName != "AddTime" && fieldItem.columnName != "UpdateTime" >
+                <#if fieldItem.columnName != "id" && fieldItem.columnName != "AddTime" && fieldItem.columnName != "UpdateTime" >
                     ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}${fieldItem.columnName} = ${r"#{"}${fieldItem.fieldName}${r"}"}<#if fieldItem_has_next>,</#if>${r"</if>"}
                 </#if>
             </#list>
         </set>
-        WHERE `id_` = ${r"#{"}id${r"}"}
+        WHERE id = ${r"#{"}id${r"}"}
     </update>
 
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    <select id="load" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List" />
         FROM ${classInfo.tableName}
-        WHERE `id_` = ${r"#{id}"}
+        WHERE id = ${r"#{id}"}
     </select>
 
     <select id="pageList" resultMap="BaseResultMap">

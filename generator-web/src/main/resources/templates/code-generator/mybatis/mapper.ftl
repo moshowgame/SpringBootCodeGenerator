@@ -17,43 +17,41 @@ public interface ${classInfo.className}Mapper {
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
-    int insert(@Param("${classInfo.className?uncap_first}") ${classInfo.className} ${classInfo.className?uncap_first});
+    int insert(${classInfo.className} ${classInfo.className?uncap_first});
 
     /**
     * [刪除]
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
-    int delete(@Param("id") int id);
+    int delete(int id);
 
     /**
     * [更新]
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
-    int update(@Param("${classInfo.className?uncap_first}") ${classInfo.className} ${classInfo.className?uncap_first});
+    int update(${classInfo.className} ${classInfo.className?uncap_first});
 
     /**
     * [查詢] 根據主鍵 id 查詢
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
-    ${classInfo.className} load(@Param("id") int id);
+    ${classInfo.className} load(int id);
 
     /**
     * [查詢] 分頁查詢
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
-    List<${classInfo.className}> pageList(@Param("offset") int offset,
-                                                 @Param("pagesize") int pagesize);
+    List<${classInfo.className}> pageList(int offset,int pagesize);
 
     /**
     * [查詢] 分頁查詢 count
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
-    int pageListCount(@Param("offset") int offset,
-                             @Param("pagesize") int pagesize);
+    int pageListCount(int offset,int pagesize);
 
 }
