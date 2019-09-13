@@ -52,7 +52,8 @@
                     "tableSql": tableSql,
                     "packageName":$("#packageName").val(),
                     "returnUtil":$("#returnUtil").val(),
-                    "authorName":$("#authorName").val()
+                    "authorName":$("#authorName").val(),
+                    "isUnderLineToCamelCase":$("#isUnderLineToCamelCase").val()
                 },
                 dataType: "json",
                 success: function (data) {
@@ -85,7 +86,20 @@
                 genCodeArea.setSize('auto', 'auto');
             }
         });
-
+        function donate(){
+            layer.open({
+                type: 1,
+                area : ['712px' , '480px'],
+                shadeClose: true, //点击遮罩关闭
+                content: '<img src="http://upyun.bejson.com/img/zhengkai.png"></img>'
+            });
+        }
+        $('#donate1').on('click', function(){
+            donate();
+        });
+        $('#donate2').on('click', function(){
+            donate();
+        });
     });
 </script>
 </head>
@@ -107,7 +121,7 @@
     <div class="container">
         <h2>Spring Boot Code Generator!</h2>
         <p class="lead">
-            基于<code>SpringBoot2</code>+<code>Freemarker</code>的代码生成器，用<code>DDL SQL</code>语句生成<code>JPA</code>/<code>JdbcTemplate</code>/<code>Mybatis</code>/<code>BeetlSQL</code>相关代码，支持<code>mysql</code>/<code>oracle</code>/<code>pgsql</code>三大数据库。以<code>释放双手</code>为目的，各大模板也在陆续补充和优化。欢迎大家多多提交模板和交流想法，如果发现有SQL语句不能识别，请<a href="https://github.com/moshowgame/SpringBootCodeGenerator/issues">留言</a>给我分析，谢谢！
+            基于<code>SpringBoot2</code>+<code>Freemarker</code>的代码生成器，用<code>DDL SQL</code>语句生成<code>JPA</code>/<code>JdbcTemplate</code>/<code>Mybatis</code>/<code>MybatisPlus</code>/<code>BeetlSQL</code>相关代码，支持<code>mysql</code>/<code>oracle</code>/<code>pgsql</code>三大数据库。以<code>释放双手</code>为目的，各大模板也在陆续补充和优化。欢迎大家多多提交模板和交流想法，如果发现有SQL语句不能识别，请<a href="https://github.com/moshowgame/SpringBootCodeGenerator/issues">留言</a>给我分析，同时欢迎大家进行<a href="https://github.com/moshowgame/SpringBootCodeGenerator/pulls">PullRequest</a>和<a href="#" id="donate1">赞赏</a>，谢谢！
         </p>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -124,6 +138,14 @@
                 <span class="input-group-text">返回封装</span>
             </div>
             <input type="text" class="form-control" id="returnUtil" name="returnUtil" placeholder="ApiReturnObject">
+            <div class="input-group-prepend">
+                <span class="input-group-text">是否下划线转换为驼峰</span>
+            </div>
+            <select type="text" class="form-control" id="isUnderLineToCamelCase"
+                    name="isUnderLineToCamelCase">
+                <option value="true">转换</option>
+                <option value="false">不转换</option>
+            </select>
         </div>
         <textarea id="ddlSqlArea" placeholder="请输入表结构信息..." class="form-control btn-lg" style="height: 250px;">
 CREATE TABLE `userinfo` (
@@ -156,7 +178,7 @@ CREATE TABLE `userinfo` (
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
                     <button type="button" class="btn btn-default generator" id="mybatis">mybatis</button>
-                    <button type="button" class="btn btn-default generator" id="dao">dao</button>
+                    <button type="button" class="btn btn-default generator" id="mapper">mapper</button>
                     <button type="button" class="btn btn-default generator" id="service">service</button>
                     <button type="button" class="btn btn-default generator" id="service_impl">service_impl</button>
                     <button type="button" class="btn btn-default generator" id="controller">controller</button>
@@ -253,7 +275,7 @@ CREATE TABLE `userinfo` (
         <footer class="bd-footer text-muted" role="contentinfo">
             <div class="container">
                <strong>Copyright &copy; ${.now?string('yyyy')}-2022 &nbsp;
-                   <p><a href="https://github.com/moshowgame/SpringBootCodeGenerator">SpringBootCodeGenerator</a>由<a href="https://blog.csdn.net/moshowgame" target="_blank">@Moshow/大狼狗/郑锴</a> 开发维护. 由 <a href="https://www.bejson.com">BeJson三叔 </a> 提供在线版本。</p>
+                   <p><a href="https://github.com/moshowgame/SpringBootCodeGenerator">SpringBootCodeGenerator</a>由<a href="https://blog.csdn.net/moshowgame" target="_blank">@Moshow/大狼狗/郑锴</a> 开发维护。 由 <a href="https://www.bejson.com">BeJson三叔 </a> 提供在线版本。点击<a href="#" id="donate2">赞赏</a>。</p>
             </div>
         </footer>
     </footer>

@@ -24,7 +24,7 @@ public class TableParseUtil {
      * @param tableSql
      * @return
      */
-    public static ClassInfo processTableIntoClassInfo(String tableSql) throws IOException {
+    public static ClassInfo processTableIntoClassInfo(String tableSql, boolean isUnderLineToCamelCase) throws IOException {
         if (tableSql==null || tableSql.trim().length()==0) {
             throw new CodeGenerateException("Table structure can not be empty.");
         }
@@ -159,9 +159,15 @@ public class TableParseUtil {
                     columnName = columnLine.substring(0, columnLine.indexOf(" "));
 
                     // field Name
-                    String fieldName = StringUtils.lowerCaseFirst(StringUtils.underlineToCamelCase(columnName));
-                    if (fieldName.contains("_")) {
-                        fieldName = fieldName.replaceAll("_", "");
+//                    2019-09-08 yj 添加是否下划线转换为驼峰的判断
+                    String fieldName;
+                    if(isUnderLineToCamelCase){
+                        fieldName = StringUtils.lowerCaseFirst(StringUtils.underlineToCamelCase(columnName));
+                        if (fieldName.contains("_")) {
+                            fieldName = fieldName.replaceAll("_", "");
+                        }
+                    }else {
+                        fieldName = StringUtils.lowerCaseFirst(columnName);
                     }
 
                     // field class
@@ -170,7 +176,7 @@ public class TableParseUtil {
                     String fieldClass = Object.class.getSimpleName();
                     //2018-9-16 zhengk 补充char/clob/blob/json等类型，如果类型未知，默认为String
                     //2018-11-22 lshz0088 处理字段类型的时候，不严谨columnLine.contains(" int") 类似这种的，可在前后适当加一些空格之类的加以区分，否则当我的字段包含这些字符的时候，产生类型判断问题。
-                    if (columnLine.contains(" int") || columnLine.contains("tinyint") || columnLine.contains("smallint")) {
+                    if (columnLine.contains(" int") || columnLine.contains("smallint")) {
                         fieldClass = Integer.class.getSimpleName();
                     } else if (columnLine.contains("bigint")) {
                         fieldClass = Long.class.getSimpleName();
@@ -215,7 +221,10 @@ public class TableParseUtil {
                         }else{
                             fieldClass = BigDecimal.class.getSimpleName();
                         }
-                    }else {
+                    } else if (columnLine.contains("boolean")|| columnLine.contains("tinyint") ) {
+                        //20190910 MOSHOW.K.ZHENG 新增对boolean的处理（感谢@violinxsc的反馈）以及修复tinyint类型字段无法生成boolean类型问题（感谢@hahaYhui的反馈）
+                        fieldClass = Boolean.class.getSimpleName();
+                    } else {
                         fieldClass = String.class.getSimpleName();
                     }
 

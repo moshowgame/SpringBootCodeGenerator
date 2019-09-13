@@ -10,55 +10,62 @@ import java.util.Map;
 
 /**
 * ${classInfo.classComment}
-* @author ${authorName} ${.now?string('yyyy-MM-dd')}
+* @author ${authorName}
+* @date ${.now?string('yyyy/MM/dd')}
 */
-@Controller
+@RestController
+@RequestMapping(value = "/${classInfo.className}")
 public class ${classInfo.className}Controller {
 
     @Resource
     private ${classInfo.className}Service ${classInfo.className?uncap_first}Service;
 
     /**
-    * 新增
-    */
+    * [新增]
+    * @author ${authorName}
+    * @date ${.now?string('yyyy/MM/dd')}
+    **/
     @RequestMapping("/insert")
-    @ResponseBody
     public ReturnT<String> insert(${classInfo.className} ${classInfo.className?uncap_first}){
         return ${classInfo.className?uncap_first}Service.insert(${classInfo.className?uncap_first});
     }
 
     /**
-    * 删除
-    */
+    * [刪除]
+    * @author ${authorName}
+    * @date ${.now?string('yyyy/MM/dd')}
+    **/
     @RequestMapping("/delete")
-    @ResponseBody
     public ReturnT<String> delete(int id){
         return ${classInfo.className?uncap_first}Service.delete(id);
     }
 
     /**
-    * 更新
-    */
+    * [更新]
+    * @author ${authorName}
+    * @date ${.now?string('yyyy/MM/dd')}
+    **/
     @RequestMapping("/update")
-    @ResponseBody
     public ReturnT<String> update(${classInfo.className} ${classInfo.className?uncap_first}){
         return ${classInfo.className?uncap_first}Service.update(${classInfo.className?uncap_first});
     }
 
     /**
-    * Load查询
-    */
+    * [查詢] 根據主鍵 id 查詢
+    * @author ${authorName}
+    * @date ${.now?string('yyyy/MM/dd')}
+    **/
     @RequestMapping("/load")
-    @ResponseBody
     public ReturnT<String> load(int id){
         return ${classInfo.className?uncap_first}Service.load(id);
     }
 
     /**
-    * 分页查询
-    */
+    * [查詢] 分頁查詢
+    * @author ${authorName}
+    * @date ${.now?string('yyyy/MM/dd')}
+    **/
     @RequestMapping("/pageList")
-    @ResponseBody
     public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") int offset,
                                         @RequestParam(required = false, defaultValue = "10") int pagesize) {
         return ${classInfo.className?uncap_first}Service.pageList(offset, pagesize);

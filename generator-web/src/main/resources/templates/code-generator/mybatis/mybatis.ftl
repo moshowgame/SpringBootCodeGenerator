@@ -3,78 +3,85 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="${packageName}.dao.${classInfo.className}Dao">
 
-    <resultMap id="${classInfo.className}" type="${packageName}.entity.${classInfo.className}" >
-    <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
-    <#list classInfo.fieldList as fieldItem >
-        <result column="${fieldItem.columnName}" property="${fieldItem.fieldName}" />
-    </#list>
-    </#if>
+    <resultMap id="BaseResultMap" type="${packageName}.entity.${classInfo.className}Entity" >
+        <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
+            <#list classInfo.fieldList as fieldItem >
+                <result column="${fieldItem.columnName}" property="${fieldItem.fieldName}" />
+            </#list>
+        </#if>
     </resultMap>
 
     <sql id="Base_Column_List">
-    <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
-    <#list classInfo.fieldList as fieldItem >
-        `${fieldItem.columnName}`<#if fieldItem_has_next>,</#if>
-    </#list>
-    </#if>
+        <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
+            <#list classInfo.fieldList as fieldItem >
+                ${fieldItem.columnName}<#if fieldItem_has_next>,</#if>
+            </#list>
+        </#if>
     </sql>
 
-    <insert id="insert" parameterType="java.util.Map" >
-        INSERT INTO ${classInfo.tableName} (
-        <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
-        <#list classInfo.fieldList as fieldItem >
-            <#if fieldItem.columnName != "Id" >
-            `${fieldItem.columnName}`<#if fieldItem_has_next>,</#if>
+    <insert id="insert" useGeneratedKeys="true" keyColumn="id" parameterType="${packageName}.entity.${classInfo.className}Entity">
+        INSERT INTO ${classInfo.tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
+                <#list classInfo.fieldList as fieldItem >
+                    <#if fieldItem.columnName != "id" >
+                        ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}
+                        ${fieldItem.columnName}<#if fieldItem_has_next>,</#if>
+                        ${r"</if>"}
+                    </#if>
+                </#list>
             </#if>
-        </#list>
-        </#if>
-        )
-        VALUES(
-        <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
-        <#list classInfo.fieldList as fieldItem >
-        <#if fieldItem.columnName != "Id" >
-            <#if fieldItem.columnName="addtime" || fieldItem.columnName="updatetime" >
-            NOW()<#if fieldItem_has_next>,</#if>
-            <#else>
-            ${r"#{"}${classInfo.className?uncap_first}.${fieldItem.fieldName}${r"}"}<#if fieldItem_has_next>,</#if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
+                <#list classInfo.fieldList as fieldItem >
+                    <#if fieldItem.columnName != "id" >
+                    <#--<#if fieldItem.columnName="addtime" || fieldItem.columnName="updatetime" >
+                    ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}
+                        NOW()<#if fieldItem_has_next>,</#if>
+                    ${r"</if>"}
+                    <#else>-->
+                        ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}
+                        ${r"#{"}${fieldItem.fieldName}${r"}"}<#if fieldItem_has_next>,</#if>
+                        ${r"</if>"}
+                    <#--</#if>-->
+                    </#if>
+                </#list>
             </#if>
-        </#if>
-        </#list>
-        </#if>
-        )
+        </trim>
     </insert>
 
-    <delete id="delete" parameterType="java.util.Map" >
+    <delete id="delete" >
         DELETE FROM ${classInfo.tableName}
-        WHERE `id` = ${r"#{id}"}
+        WHERE id = ${r"#{id}"}
     </delete>
 
-    <update id="update" parameterType="java.util.Map" >
+    <update id="update" parameterType="${packageName}.entity.${classInfo.className}Entity">
         UPDATE ${classInfo.tableName}
-        SET
-        <#list classInfo.fieldList as fieldItem >
-        <#if fieldItem.columnName != "Id" && fieldItem.columnName != "AddTime" && fieldItem.columnName != "UpdateTime" >
-            ${fieldItem.columnName} = ${r"#{"}${classInfo.className?uncap_first}.${fieldItem.fieldName}${r"}"},
-        </#if>
-        </#list>
-            UpdateTime = NOW()
-        WHERE `id` = ${r"#{"}${classInfo.className?uncap_first}.id${r"}"}
+        <set>
+            <#list classInfo.fieldList as fieldItem >
+                <#if fieldItem.columnName != "id" && fieldItem.columnName != "AddTime" && fieldItem.columnName != "UpdateTime" >
+                    ${r"<if test ='null != "}${fieldItem.fieldName}${r"'>"}${fieldItem.columnName} = ${r"#{"}${fieldItem.fieldName}${r"}"}<#if fieldItem_has_next>,</#if>${r"</if>"}
+                </#if>
+            </#list>
+        </set>
+        WHERE id = ${r"#{"}id${r"}"}
     </update>
 
 
-    <select id="load" parameterType="java.util.Map" resultMap="${classInfo.className}">
+    <select id="load" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List" />
         FROM ${classInfo.tableName}
-        WHERE `id` = ${r"#{id}"}
+        WHERE id = ${r"#{id}"}
     </select>
 
-    <select id="pageList" parameterType="java.util.Map" resultMap="${classInfo.className}">
+    <select id="pageList" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List" />
         FROM ${classInfo.tableName}
-        LIMIT ${r"#{offset}"}, ${r"#{pagesize}"}
+        LIMIT ${r"#{offset}"}, ${r"#{pageSize}"}
     </select>
 
-    <select id="pageListCount" parameterType="java.util.Map" resultType="int">
+    <select id="pageListCount" resultType="java.lang.Integer">
         SELECT count(1)
         FROM ${classInfo.tableName}
     </select>

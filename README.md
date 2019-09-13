@@ -6,9 +6,9 @@
 
 SpringBootCodeGenerator
 ----
-基于SpringBoot2+Freemarker的代码生成器，用DDL SQL语句生成JPA/JdbcTemplate/Mybatis/BeetlSQL相关代码，支持mysql/oracle/pgsql等三大数据库。以释放双手为目的，各大模板也在陆续补充和优化。欢迎大家提交模板和交流想法！
+基于SpringBoot2+Freemarker的代码生成器，用DDL SQL语句生成JPA/JdbcTemplate/Mybatis/BeetlSQL相关代码，支持mysql/oracle/pgsql等三大数据库。以释放双手为目的，各大模板也在陆续补充和优化。欢迎大家Issue提交模板和交流想法，也欢迎提交PullRequest！
 <br><br>
-另外，感谢bejson三叔将他部署在 http://java.bejson.com/generator 上，目前是besjon专供工具。
+另外，感谢bejson三叔将他部署在 http://java.bejson.com/generator 上，目前是besjon专供工具(线上版本不一定是最新的，会有延迟，请谅解，谢谢)。
 <br><br>
 <table><tbody>
 <tr><td>访问路径</td> <td>http://127.0.0.1:1234/generator</td></tr>
@@ -16,6 +16,11 @@ SpringBootCodeGenerator
 <tr><td>CSDN博客</td> <td>http://blog.csdn.net/moshowgame</td></tr>
 <tr><td></td> <td></td></tr>
 <tr><td>更新日期</td> <td>更新内容</td></tr>
+<tr><td>20190910-2<td>优化以及更新Maven依赖，减少打包体积。 </td></tr>   
+<tr><td>20190910-1<td>1.修复mapper接口load方法，但是xml中方法不匹配问题 2.移除mapper中CRUD时的@param 注解，会影响xml的解析（感谢@caojiantao的反馈）。3.优化MyBatis的xml文件对Oracle的支持。（感谢@wylove1992的反馈） 4.新增对boolean的处理（感谢@violinxsc的反馈）以及优化tinyint类型生成boolean类型问题（感谢@hahaYhui的反馈） </td></tr>   
+<tr><td>20190909<td>添加是否下划线转换为驼峰的选择（感谢@youngking28 的pull request）。</td></tr>   
+<tr><td>20190518<td>1.优化注释 2.修改 mybatis模板中 controller注解 3.修改 mybatis模板中 dao文件使用为 mapper文件 4.修改 mybatis模板中 service实现类中的一个 bug 5.修改 index.ftl文件中 mybatis模板的 dao -> mapper（感谢@unqin的pull request）</td></tr>
+<tr><td>20190511<td>优化mybatis模块的dao和xml模板，修改dao接口注解为@Repository，所有dao参数改为包装类，删除update语句最后的UpdateTime = NOW()，修改dao接口文件的方法注释使其更符合javaDoc的标准，修改insert语句增加插入行主键的返回，修改load的方法名为selectByPrimaryKey，修改xml的update语句新增动态if判空，修改xml的insert语句新增动态插入判空，更符合mybatisGenerator标准（感谢@Archer-Wen的贡献 ）。</td></tr>
 <tr><td>20190429<td>新增返回封装工具类设置，优化对oracle注释comment on column的支持（感谢@liukex反馈），优化对普通和特殊storage关键字的判断（感谢@AhHeadFloating的反馈 ）。</td></tr>
 <tr><td>20190211<td>提交gitignore，解决StringUtils.lowerCaseFirst潜在的NPE异常，校验修改为@RequestParam参数校验，lombok之@Data和@Slf4j优化，fix JdbcDAO模板类名显示为中文问题，WebMvcConfig整合MessageConverter，模板代码分类（感谢@liutf和@tfgzs的pull request）。</td></tr>
 <tr><td>20190210<td>实体生成规则切换为包装类型，不再采用基本数据类型，为实体类生成添加显示的默认构造方法（感谢@h2so的pull request）。</td></tr>
@@ -40,10 +45,13 @@ SpringBootCodeGenerator
 </tbody></table>
 
 <table><tbody>
-<tr><td>类名</td> <td>说明</td></tr>
+<tr><td>字段名</td> <td>说明</td></tr>
+<tr><td>packageName</td> <td>自定义的包名</td></tr>
+<tr><td>authorName</td> <td>自定义的作者名</td></tr>
+<tr><td>returnUtil</td> <td>自定义的返回Util</td></tr>
 <tr><td>tableName</td> <td>sql中的表名</td></tr>
 <tr><td>className</td> <td>java类名</td></tr>
-<tr><td>classComment</td> <td>java类备注</td></tr>
+<tr><td>classComment</td> <td>sql表备注/java类备注</td></tr>
 <tr><td>fieldName</td> <td>字段名</td></tr>
 <tr><td>fieldComment</td> <td>字段备注</td></tr>
 </tbody></table>
@@ -52,4 +60,5 @@ SpringBootCodeGenerator
 <img src="./codegenerator2.png">
 <img src="./codegenerator3.png">
 <img src="./codegenerator4.png">
+<img src="./donate.jpg">
 <table>
