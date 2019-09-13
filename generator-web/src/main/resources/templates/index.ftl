@@ -250,6 +250,19 @@ CREATE TABLE `userinfo` (
                     <button type="button" class="btn btn-default generator" id="jtdao">dao</button>
                 </div>
             </div>
+            <div class="btn-toolbar col-md-7" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="btn btn-secondary disabled" id="btnGroupAddon">SQL</div>
+                    </div>
+                </div>
+                <div class="btn-group" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-default generator" id="select">select</button>
+                    <button type="button" class="btn btn-default generator" id="insert">insert</button>
+                    <button type="button" class="btn btn-default generator" id="update">update</button>
+                    <button type="button" class="btn btn-default generator" id="delete">delete</button>
+                </div>
+            </div>
         </div>
         <div class="row" style="margin-top: 10px;">
             <div class="btn-toolbar col-md-5" role="toolbar" aria-label="Toolbar with button groups">
@@ -260,6 +273,16 @@ CREATE TABLE `userinfo` (
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
                     <button type="button" class="btn btn-default generator" id="beetlentitydto">entitydto(lombok+swagger)</button>
+                </div>
+            </div>
+            <div class="btn-toolbar col-md-5" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="btn btn-secondary disabled" id="btnGroupAddon">Util</div>
+                    </div>
+                </div>
+                <div class="btn-group" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-default generator" id="util">bean get set</button>
                 </div>
             </div>
         </div>
