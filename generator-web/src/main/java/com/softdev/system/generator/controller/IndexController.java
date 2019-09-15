@@ -89,6 +89,13 @@ public class IndexController {
             //mybatis plus
             result.put("pluscontroller", freemarkerTool.processString("code-generator/mybatis-plus/pluscontroller.ftl", params));
             result.put("plusmapper", freemarkerTool.processString("code-generator/mybatis-plus/plusmapper.ftl", params));
+            //util
+            result.put("util", freemarkerTool.processString("code-generator/util/util.ftl", params));
+            //sql generate
+            result.put("select", freemarkerTool.processString("code-generator/sql/select.ftl", params));
+            result.put("insert", freemarkerTool.processString("code-generator/sql/insert.ftl", params));
+            result.put("update", freemarkerTool.processString("code-generator/sql/update.ftl", params));
+            result.put("delete", freemarkerTool.processString("code-generator/sql/delete.ftl", params));
 
             // 计算,生成代码行数
             int lineNum = 0;
