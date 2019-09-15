@@ -16,6 +16,7 @@ SpringBootCodeGenerator
 <tr><td>CSDN博客</td> <td>http://blog.csdn.net/moshowgame</td></tr>
 <tr><td></td> <td></td></tr>
 <tr><td>更新日期</td> <td>更新内容</td></tr>
+<tr><td>20190915<td>1.添加对象getset模板 2.添加sql模板 3.启动类添加日志输出，方便项目使用（感谢@gaohanghang 的pull request） </td></tr>   
 <tr><td>20190910-2<td>优化以及更新Maven依赖，减少打包体积。 </td></tr>   
 <tr><td>20190910-1<td>1.修复mapper接口load方法，但是xml中方法不匹配问题 2.移除mapper中CRUD时的@param 注解，会影响xml的解析（感谢@caojiantao的反馈）。3.优化MyBatis的xml文件对Oracle的支持。（感谢@wylove1992的反馈） 4.新增对boolean的处理（感谢@violinxsc的反馈）以及优化tinyint类型生成boolean类型问题（感谢@hahaYhui的反馈） </td></tr>   
 <tr><td>20190909<td>添加是否下划线转换为驼峰的选择（感谢@youngking28 的pull request）。</td></tr>   
