@@ -17,8 +17,8 @@ public class ${classInfo.className}DaoImpl implements I${classInfo.className}Dao
 
     @Override
     public int add(${classInfo.className} ${classInfo.className?uncap_first}) {
-        return jdbcTemplate.update("insert into ${classInfo.tableName}  (<#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0><#list classInfo.fieldList as fieldItem ><#if fieldItem_index gt 0>${fieldItem.columnName}<#if fieldItem_has_next>,</#if></#if></#list></#if> ) values (<#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0><#list classInfo.fieldList as fieldItem >?<#if fieldItem_has_next>,</#if></#list></#if> )",
-        <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0><#list classInfo.fieldList as fieldItem ><#if fieldItem_index gt 0 >${classInfo.className?uncap_first}.get${fieldItem.fieldName?cap_first}()<#if fieldItem_has_next>,</#if></#if></#list></#if>);
+        return jdbcTemplate.update("insert into ${classInfo.tableName}  (<#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0><#list classInfo.fieldList as fieldItem >${fieldItem.columnName}<#if fieldItem_has_next>,</#if></#list></#if> ) values (<#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0><#list classInfo.fieldList as fieldItem >?<#if fieldItem_has_next>,</#if></#list></#if> )",
+        <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0><#list classInfo.fieldList as fieldItem >${classInfo.className?uncap_first}.get${fieldItem.fieldName?cap_first}()<#if fieldItem_has_next>,</#if></#list></#if>);
     }
 
     @Override
