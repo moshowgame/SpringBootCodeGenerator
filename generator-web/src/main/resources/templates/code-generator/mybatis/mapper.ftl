@@ -34,21 +34,21 @@ public interface ${classInfo.className}Mapper {
     int update(${classInfo.className} ${classInfo.className?uncap_first});
 
     /**
-    * [查詢] 根據主鍵 id 查詢
+    * [查询] 根据主键 id 查询
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
     ${classInfo.className} load(int id);
 
     /**
-    * [查詢] 分頁查詢
+    * [查询] 分页查询
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
     List<${classInfo.className}> pageList(int offset,int pagesize);
 
     /**
-    * [查詢] 分頁查詢 count
+    * [查询] 分页查询 count
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
