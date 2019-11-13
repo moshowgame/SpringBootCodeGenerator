@@ -51,7 +51,7 @@ public class ${classInfo.className}Controller {
     }
 
     /**
-    * [查詢] 根據主鍵 id 查詢
+    * [查询] 根据主键 id 查询
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
@@ -61,7 +61,7 @@ public class ${classInfo.className}Controller {
     }
 
     /**
-    * [查詢] 分頁查詢
+    * [查询] 分页查询
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
