@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <title>SQL转Java JPA、MYBATIS实现类代码生成平台</title>
     <meta name="keywords" content="sql转实体类,sql转DAO,SQL转service,SQL转JPA实现,SQL转MYBATIS实现">
+
     <#import "common/common-import.ftl" as netCommon>
     <@netCommon.commonStyle />
-
     <@netCommon.commonScript />
+
     <#--<script src="${request.contextPath}/static/js/index-new.js"></script>-->
 <script>
-    $(function () {
 
+    <@netCommon.viewerCounter />
+
+    $(function () {
         /**
          * 初始化 table sql 3
          */
@@ -58,15 +61,10 @@
                 dataType: "json",
                 success: function (data) {
                     if (data.code == 200) {
-                        layer.open({
-                            icon: '1',
-                            content: "代码生成成功",
-                            end: function () {
-                                codeData = data.data;
-                                genCodeArea.setValue(codeData.beetlentity);
-                                genCodeArea.setSize('auto', 'auto');
-                            }
-                        });
+                        layer.msg("代码生成成功");
+                        codeData = data.data;
+                        genCodeArea.setValue(codeData.beetlentity);
+                        genCodeArea.setSize('auto', 'auto');
                     } else {
                         layer.open({
                             icon: '2',
@@ -86,6 +84,9 @@
                 genCodeArea.setSize('auto', 'auto');
             }
         });
+        /**
+         * 捐赠
+         */
         function donate(){
             layer.open({
                 type: 1,
@@ -100,6 +101,13 @@
         $('#donate2').on('click', function(){
             donate();
         });
+        $('#btnCopy').on('click', function(){
+            if(!$.isEmptyObject(genCodeArea.getValue())&&!$.isEmptyObject(navigator)&&!$.isEmptyObject(navigator.clipboard)){
+                navigator.clipboard.writeText(genCodeArea.getValue());
+                layer.msg("复制成功");
+            }
+        });
+
     });
 </script>
 </head>
@@ -110,7 +118,7 @@
             <a class="navbar-brand" href="http://www.bejson.com">BeJSON在线工具站</a>
             <ul class="nav navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="http://blog.csdn.net/moshowgame">大狼狗CSDN</a>
+                    <a class="nav-link" href="http://zhengkai.blog.csdn.net">大狼狗CSDN</a>
                 </li>
             </ul>
         </nav>
@@ -121,13 +129,20 @@
     <div class="container">
         <h2>Spring Boot Code Generator!</h2>
         <p class="lead">
-            基于<code>SpringBoot2</code>+<code>Freemarker</code>的代码生成器，用<code>DDL SQL</code>语句生成<code>JPA</code>/<code>JdbcTemplate</code>/<code>Mybatis</code>/<code>MybatisPlus</code>/<code>BeetlSQL</code>相关代码，支持<code>mysql</code>/<code>oracle</code>/<code>pgsql</code>三大数据库。以<code>释放双手</code>为目的，各大模板也在陆续补充和优化。欢迎大家多多提交模板和交流想法，如果发现有SQL语句不能识别，请<a href="https://github.com/moshowgame/SpringBootCodeGenerator/issues">留言</a>给我分析，同时欢迎大家进行<a href="https://github.com/moshowgame/SpringBootCodeGenerator/pulls">PullRequest</a>和<a href="#" id="donate1">赞赏</a>，谢谢！
+            √基于SpringBoot2+Freemarker的代码生成器，√以释放双手为目的，√支持mysql/oracle/pgsql三大数据库，<br>
+            √用DDL-SQL语句生成JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL相关代码。<br>
+            欢迎大家多多提交模板和交流想法，如果发现有SQL语句不能识别，请<a href="https://github.com/moshowgame/SpringBootCodeGenerator/issues">留言</a>，同时欢迎大家提<a href="https://github.com/moshowgame/SpringBootCodeGenerator/pulls">PR</a>和<a href="#" id="donate1">点击赞赏</a>，谢谢！
         </p>
+        <hr>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">作者名称</span>
             </div>
             <input type="text" class="form-control" id="authorName" name="authorName" placeholder="大狼狗">
+            <div class="input-group-prepend">
+                <span class="input-group-text">返回封装</span>
+            </div>
+            <input type="text" class="form-control" id="returnUtil" name="returnUtil" placeholder="ApiReturnObject">
             <div class="input-group-prepend">
                 <span class="input-group-text">包名路径</span>
             </div>
@@ -135,11 +150,17 @@
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group-text">返回封装</span>
+                <span class="input-group-text">tinyint转换类型</span>
             </div>
-            <input type="text" class="form-control" id="returnUtil" name="returnUtil" placeholder="ApiReturnObject">
+            <select type="text" class="form-control" id="tinyintTransType"
+                    name="tinyintTransType">
+                <option value="boolean">boolean</option>
+                <option value="Boolean">Boolean</option>
+                <option value="Integer">Integer</option>
+                <option value="int">int</option>
+            </select>
             <div class="input-group-prepend">
-                <span class="input-group-text">是否下划线转换为驼峰</span>
+                <span class="input-group-text">是否转换下划线为驼峰</span>
             </div>
             <select type="text" class="form-control" id="isUnderLineToCamelCase"
                     name="isUnderLineToCamelCase">
@@ -155,7 +176,7 @@ CREATE TABLE `userinfo` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息'
         </textarea><br>
-        <p><button class="btn btn-primary btn-lg disabled" id="btnGenCode" role="button">开始生成 »</button></p>
+        <p><button class="btn btn-primary btn-lg disabled" id="btnGenCode" role="button">开始生成 »</button> <button class="btn alert-secondary" id="btnCopy">一键复制</button></p>
         <hr>
         <!-- Example row of columns -->
         <div class="row" style="margin-top: 10px;">
@@ -290,20 +311,6 @@ CREATE TABLE `userinfo` (
         <textarea id="genCodeArea" class="form-control btn-lg" ></textarea>
     </div>
 </div>
-
-<div class="container">
-
-    <hr>
-    <footer>
-        <footer class="bd-footer text-muted" role="contentinfo">
-            <div class="container">
-               <strong>Copyright &copy; ${.now?string('yyyy')}-2022 &nbsp;
-                   <p><a href="https://github.com/moshowgame/SpringBootCodeGenerator">SpringBootCodeGenerator</a>由<a href="https://blog.csdn.net/moshowgame" target="_blank">@Moshow/大狼狗/郑锴</a> 开发维护。 由 <a href="https://www.bejson.com">BeJson三叔 </a> 提供在线版本。点击<a href="#" id="donate2">赞赏</a>。</p>
-            </div>
-        </footer>
-    </footer>
-</div> <!-- /container -->
-
-
+    <@netCommon.commonFooter />
 </body>
 </html>

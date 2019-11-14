@@ -8,13 +8,13 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 4 -->
-    <link href="//cdn.staticfile.org/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="//cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//cdn.staticfile.org/font-awesome/5.11.2/css/fontawesome.min.css" rel="stylesheet">
     <!-- Ionicons -->
-    <link href="//cdn.staticfile.org/ionicons/4.1.2/css/ionicons.min.css" rel="stylesheet">
+    <link href="//cdn.staticfile.org/ionicons/4.5.6/css/ionicons.min.css" rel="stylesheet">
 
-    <link href="//cdn.staticfile.org/codemirror/5.42.0/codemirror.min.css" rel="stylesheet">
+    <link href="//cdn.staticfile.org/codemirror/5.48.4/codemirror.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -28,33 +28,43 @@
 </#macro>
 
 <#macro commonScript>
-
     <!-- jQuery -->
-    <script src="//cdn.staticfile.org/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
     <!-- Bootstrap -->
-    <script src="//cdn.staticfile.org/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- FastClick -->
     <script src="//cdn.staticfile.org/fastclick/1.0.6/fastclick.min.js"></script>
     <script src="//cdn.staticfile.org/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
     <script src="//cdn.staticfile.org/layer/2.3/layer.js"></script>
-    <script src="//cdn.staticfile.org/codemirror/5.42.0/codemirror.min.js"></script>
-    <script src="//cdn.staticfile.org/codemirror/5.42.0/addon/display/placeholder.min.js"></script>
-    <script src="//cdn.staticfile.org/codemirror/5.42.0/mode/clike/clike.min.js"></script>
-    <script src="//cdn.staticfile.org/codemirror/5.42.0/mode/sql/sql.min.js"></script>
-    <script src="//cdn.staticfile.org/codemirror/5.42.0/mode/xml/xml.min.js"></script>
+    <script src="//cdn.staticfile.org/codemirror/5.48.4/codemirror.min.js"></script>
+    <script src="//cdn.staticfile.org/codemirror/5.48.4/addon/display/placeholder.min.js"></script>
+    <script src="//cdn.staticfile.org/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+    <script src="//cdn.staticfile.org/codemirror/5.48.4/mode/sql/sql.min.js"></script>
+    <script src="//cdn.staticfile.org/codemirror/5.48.4/mode/xml/xml.min.js"></script>
 </#macro>
 
 
 <#macro commonFooter >
-<footer class="main-footer">
     <div class="container">
-        Powered by <b>Spring Boot Code Generator</b> base on XXL Code Generator
-        <div class="pull-right hidden-xs">
-            <strong>Copyright &copy; 2018-${.now?string('yyyy')} &nbsp;
-                <a href="https://github.com/moshowgame/SpringBootCodeGenerator" target="_blank" >SpringBootCodeGenerator</a>
-                <a href="https://github.com/xuxueli/xxl-code-generator" target="_blank" >xxl-code-generator</a>
-            </strong><!-- All rights reserved. -->
-        </div>
-    </div>
-</footer>
+        <hr>
+        <footer>
+            <footer class="bd-footer text-muted" role="contentinfo">
+                <div class="container">
+                    <strong>Copyright &copy; ${.now?string('yyyy')}-2022 &nbsp;
+                        <p><a href="https://github.com/moshowgame/SpringBootCodeGenerator">SpringBootCodeGenerator</a>由<a href="https://blog.csdn.net/moshowgame" target="_blank">@Moshow/大狼狗/郑锴</a> 开发维护。 由 <a href="https://www.bejson.com">BeJson三叔 </a> 提供在线版本。点击<a href="#" id="donate2">赞赏</a>。</p>
+                </div>
+            </footer>
+        </footer>
+    </div> <!-- /container -->
+</#macro>
+
+<#macro viewerCounter>
+var _hmt = _hmt || [];
+(function() {
+  //百度统计一下
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?97fd5ca1a4298ac8349c7e0de9029a0f";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
 </#macro>
