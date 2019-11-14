@@ -19,7 +19,7 @@
         </#if>
     </sql>
 
-    <insert id="insert" useGeneratedKeys="true" keyColumn="id" parameterType="${packageName}.entity.${classInfo.className}Entity">
+    <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="${packageName}.entity.${classInfo.className}Entity">
         INSERT INTO ${classInfo.tableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>

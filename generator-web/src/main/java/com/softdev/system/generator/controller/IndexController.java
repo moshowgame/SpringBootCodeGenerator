@@ -2,8 +2,8 @@ package com.softdev.system.generator.controller;
 
 import com.softdev.system.generator.entity.ClassInfo;
 import com.softdev.system.generator.entity.ReturnT;
-import com.softdev.system.generator.util.CodeGeneratorTool;
 import com.softdev.system.generator.util.FreemarkerTool;
+import com.softdev.system.generator.util.TableParseUtil;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -40,8 +40,9 @@ public class IndexController {
                                                      @RequestParam(required = false, defaultValue = "大狼狗") String authorName,
                                                      @RequestParam(required = false, defaultValue = "com.softdev.system")String packageName,
                                                      @RequestParam(required = false, defaultValue = "ApiReturnUtil")String returnUtil,
-                                                     @RequestParam(required = false, defaultValue = "true")boolean isUnderLineToCamelCase
-    ) {
+                                                     @RequestParam(required = false, defaultValue = "true")boolean isUnderLineToCamelCase,
+                                                     @RequestParam(required = false, defaultValue = "boolean")String tinyintTransType
+                                                     ) {
 
 
         try {
@@ -51,17 +52,17 @@ public class IndexController {
             }
 
             // parse table
-            ClassInfo classInfo = CodeGeneratorTool.processTableIntoClassInfo(tableSql, isUnderLineToCamelCase);
+            ClassInfo classInfo = TableParseUtil.processTableIntoClassInfo(tableSql, isUnderLineToCamelCase, tinyintTransType);
 
             // code genarete
-            Map<String, Object> params = new HashMap<String, Object>();
+            Map<String, Object> params = new HashMap<String, Object>(8);
             params.put("classInfo", classInfo);
             params.put("authorName", authorName);
             params.put("packageName", packageName);
             params.put("returnUtil", returnUtil);
 
             // result
-            Map<String, String> result = new HashMap<String, String>();
+            Map<String, String> result = new HashMap<String, String>(32);
 
             //UI
             result.put("swagger-ui", freemarkerTool.processString("code-generator/ui/swagger-ui.ftl", params));

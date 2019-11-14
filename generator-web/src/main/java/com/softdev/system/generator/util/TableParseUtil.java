@@ -24,7 +24,8 @@ public class TableParseUtil {
      * @param tableSql
      * @return
      */
-    public static ClassInfo processTableIntoClassInfo(String tableSql, boolean isUnderLineToCamelCase) throws IOException {
+    public static ClassInfo processTableIntoClassInfo(String tableSql, boolean isUnderLineToCamelCase,String tinyintTransType)
+            throws IOException {
         if (tableSql==null || tableSql.trim().length()==0) {
             throw new CodeGenerateException("Table structure can not be empty.");
         }
@@ -41,7 +42,9 @@ public class TableParseUtil {
         }
 
         //新增处理create table if not exists members情况
-        if (tableName.contains("if not exists")) tableName=tableName.replaceAll("if not exists","");
+        if (tableName.contains("if not exists")) {
+            tableName=tableName.replaceAll("if not exists","");
+        }
 
         if (tableName.contains("`")) {
             tableName = tableName.substring(tableName.indexOf("`")+1, tableName.lastIndexOf("`"));
@@ -101,20 +104,22 @@ public class TableParseUtil {
         String fieldListTmp = tableSql.substring(tableSql.indexOf("(")+1, tableSql.lastIndexOf(")"));
 
         // 匹配 comment，替换备注里的小逗号, 防止不小心被当成切割符号切割
-        Matcher matcher = Pattern.compile("comment `(.*?)\\`").matcher(fieldListTmp);     // "\\{(.*?)\\}"
-        while(matcher.find()){
+        String commentPattenStr1="comment `(.*?)\\`";
+        Matcher matcher1 = Pattern.compile(commentPattenStr1).matcher(fieldListTmp);
+        while(matcher1.find()){
 
-            String commentTmp = matcher.group();
+            String commentTmp = matcher1.group();
             //2018-9-27 zhengk 不替换，只处理，支持COMMENT评论里面多种注释
             //commentTmp = commentTmp.replaceAll("\\ comment `|\\`", " ");      // "\\{|\\}"
 
             if (commentTmp.contains(",")) {
                 String commentTmpFinal = commentTmp.replaceAll(",", "，");
-                fieldListTmp = fieldListTmp.replace(matcher.group(), commentTmpFinal);
+                fieldListTmp = fieldListTmp.replace(matcher1.group(), commentTmpFinal);
             }
         }
         //2018-10-18 zhengkai 新增支持double(10, 2)等类型中有英文逗号的特殊情况
-        Matcher matcher2 = Pattern.compile("\\`(.*?)\\`").matcher(fieldListTmp);     // "\\{(.*?)\\}"
+        String commentPattenStr2="\\`(.*?)\\`";
+        Matcher matcher2 = Pattern.compile(commentPattenStr2).matcher(fieldListTmp);
         while(matcher2.find()){
             String commentTmp2 = matcher2.group();
             if (commentTmp2.contains(",")) {
@@ -123,7 +128,8 @@ public class TableParseUtil {
             }
         }
         //2018-10-18 zhengkai 新增支持double(10, 2)等类型中有英文逗号的特殊情况
-        Matcher matcher3 = Pattern.compile("\\((.*?)\\)").matcher(fieldListTmp);     // "\\{(.*?)\\}"
+        String commentPattenStr3="\\((.*?)\\)";
+        Matcher matcher3 = Pattern.compile(commentPattenStr3).matcher(fieldListTmp);
         while(matcher3.find()){
             String commentTmp3 = matcher3.group();
             if (commentTmp3.contains(",")) {
@@ -148,7 +154,6 @@ public class TableParseUtil {
                         &&!columnLine.contains("pctincrease")
                         &&!columnLine.contains("buffer_pool")&&!columnLine.contains("tablespace")
                         &&!(columnLine.contains("primary")&&i>3));
-
                 if (specialFlag){
                     //如果是oracle的number(x,x)，可能出现最后分割残留的,x)，这里做排除处理
                     if(columnLine.length()<5) {continue;}
@@ -157,9 +162,8 @@ public class TableParseUtil {
                     columnLine=columnLine.replaceAll("`"," ").replaceAll("\""," ").replaceAll("'","").replaceAll("  "," ").trim();
                     //如果遇到username varchar(65) default '' not null,这种情况，判断第一个空格是否比第一个引号前
                     columnName = columnLine.substring(0, columnLine.indexOf(" "));
-
                     // field Name
-//                    2019-09-08 yj 添加是否下划线转换为驼峰的判断
+                    // 2019-09-08 yj 添加是否下划线转换为驼峰的判断
                     String fieldName;
                     if(isUnderLineToCamelCase){
                         fieldName = StringUtils.lowerCaseFirst(StringUtils.underlineToCamelCase(columnName));
@@ -184,7 +188,7 @@ public class TableParseUtil {
                         fieldClass = Float.class.getSimpleName();
                     } else if (columnLine.contains("double")) {
                         fieldClass = Double.class.getSimpleName();
-                    } else if (columnLine.contains("datetime") || columnLine.contains("timestamp")) {
+                    } else if (columnLine.contains("time") || columnLine.contains("date") || columnLine.contains("datetime") || columnLine.contains("timestamp")) {
                         fieldClass = Date.class.getSimpleName();
                     } else if (columnLine.contains("varchar") || columnLine.contains(" text")|| columnLine.contains("char")
                             || columnLine.contains("clob")||columnLine.contains("blob")||columnLine.contains("json")) {
@@ -221,9 +225,12 @@ public class TableParseUtil {
                         }else{
                             fieldClass = BigDecimal.class.getSimpleName();
                         }
-                    } else if (columnLine.contains("boolean")|| columnLine.contains("tinyint") ) {
+                    } else if (columnLine.contains("boolean")) {
                         //20190910 MOSHOW.K.ZHENG 新增对boolean的处理（感谢@violinxsc的反馈）以及修复tinyint类型字段无法生成boolean类型问题（感谢@hahaYhui的反馈）
                         fieldClass = Boolean.class.getSimpleName();
+                    } else if (columnLine.contains("tinyint") ) {
+                        //20191115 MOSHOW.K.ZHENG 支持对tinyint的特殊处理
+                        fieldClass=tinyintTransType;
                     } else {
                         fieldClass = String.class.getSimpleName();
                     }

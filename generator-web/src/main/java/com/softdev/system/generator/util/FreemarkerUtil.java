@@ -4,8 +4,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,8 +17,8 @@ import java.util.Map;
  *
  * @author xuxueli 2018-05-02 19:56:00
  */
+@Slf4j
 public class FreemarkerUtil {
-    private static final Logger logger = LoggerFactory.getLogger(CodeGeneratorTool.class);
 
     /**
      * freemarker config
@@ -40,7 +39,7 @@ public class FreemarkerUtil {
             freemarkerConfig.setLocale(Locale.CHINA);
             freemarkerConfig.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
     }
 
