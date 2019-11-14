@@ -150,10 +150,10 @@ public class TableParseUtil {
                 // 2019-2-22 zhengkai 要在条件中使用复杂的表达式
                 // 2019-4-29 zhengkai 优化对普通和特殊storage关键字的判断（感谢@AhHeadFloating的反馈 ）
                 boolean specialFlag=(!columnLine.contains("key ")&&!columnLine.contains("constraint")&&!columnLine.contains("using")&&!columnLine.contains("unique")
-                        &&!(columnLine.contains("primary")&&columnLine.indexOf("storage")+3>columnLine.indexOf("("))
+                        &&!(columnLine.contains("primary ")&&columnLine.indexOf("storage")+3>columnLine.indexOf("("))
                         &&!columnLine.contains("pctincrease")
                         &&!columnLine.contains("buffer_pool")&&!columnLine.contains("tablespace")
-                        &&!(columnLine.contains("primary")&&i>3));
+                        &&!(columnLine.contains("primary ")&&i>3));
                 if (specialFlag){
                     //如果是oracle的number(x,x)，可能出现最后分割残留的,x)，这里做排除处理
                     if(columnLine.length()<5) {continue;}
