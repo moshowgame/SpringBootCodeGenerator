@@ -85,12 +85,11 @@
          * 捐赠
          */
         function donate(){
-            layer.open({
-                type: 1,
-                area : ['712px' , '480px'],
-                shadeClose: true, //点击遮罩关闭
-                content: '<img src="http://upyun.bejson.com/img/zhengkai.png"></img>'
-            });
+            if($("#donate").attr("show")=="no"){
+                $("#donate").html('<img src="http://upyun.bejson.com/img/zhengkai.png"></img>');
+                $("#donate").attr("show","yes");
+            }else{
+            }
         }
         $('#donate1').on('click', function(){
             donate();
@@ -130,6 +129,7 @@
             √用DDL-SQL语句生成JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL相关代码。<br>
             欢迎大家多多提交模板和交流想法，如果发现有SQL语句不能识别，请<a href="https://github.com/moshowgame/SpringBootCodeGenerator/issues">留言</a>，同时欢迎大家提<a href="https://github.com/moshowgame/SpringBootCodeGenerator/pulls">PR</a>和<a href="#" id="donate1">点击赞赏</a>，谢谢！
         </p>
+        <div id="donate" class="container" show="no"></div>
         <hr>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
