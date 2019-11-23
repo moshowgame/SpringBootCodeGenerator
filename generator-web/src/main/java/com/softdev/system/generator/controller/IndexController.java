@@ -92,6 +92,8 @@ public class IndexController {
             result.put("plusmapper", freemarkerTool.processString("code-generator/mybatis-plus/plusmapper.ftl", params));
             //util
             result.put("util", freemarkerTool.processString("code-generator/util/util.ftl", params));
+            result.put("json", freemarkerTool.processString("code-generator/util/json.ftl", params));
+            result.put("xml", freemarkerTool.processString("code-generator/util/xml.ftl", params));
             //sql generate
             result.put("select", freemarkerTool.processString("code-generator/sql/select.ftl", params));
             result.put("insert", freemarkerTool.processString("code-generator/sql/insert.ftl", params));

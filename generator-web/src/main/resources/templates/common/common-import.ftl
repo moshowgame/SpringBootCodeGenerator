@@ -16,6 +16,8 @@
 
     <link href="//cdn.staticfile.org/codemirror/5.48.4/codemirror.min.css" rel="stylesheet">
 
+    <link href="//cdn.bootcss.com/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -32,10 +34,10 @@
     <script src="//cdn.staticfile.org/jquery/3.4.1/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="//cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
     <!-- FastClick -->
     <script src="//cdn.staticfile.org/fastclick/1.0.6/fastclick.min.js"></script>
     <script src="//cdn.staticfile.org/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
-    <script src="//cdn.staticfile.org/layer/2.3/layer.js"></script>
     <script src="//cdn.staticfile.org/codemirror/5.48.4/codemirror.min.js"></script>
     <script src="//cdn.staticfile.org/codemirror/5.48.4/addon/display/placeholder.min.js"></script>
     <script src="//cdn.staticfile.org/codemirror/5.48.4/mode/clike/clike.min.js"></script>

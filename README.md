@@ -16,6 +16,7 @@ SpringBootCodeGenerator
 <tr><td>CSDN博客</td> <td>http://zhengkai.blog.csdn.net</td></tr>
 <tr><td></td> <td></td></tr>
 <tr><td>更新日期</td> <td>更新内容</td></tr>
+<tr><td>20191123<td>1.移除频繁出错和被过滤的layer,改为jquery-toast. 2.Util功能优化,新增json和xml.</td></tr>   
 <tr><td>20191116<td>优化对primary关键字的处理(感谢@liujiansgit的反馈). </td></tr>   
 <tr><td>20191115<td>1.添加tinyint类型转换(感谢@lixiliang&@liujiansgit的Suggestion) 2.添加一键复制功能(感谢@gaohanghang的Suggestion) 3.Mybatis的insert增加keyProperty="id"用于返回自增id(感谢@88888888888888888888的Suggestion) 4.优化date类型的支持(感谢@SteveLsf的反馈) 5.其他一些优化. </td></tr> 
 <tr><td>20191015<td>修复jdbcTemplates中insert语句第一个字段丢失的问题. </td></tr>   
