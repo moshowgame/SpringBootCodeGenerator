@@ -13,4 +13,9 @@ ${fieldItem.fieldClass} ${fieldItem.fieldName} = ${classInfo.className?uncap_fir
 // ${fieldItem.fieldComment}
 ${classInfo.className?uncap_first}.set${fieldItem.fieldName?cap_first}();
 </#list>
+
+<#list classInfo.fieldList as fieldItem>
+// ${fieldItem.fieldComment}
+${classInfo.className?uncap_first}.set${fieldItem.fieldName?cap_first}(${classInfo.className?uncap_first}2.get${fieldItem.fieldName?cap_first}(););
+</#list>
 </#if>
