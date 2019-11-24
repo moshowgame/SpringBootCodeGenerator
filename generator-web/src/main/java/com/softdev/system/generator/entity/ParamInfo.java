@@ -12,7 +12,14 @@ public class ParamInfo {
     private String authorName;
     private String packageName;
     private String returnUtil;
-    private boolean isUnderLineToCamelCase;
-    String tinyintTransType;
-    String dataType;
+    private String nameCaseType;
+    private String tinyintTransType;
+    private String dataType;
+
+    @Data
+    public static class NAME_CASE_TYPE{
+        public static String CAMEL_CASE="CamelCase";
+        public static String UNDER_SCORE_CASE="UnderScoreCase";
+        public static String UPPER_UNDER_SCORE_CASE="UpperUnderScoreCase";
+    }
 }

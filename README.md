@@ -26,7 +26,7 @@
 
 |更新日期|更新内容|
 |-|-|
-|20191124|1.java代码结构优化. 2.新增简单的json生成模式 3.新增简单的正则表达式匹配模式(感谢@ydq的贡献) |   
+|20191124|1.java代码结构优化. 2.新增简单的json生成模式 3.新增简单的正则表达式匹配模式(感谢@ydq的贡献)  4.新增对复制String代码中的乱SQL代码的支持 5.优化对JSON的父子节点/处理，JSONObject和JSONArray节点处理，子节点缺失'{'头处理|   
 |20191123|1.移除频繁出错和被过滤的layer,改为jquery-toast. 2.Util功能优化,新增json和xml.|   
 |20191116|优化对primary关键字的处理(感谢@liujiansgit的反馈). |   
 |20191115|1.添加tinyint类型转换(感谢@lixiliang&@liujiansgit的Suggestion) 2.添加一键复制功能(感谢@gaohanghang的Suggestion) 3.Mybatis的insert增加keyProperty="id"用于返回自增id(感谢@88888888888888888888的Suggestion) 4.优化date类型的支持(感谢@SteveLsf的反馈) 5.其他一些优化. | 

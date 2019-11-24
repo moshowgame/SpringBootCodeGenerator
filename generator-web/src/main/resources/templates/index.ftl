@@ -57,7 +57,7 @@
                     "returnUtil":$("#returnUtil").val(),
                     "authorName":$("#authorName").val(),
                     "dataType":$("#dataType").val(),
-                    "isUnderLineToCamelCase":$("#isUnderLineToCamelCase").val()
+                    "nameCaseType":$("#nameCaseType").val()
                 },
                 dataType: "json",
                 success: function (data) {
@@ -167,14 +167,16 @@
                 <option value="Boolean">Boolean</option>
                 <option value="Integer">Integer</option>
                 <option value="int">int</option>
+                <option value="String">String</option>
             </select>
             <div class="input-group-prepend">
-                <span class="input-group-text">是否转换下划线为驼峰</span>
+                <span class="input-group-text">命名转换规则</span>
             </div>
-            <select type="text" class="form-control" id="isUnderLineToCamelCase"
-                    name="isUnderLineToCamelCase">
-                <option value="true">转换</option>
-                <option value="false">不转换</option>
+            <select type="text" class="form-control" id="nameCaseType"
+                    name="nameCaseType">
+                <option value="CamelCase">驼峰</option>
+                <option value="UnderScoreCase">下划线</option>
+                <#--<option value="UpperUnderScoreCase">大写下划线</option>-->
             </select>
         </div>
         <textarea id="ddlSqlArea" placeholder="请输入表结构信息..." class="form-control btn-lg" style="height: 250px;">

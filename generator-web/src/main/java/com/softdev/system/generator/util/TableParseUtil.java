@@ -3,6 +3,7 @@ package com.softdev.system.generator.util;
 
 import cn.hutool.core.util.XmlUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.softdev.system.generator.entity.ClassInfo;
 import com.softdev.system.generator.entity.FieldInfo;
@@ -32,14 +33,18 @@ public class TableParseUtil {
             throws IOException {
         //process the param
         String tableSql=paramInfo.getTableSql();
-        boolean isUnderLineToCamelCase=paramInfo.isUnderLineToCamelCase();
+        String nameCaseType=paramInfo.getNameCaseType();
         String tinyintTransType=paramInfo.getTinyintTransType();
 
         if (tableSql==null || tableSql.trim().length()==0) {
             throw new CodeGenerateException("Table structure can not be empty.");
         }
+        //deal with special character
         tableSql = tableSql.trim().replaceAll("'","`").replaceAll("\"","`").replaceAll("，",",").toLowerCase();
-
+        //deal with java string copy \n"
+        System.out.println(tableSql);
+        tableSql = tableSql.trim().replaceAll("n`","").replaceAll("\\+","").replaceAll("``","`").replaceAll("\\\\","");
+        System.out.println(tableSql);
         // table Name
         String tableName = null;
         if (tableSql.contains("TABLE") && tableSql.contains("(")) {
@@ -173,14 +178,18 @@ public class TableParseUtil {
                     columnName = columnLine.substring(0, columnLine.indexOf(" "));
                     // field Name
                     // 2019-09-08 yj 添加是否下划线转换为驼峰的判断
-                    String fieldName;
-                    if(isUnderLineToCamelCase){
+                    String fieldName=null;
+                    if(ParamInfo.NAME_CASE_TYPE.CAMEL_CASE.equals(nameCaseType)){
                         fieldName = StringUtils.lowerCaseFirst(StringUtils.underlineToCamelCase(columnName));
                         if (fieldName.contains("_")) {
                             fieldName = fieldName.replaceAll("_", "");
                         }
-                    }else {
+                    }else if(ParamInfo.NAME_CASE_TYPE.UNDER_SCORE_CASE.equals(nameCaseType)){
                         fieldName = StringUtils.lowerCaseFirst(columnName);
+                    }else if(ParamInfo.NAME_CASE_TYPE.UPPER_UNDER_SCORE_CASE.equals(nameCaseType)){
+                        fieldName = StringUtils.lowerCaseFirst(columnName.toUpperCase());
+                    }else{
+                        fieldName=columnName;
                     }
 
                     // field class
@@ -305,25 +314,26 @@ public class TableParseUtil {
      * @return
      */
     public static ClassInfo processJsonToClassInfo(ParamInfo paramInfo){
-        // field List
-        List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
-
-        if(JSON.isValid(paramInfo.getTableSql())){
-            JSONObject jsonObject = JSONObject.parseObject(paramInfo.getTableSql().trim());
-            jsonObject.keySet().stream().forEach(jsonField->{
-                FieldInfo fieldInfo = new FieldInfo();
-                fieldInfo.setFieldName(jsonField);
-                fieldInfo.setColumnName(jsonField);
-                fieldInfo.setFieldClass(String.class.getSimpleName());
-                fieldInfo.setFieldComment(jsonField);
-                fieldList.add(fieldInfo);
-            });
-        }
         ClassInfo codeJavaInfo = new ClassInfo();
         codeJavaInfo.setTableName("JsonDto");
         codeJavaInfo.setClassName("JsonDto");
         codeJavaInfo.setClassComment("JsonDto");
-        codeJavaInfo.setFieldList(fieldList);
+
+        //support children json if forget to add '{' in front of json
+        if(paramInfo.getTableSql().trim().startsWith("\"")){
+            paramInfo.setTableSql("{"+paramInfo.getTableSql());
+        }
+        if(JSON.isValid(paramInfo.getTableSql())){
+            if(paramInfo.getTableSql().trim().startsWith("{")){
+                JSONObject jsonObject = JSONObject.parseObject(paramInfo.getTableSql().trim());
+                //parse FieldList by JSONObject
+                codeJavaInfo.setFieldList(processJsonObjectToFieldList(jsonObject));
+            }else if(paramInfo.getTableSql().trim().startsWith("[")){
+                JSONArray jsonArray=JSONArray.parseArray(paramInfo.getTableSql().trim());
+                //parse FieldList by JSONObject
+                codeJavaInfo.setFieldList(processJsonObjectToFieldList(jsonArray.getJSONObject(0)));
+            }
+        }
 
         return codeJavaInfo;
     }
@@ -376,5 +386,40 @@ public class TableParseUtil {
             codeJavaInfo.setFieldList(fieldList);
         }
         return codeJavaInfo;
+    }
+    public static List<FieldInfo> processJsonObjectToFieldList(JSONObject jsonObject){
+        // field List
+        List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
+        jsonObject.keySet().stream().forEach(jsonField->{
+            FieldInfo fieldInfo = new FieldInfo();
+            fieldInfo.setFieldName(jsonField);
+            fieldInfo.setColumnName(jsonField);
+            fieldInfo.setFieldClass(String.class.getSimpleName());
+            fieldInfo.setFieldComment("father:"+jsonField);
+            fieldList.add(fieldInfo);
+            if(jsonObject.get(jsonField) instanceof JSONArray){
+                jsonObject.getJSONArray(jsonField).stream().forEach(arrayObject->{
+                    FieldInfo fieldInfo2 = new FieldInfo();
+                    fieldInfo2.setFieldName(arrayObject.toString());
+                    fieldInfo2.setColumnName(arrayObject.toString());
+                    fieldInfo2.setFieldClass(String.class.getSimpleName());
+                    fieldInfo2.setFieldComment("children:"+arrayObject.toString());
+                    fieldList.add(fieldInfo2);
+                });
+            }else if(jsonObject.get(jsonField) instanceof JSONObject){
+                jsonObject.getJSONObject(jsonField).keySet().stream().forEach(arrayObject->{
+                    FieldInfo fieldInfo2 = new FieldInfo();
+                    fieldInfo2.setFieldName(arrayObject.toString());
+                    fieldInfo2.setColumnName(arrayObject.toString());
+                    fieldInfo2.setFieldClass(String.class.getSimpleName());
+                    fieldInfo2.setFieldComment("children:"+arrayObject.toString());
+                    fieldList.add(fieldInfo2);
+                });
+            }
+        });
+        if(fieldList.size()<1){
+            throw new CodeGenerateException("JSON解析失败");
+        }
+        return fieldList;
     }
 }
