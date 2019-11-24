@@ -56,7 +56,8 @@
                     "packageName":$("#packageName").val(),
                     "returnUtil":$("#returnUtil").val(),
                     "authorName":$("#authorName").val(),
-                    "isUnderLineToCamelCase":$("#isUnderLineToCamelCase").val()
+                    "dataType":$("#dataType").val(),
+                    "nameCaseType":$("#nameCaseType").val()
                 },
                 dataType: "json",
                 success: function (data) {
@@ -66,7 +67,7 @@
                         genCodeArea.setSize('auto', 'auto');
                         $.toast("√ 代码生成成功");
                     } else {
-                        $.toast("× 代码生成失败");
+                        $.toast("× 代码生成失败 :"+data.msg);
                     }
                 }
             });
@@ -149,6 +150,15 @@
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
+                <span class="input-group-text">数据类型</span>
+            </div>
+            <select type="text" class="form-control" id="dataType"
+                    name="dataType">
+                <option value="sql">sql</option>
+                <option value="json">json</option>
+                <option value="sql-regex">sql-regex</option>
+            </select>
+            <div class="input-group-prepend">
                 <span class="input-group-text">tinyint转换类型</span>
             </div>
             <select type="text" class="form-control" id="tinyintTransType"
@@ -157,14 +167,16 @@
                 <option value="Boolean">Boolean</option>
                 <option value="Integer">Integer</option>
                 <option value="int">int</option>
+                <option value="String">String</option>
             </select>
             <div class="input-group-prepend">
-                <span class="input-group-text">是否转换下划线为驼峰</span>
+                <span class="input-group-text">命名转换规则</span>
             </div>
-            <select type="text" class="form-control" id="isUnderLineToCamelCase"
-                    name="isUnderLineToCamelCase">
-                <option value="true">转换</option>
-                <option value="false">不转换</option>
+            <select type="text" class="form-control" id="nameCaseType"
+                    name="nameCaseType">
+                <option value="CamelCase">驼峰</option>
+                <option value="UnderScoreCase">下划线</option>
+                <#--<option value="UpperUnderScoreCase">大写下划线</option>-->
             </select>
         </div>
         <textarea id="ddlSqlArea" placeholder="请输入表结构信息..." class="form-control btn-lg" style="height: 250px;">
