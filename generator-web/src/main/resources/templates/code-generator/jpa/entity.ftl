@@ -12,7 +12,9 @@ import java.util.List;
 @Data
 @Table(name="${classInfo.tableName}")
 public class ${classInfo.className} implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue
 <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
