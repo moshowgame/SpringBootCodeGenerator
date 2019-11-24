@@ -1,8 +1,13 @@
 package com.softdev.system.generator.util;
 
 
+import cn.hutool.core.util.XmlUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.softdev.system.generator.entity.ClassInfo;
 import com.softdev.system.generator.entity.FieldInfo;
+import com.softdev.system.generator.entity.ParamInfo;
+import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -13,19 +18,23 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author xuxueli 2018-05-02 21:10:45
- * @modify zhengk/moshow 20180913
+ * @author zhengkai.blog.csdn.net
  */
 public class TableParseUtil {
 
     /**
      * 解析建表SQL生成代码（model-dao-xml）
      *
-     * @param tableSql
+     * @param paramInfo
      * @return
      */
-    public static ClassInfo processTableIntoClassInfo(String tableSql, boolean isUnderLineToCamelCase,String tinyintTransType)
+    public static ClassInfo processTableIntoClassInfo(ParamInfo paramInfo)
             throws IOException {
+        //process the param
+        String tableSql=paramInfo.getTableSql();
+        boolean isUnderLineToCamelCase=paramInfo.isUnderLineToCamelCase();
+        String tinyintTransType=paramInfo.getTinyintTransType();
+
         if (tableSql==null || tableSql.trim().length()==0) {
             throw new CodeGenerateException("Table structure can not be empty.");
         }
@@ -290,5 +299,82 @@ public class TableParseUtil {
 
         return codeJavaInfo;
     }
+    /**
+     * parse JSON
+     * @param paramInfo
+     * @return
+     */
+    public static ClassInfo processJsonToClassInfo(ParamInfo paramInfo){
+        // field List
+        List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
 
+        if(JSON.isValid(paramInfo.getTableSql())){
+            JSONObject jsonObject = JSONObject.parseObject(paramInfo.getTableSql().trim());
+            jsonObject.keySet().stream().forEach(jsonField->{
+                FieldInfo fieldInfo = new FieldInfo();
+                fieldInfo.setFieldName(jsonField);
+                fieldInfo.setColumnName(jsonField);
+                fieldInfo.setFieldClass(String.class.getSimpleName());
+                fieldInfo.setFieldComment(jsonField);
+                fieldList.add(fieldInfo);
+            });
+        }
+        ClassInfo codeJavaInfo = new ClassInfo();
+        codeJavaInfo.setTableName("JsonDto");
+        codeJavaInfo.setClassName("JsonDto");
+        codeJavaInfo.setClassComment("JsonDto");
+        codeJavaInfo.setFieldList(fieldList);
+
+        return codeJavaInfo;
+    }
+    /**
+     * parse SQL by regex
+     * @author https://github.com/ydq
+     * @param paramInfo
+     * @return
+     */
+    public static ClassInfo processTableToClassInfoByRegex(ParamInfo paramInfo){
+        // field List
+        List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
+        //return classInfo
+        ClassInfo codeJavaInfo = new ClassInfo();
+
+        //匹配整个ddl，将ddl分为表名，列sql部分，表注释
+        String DDL_PATTEN_STR="\\s*create\\s+table\\s+(?<tableName>\\S+)[^\\(]*\\((?<columnsSQL>[\\s\\S]+)\\)[^\\)]+?(comment\\s*(=|on\\s+table)\\s*'(?<tableComment>.*?)'\\s*;?)?$";
+
+        Pattern DDL_PATTERN = Pattern.compile(DDL_PATTEN_STR, Pattern.CASE_INSENSITIVE);
+
+        //匹配列sql部分，分别解析每一列的列名 类型 和列注释
+        String COL_PATTERN_STR="\\s*(?<fieldName>\\S+)\\s+(?<fieldType>\\w+)\\s*(?:\\([\\s\\d,]+\\))?((?!comment).)*(comment\\s*'(?<fieldComment>.*?)')?\\s*(,|$)";
+
+        Pattern COL_PATTERN = Pattern.compile(COL_PATTERN_STR, Pattern.CASE_INSENSITIVE);
+
+        Matcher matcher = DDL_PATTERN.matcher(paramInfo.getTableSql().trim());
+        if (matcher.find()){
+            String tableName = matcher.group("tableName");
+            String tableComment = matcher.group("tableComment");
+            codeJavaInfo.setTableName(tableName.replaceAll("'",""));
+            codeJavaInfo.setClassName(tableName.replaceAll("'",""));
+            codeJavaInfo.setClassComment(tableComment.replaceAll("'",""));
+            String columnsSQL = matcher.group("columnsSQL");
+            if (columnsSQL != null && columnsSQL.length() > 0){
+                Matcher colMatcher = COL_PATTERN.matcher(columnsSQL);
+                while (colMatcher.find()){
+                    String fieldName = colMatcher.group("fieldName");
+                    String fieldType = colMatcher.group("fieldType");
+                    String fieldComment = colMatcher.group("fieldComment");
+                    if (!"key".equalsIgnoreCase(fieldType)){
+                        FieldInfo fieldInfo = new FieldInfo();
+                        fieldInfo.setFieldName(fieldName.replaceAll("'",""));
+                        fieldInfo.setColumnName(fieldName.replaceAll("'",""));
+                        fieldInfo.setFieldClass(fieldType.replaceAll("'",""));
+                        fieldInfo.setFieldComment(fieldComment.replaceAll("'",""));
+                        fieldList.add(fieldInfo);
+                    }
+                }
+            }
+            codeJavaInfo.setFieldList(fieldList);
+        }
+        return codeJavaInfo;
+    }
 }

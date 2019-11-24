@@ -56,6 +56,7 @@
                     "packageName":$("#packageName").val(),
                     "returnUtil":$("#returnUtil").val(),
                     "authorName":$("#authorName").val(),
+                    "dataType":$("#dataType").val(),
                     "isUnderLineToCamelCase":$("#isUnderLineToCamelCase").val()
                 },
                 dataType: "json",
@@ -66,7 +67,7 @@
                         genCodeArea.setSize('auto', 'auto');
                         $.toast("√ 代码生成成功");
                     } else {
-                        $.toast("× 代码生成失败");
+                        $.toast("× 代码生成失败 :"+data.msg);
                     }
                 }
             });
@@ -148,6 +149,15 @@
             <input type="text" class="form-control" id="packageName" name="packageName" placeholder="com.softdev.system">
         </div>
         <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">数据类型</span>
+            </div>
+            <select type="text" class="form-control" id="dataType"
+                    name="dataType">
+                <option value="sql">sql</option>
+                <option value="json">json</option>
+                <option value="sql-regex">sql-regex</option>
+            </select>
             <div class="input-group-prepend">
                 <span class="input-group-text">tinyint转换类型</span>
             </div>
