@@ -9,6 +9,7 @@ import java.util.List;
 */
 @Data
 public class ${classInfo.className} implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
 <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>

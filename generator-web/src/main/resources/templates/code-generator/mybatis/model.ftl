@@ -7,6 +7,7 @@ import java.util.List;
 * @author ${authorName} ${.now?string('yyyy-MM-dd')}
 */
 public class ${classInfo.className} implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
 <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
