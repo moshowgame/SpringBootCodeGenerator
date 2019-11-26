@@ -57,6 +57,7 @@
                     "returnUtil":$("#returnUtil").val(),
                     "authorName":$("#authorName").val(),
                     "dataType":$("#dataType").val(),
+                    "tinyintTransType":$("#tinyintTransType").val(),
                     "nameCaseType":$("#nameCaseType").val()
                 },
                 dataType: "json",
