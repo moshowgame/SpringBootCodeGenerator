@@ -18,7 +18,7 @@
 |-|-|
 |在线地址|http://java.bejson.com/generator|
 |CSDN博客|http://zhengkai.blog.csdn.net|
-
+|最新Jar包|https://github.com/moshowgame/SpringBootCodeGenerator/releases|
 感谢bejson三叔将他部署在[BEJSON](www.bejson.com)上，目前是besjon专供工具(线上版本不一定是最新的，会有延迟，请谅解，谢谢).
 
 
@@ -75,5 +75,6 @@
 <img src="./codegenerator1.png">
 <img src="./codegenerator2.png">
 <img src="./codegenerator3.png">
+<img src="./codegenerator4.png">
 <img src="./donate.jpg">
 
