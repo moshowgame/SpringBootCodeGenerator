@@ -42,9 +42,7 @@ public class TableParseUtil {
         //deal with special character
         tableSql = tableSql.trim().replaceAll("'","`").replaceAll("\"","`").replaceAll("，",",").toLowerCase();
         //deal with java string copy \n"
-        System.out.println(tableSql);
         tableSql = tableSql.trim().replaceAll("n`","").replaceAll("\\+","").replaceAll("``","`").replaceAll("\\\\","");
-        System.out.println(tableSql);
         // table Name
         String tableName = null;
         if (tableSql.contains("TABLE") && tableSql.contains("(")) {

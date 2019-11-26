@@ -62,6 +62,8 @@ public class IndexController {
             params.put("packageName", paramInfo.getPackageName());
             params.put("returnUtil", paramInfo.getReturnUtil());
 
+            log.info("generator table:"+(classInfo==null?"":classInfo.getTableName()));
+
             // generate the code 需要加新的模板请在里面改
             Map<String, String> result = generatorService.getResultByParams(params);
 
