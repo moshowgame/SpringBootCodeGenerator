@@ -5,14 +5,15 @@ import com.softdev.system.generator.entity.ParamInfo;
 import com.softdev.system.generator.entity.ReturnT;
 import com.softdev.system.generator.service.GeneratorService;
 import com.softdev.system.generator.util.CodeGenerateException;
-import com.softdev.system.generator.util.FreemarkerTool;
 import com.softdev.system.generator.util.TableParseUtil;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -62,7 +63,8 @@ public class IndexController {
             params.put("packageName", paramInfo.getPackageName());
             params.put("returnUtil", paramInfo.getReturnUtil());
 
-            log.info("generator table:"+(classInfo==null?"":classInfo.getTableName()));
+            log.info("generator table:"+(classInfo==null?"":classInfo.getTableName())
+                    +",field size:"+((classInfo==null||classInfo.getFieldList()==null)?"":classInfo.getFieldList().size()));
 
             // generate the code 需要加新的模板请在里面改
             Map<String, String> result = generatorService.getResultByParams(params);

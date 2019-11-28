@@ -1,8 +1,16 @@
-import java.io.Serializable;
-import javax.persistence.*;
+package ${packageName}.entity;
+
 import lombok.Data;
 import java.util.Date;
 import java.util.List;
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
 *  ${classInfo.classComment}
@@ -11,6 +19,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name="${classInfo.tableName}")
+@ApiModel("${classInfo.classComment}")
 public class ${classInfo.className} implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,6 +31,8 @@ public class ${classInfo.className} implements Serializable {
     /**
     * ${fieldItem.fieldComment}
     */
+    @ApiModelProperty("${fieldItem.fieldComment}")
+    @Column("${fieldItem.columnName}")
     private ${fieldItem.fieldClass} ${fieldItem.fieldName};
 
 </#list>

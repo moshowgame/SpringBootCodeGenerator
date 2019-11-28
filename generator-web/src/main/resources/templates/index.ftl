@@ -139,15 +139,15 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">作者名称</span>
             </div>
-            <input type="text" class="form-control" id="authorName" name="authorName" placeholder="大狼狗">
+            <input type="text" class="form-control" id="authorName" name="authorName" value="大狼狗">
             <div class="input-group-prepend">
                 <span class="input-group-text">返回封装</span>
             </div>
-            <input type="text" class="form-control" id="returnUtil" name="returnUtil" placeholder="ApiReturnObject">
+            <input type="text" class="form-control" id="returnUtil" name="returnUtil" value="ApiReturnObject">
             <div class="input-group-prepend">
                 <span class="input-group-text">包名路径</span>
             </div>
-            <input type="text" class="form-control" id="packageName" name="packageName" placeholder="com.softdev.system">
+            <input type="text" class="form-control" id="packageName" name="packageName" value="com.softdev.system">
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
