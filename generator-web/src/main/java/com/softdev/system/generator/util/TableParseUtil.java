@@ -1,14 +1,12 @@
 package com.softdev.system.generator.util;
 
 
-import cn.hutool.core.util.XmlUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.softdev.system.generator.entity.ClassInfo;
 import com.softdev.system.generator.entity.FieldInfo;
 import com.softdev.system.generator.entity.ParamInfo;
-import org.w3c.dom.Document;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -42,9 +40,7 @@ public class TableParseUtil {
         //deal with special character
         tableSql = tableSql.trim().replaceAll("'","`").replaceAll("\"","`").replaceAll("，",",").toLowerCase();
         //deal with java string copy \n"
-        System.out.println(tableSql);
-        tableSql = tableSql.trim().replaceAll("n`","").replaceAll("\\+","").replaceAll("``","`").replaceAll("\\\\","");
-        System.out.println(tableSql);
+        tableSql = tableSql.trim().replaceAll("\\\\n`","").replaceAll("\\+","").replaceAll("``","`").replaceAll("\\\\","");
         // table Name
         String tableName = null;
         if (tableSql.contains("TABLE") && tableSql.contains("(")) {

@@ -57,6 +57,7 @@
                     "returnUtil":$("#returnUtil").val(),
                     "authorName":$("#authorName").val(),
                     "dataType":$("#dataType").val(),
+                    "tinyintTransType":$("#tinyintTransType").val(),
                     "nameCaseType":$("#nameCaseType").val()
                 },
                 dataType: "json",
@@ -107,6 +108,28 @@
             }
         });
 
+        function getVersion(){
+            var gitVersion ;
+            $.ajax({
+                type: 'GET',
+                url: "https://raw.githubusercontent.com/moshowgame/SpringBootCodeGenerator/master/generator-web/src/main/resources/static/version.json",
+                dataType: "json",
+                success: function (data) {
+                    gitVersion = data.version;
+                    $.ajax({
+                        type: 'GET',
+                        url: base_url + "/static/version.json",
+                        dataType: "json",
+                        success: function (data) {
+                            $.toast("#当前版本:"+data.version+" | github:"+gitVersion);
+                        }
+                    });
+                }
+            });
+        }
+        $('#version').on('click', function(){
+            getVersion();
+        });
     });
 </script>
 </head>
@@ -130,7 +153,7 @@
         <p class="lead">
             √基于SpringBoot2+Freemarker的代码生成器，√以释放双手为目的，√支持mysql/oracle/pgsql三大数据库，<br>
             √用DDL-SQL语句生成JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL相关代码。<br>
-            欢迎大家多多提交模板和交流想法，如果发现有SQL语句不能识别，请<a href="https://github.com/moshowgame/SpringBootCodeGenerator/issues">留言</a>，同时欢迎大家提<a href="https://github.com/moshowgame/SpringBootCodeGenerator/pulls">PR</a>和<a href="#" id="donate1">点击赞赏</a>，谢谢！
+            如果发现有SQL语句不能识别，请<a href="https://github.com/moshowgame/SpringBootCodeGenerator/issues">留言</a>，同时欢迎大家提<a href="https://github.com/moshowgame/SpringBootCodeGenerator/pulls">PR</a>和<a href="#" id="donate1">赞赏</a>，谢谢！<a id="version" href="#">查看版本</a>
         </p>
         <div id="donate" class="container" show="no"></div>
         <hr>
@@ -138,15 +161,15 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">作者名称</span>
             </div>
-            <input type="text" class="form-control" id="authorName" name="authorName" placeholder="大狼狗">
+            <input type="text" class="form-control" id="authorName" name="authorName" value="大狼狗">
             <div class="input-group-prepend">
                 <span class="input-group-text">返回封装</span>
             </div>
-            <input type="text" class="form-control" id="returnUtil" name="returnUtil" placeholder="ApiReturnObject">
+            <input type="text" class="form-control" id="returnUtil" name="returnUtil" value="ApiReturnObject">
             <div class="input-group-prepend">
                 <span class="input-group-text">包名路径</span>
             </div>
-            <input type="text" class="form-control" id="packageName" name="packageName" placeholder="com.softdev.system">
+            <input type="text" class="form-control" id="packageName" name="packageName" value="com.softdev.system">
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">

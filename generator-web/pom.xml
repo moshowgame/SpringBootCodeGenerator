@@ -7,12 +7,12 @@
 	<parent>
 		<groupId>com.softdev.system</groupId>
 		<artifactId>SpringBootCodeGenerator</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>2.0</version>
 	</parent>
 	
 	<groupId>com.softdev.system</groupId>
 	<artifactId>generator-web</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>2.0</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -38,10 +38,10 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>-->
 
-        <dependency>
+        <!--<dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
 
@@ -65,7 +65,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.8.1</version>
 				<configuration>
 					<skip>true</skip>
 					<compilerId>javac</compilerId>
@@ -87,25 +87,24 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.0.1</version>
+				<version>3.1.0</version>
 				<configuration>
 					<!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
 					<includeEmptyDirs>true</includeEmptyDirs>
 				</configuration>
 			</plugin>
-			<plugin>
+			<!--<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1.1</version>
+				<version>3.2.3</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 					<warSourceExcludes>upload/**</warSourceExcludes>
 				</configuration>
-			</plugin>
+			</plugin>-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>2.0.4.RELEASE</version>
 				<executions>
 					<execution>
 						<goals>

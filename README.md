@@ -18,6 +18,7 @@
 |-|-|
 |在线地址|http://java.bejson.com/generator|
 |CSDN博客|http://zhengkai.blog.csdn.net|
+|最新Jar包|https://github.com/moshowgame/SpringBootCodeGenerator/releases|
 
 感谢bejson三叔将他部署在[BEJSON](www.bejson.com)上，目前是besjon专供工具(线上版本不一定是最新的，会有延迟，请谅解，谢谢).
 
@@ -26,6 +27,8 @@
 
 |更新日期|更新内容|
 |-|-|
+|20191128|1.修复支持string-copy导致的以n结尾的字母不显示问题 2.jpa-entity新增swagger@ApiModel@ApiModelProperty注解和SQL字段@Column注解(感谢@yjq907的建议) |   
+|20191126|1.springboot2内置tomcat更换为性能更强大的undertow 2.修复tinyintTransType参数丢失问题 |   
 |20191124|1.java代码结构优化. 2.新增简单的json生成模式 3.新增简单的正则表达式匹配模式(感谢@ydq的贡献)  4.新增对复制String代码中的乱SQL代码的支持 5.优化对JSON的父子节点/处理，JSONObject和JSONArray节点处理，子节点缺失'{'头处理|   
 |20191123|1.移除频繁出错和被过滤的layer,改为jquery-toast. 2.Util功能优化,新增json和xml.|   
 |20191116|优化对primary关键字的处理(感谢@liujiansgit的反馈). |   
@@ -74,5 +77,6 @@
 <img src="./codegenerator1.png">
 <img src="./codegenerator2.png">
 <img src="./codegenerator3.png">
+<img src="./codegenerator4.png">
 <img src="./donate.jpg">
 
