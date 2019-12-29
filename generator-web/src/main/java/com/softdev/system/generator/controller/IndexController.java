@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class IndexController {
 
     @PostMapping("/genCode")
     @ResponseBody
-    public ReturnT<Map<String, String>> codeGenerate( ParamInfo paramInfo ) {
+    public ReturnT<Map<String, String>> codeGenerate(@RequestBody ParamInfo paramInfo ) {
 
         try {
 

@@ -202,7 +202,7 @@ public class TableParseUtil {
                         fieldClass = Float.class.getSimpleName();
                     } else if (columnLine.contains("double")) {
                         fieldClass = Double.class.getSimpleName();
-                    } else if (columnLine.contains("time") || columnLine.contains("date") || columnLine.contains("datetime") || columnLine.contains("timestamp")) {
+                    } else if (columnLine.contains("time") || columnLine.contains(" date") || columnLine.contains("datetime") || columnLine.contains("timestamp")) {
                         fieldClass = Date.class.getSimpleName();
                     } else if (columnLine.contains("varchar") || columnLine.contains(" text")|| columnLine.contains("char")
                             || columnLine.contains("clob")||columnLine.contains("blob")||columnLine.contains("json")) {

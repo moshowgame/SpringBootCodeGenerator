@@ -42,27 +42,44 @@
         genCodeArea.setSize('auto','auto');
 
         var codeData;
-
+        // 使用：var jsonObj = $("#formId").serializeObject();
+        $.fn.serializeObject = function()
+        {
+            var o = {};
+            var a = this.serializeArray();
+            $.each(a, function() {
+                if (o[this.name]) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+            return o;
+        };
         /**
          * 生成代码
          */
         $('#btnGenCode').click(function ()  {
-            var tableSql = ddlSqlArea.getValue();
+            var jsonData = {
+                "tableSql": ddlSqlArea.getValue(),
+                "packageName":$("#packageName").val(),
+                "returnUtil":$("#returnUtil").val(),
+                "authorName":$("#authorName").val(),
+                "dataType":$("#dataType").val(),
+                "tinyintTransType":$("#tinyintTransType").val(),
+                "nameCaseType":$("#nameCaseType").val()
+            };
             $.ajax({
                 type: 'POST',
                 url: base_url + "/genCode",
-                data: {
-                    "tableSql": tableSql,
-                    "packageName":$("#packageName").val(),
-                    "returnUtil":$("#returnUtil").val(),
-                    "authorName":$("#authorName").val(),
-                    "dataType":$("#dataType").val(),
-                    "tinyintTransType":$("#tinyintTransType").val(),
-                    "nameCaseType":$("#nameCaseType").val()
-                },
+                data:(JSON.stringify(jsonData)),
                 dataType: "json",
+                contentType: "application/json",
                 success: function (data) {
-                    if (data.code == 200) {
+                    if (data.code === 200) {
                         codeData = data.data;
                         genCodeArea.setValue(codeData.beetlentity);
                         genCodeArea.setSize('auto', 'auto');
@@ -72,6 +89,7 @@
                     }
                 }
             });
+            return false;
         });
         /**
          * 按钮事件组
