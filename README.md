@@ -27,6 +27,7 @@
 
 |更新日期|更新内容|
 |-|-|
+|20191229|1.修复bejson安全防护策略拦截问题(感谢@liangbintao和@1808083642的反馈) 2.优化字段名含date字符串的处理(感谢@smilexzh的反馈) 3.控制台动态输出项目访问地址(感谢@gaohanghang的提交)|
 |20191128|1.修复支持string-copy导致的以n结尾的字母不显示问题 2.jpa-entity新增swagger@ApiModel@ApiModelProperty注解和SQL字段@Column注解(感谢@yjq907的建议) |   
 |20191126|1.springboot2内置tomcat更换为性能更强大的undertow 2.修复tinyintTransType参数丢失问题 |   
 |20191124|1.java代码结构优化. 2.新增简单的json生成模式 3.新增简单的正则表达式匹配模式(感谢@ydq的贡献)  4.新增对复制String代码中的乱SQL代码的支持 5.优化对JSON的父子节点/处理，JSONObject和JSONArray节点处理，子节点缺失'{'头处理|   
