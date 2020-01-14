@@ -13,9 +13,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
-*  ${classInfo.classComment}
-* @author ${authorName} ${.now?string('yyyy-MM-dd')}
-*/
+ * @description ${classInfo.classComment}
+ * @author ${authorName}
+ * @date ${.now?string('yyyy-MM-dd HH:mm:ss')}
+ */
 @Entity
 @Data
 @Table(name="${classInfo.tableName}")

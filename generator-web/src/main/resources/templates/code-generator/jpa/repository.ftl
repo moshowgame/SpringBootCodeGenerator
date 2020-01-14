@@ -14,9 +14,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
-*  ${classInfo.classComment}
-* @author ${authorName} ${.now?string('yyyy-MM-dd')}
-*/
+ * @description ${classInfo.classComment}
+ * @author ${authorName}
+ * @date ${.now?string('yyyy-MM-dd HH:mm:ss')}
+ */
 @Repository
 public interface ${classInfo.className}Repository extends JpaRepository<${classInfo.className},Integer> {
 

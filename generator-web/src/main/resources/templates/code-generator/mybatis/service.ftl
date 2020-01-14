@@ -1,10 +1,10 @@
 import java.util.Map;
 
 /**
-* ${classInfo.classComment}
-* @author ${authorName}
-* @date ${.now?string('yyyy/MM/dd')}
-*/
+ * @description ${classInfo.classComment}
+ * @author ${authorName}
+ * @date ${.now?string('yyyy-MM-dd HH:mm:ss')}
+ */
 public interface ${classInfo.className}Service {
 
     /**

@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
-* ${classInfo.classComment}
-* @author ${authorName}
-* @date ${.now?string('yyyy/MM/dd')}
-*/
+ * @description ${classInfo.classComment}
+ * @author ${authorName}
+ * @date ${.now?string('yyyy-MM-dd HH:mm:ss')}
+ */
 @RestController
 @RequestMapping(value = "/${classInfo.className}")
 public class ${classInfo.className}Controller {
@@ -21,7 +21,7 @@ public class ${classInfo.className}Controller {
     private ${classInfo.className}Service ${classInfo.className?uncap_first}Service;
 
     /**
-    * [新增]
+    * 新增
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
@@ -31,7 +31,7 @@ public class ${classInfo.className}Controller {
     }
 
     /**
-    * [刪除]
+    * 刪除
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
@@ -41,7 +41,7 @@ public class ${classInfo.className}Controller {
     }
 
     /**
-    * [更新]
+    * 更新
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
@@ -51,7 +51,7 @@ public class ${classInfo.className}Controller {
     }
 
     /**
-    * [查询] 根据主键 id 查询
+    * 查询 根据主键 id 查询
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
@@ -61,7 +61,7 @@ public class ${classInfo.className}Controller {
     }
 
     /**
-    * [查询] 分页查询
+    * 查询 分页查询
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/

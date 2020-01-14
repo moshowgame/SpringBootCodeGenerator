@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
-* ${classInfo.classComment}
-* @author ${authorName}
-* @date ${.now?string('yyyy/MM/dd')}
-*/
+ * @description ${classInfo.classComment}
+ * @author ${authorName}
+ * @date ${.now?string('yyyy-MM-dd HH:mm:ss')}
+ */
 @Service
 public class ${classInfo.className}ServiceImpl implements ${classInfo.className}Service {
 
