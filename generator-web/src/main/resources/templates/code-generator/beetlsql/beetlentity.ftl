@@ -4,9 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
-*  ${classInfo.classComment}
-* @author ${authorName} ${.now?string('yyyy-MM-dd')}
-*/
+ * @description ${classInfo.classComment}
+ * @author ${authorName}
+ * @date ${.now?string('yyyy-MM-dd HH:mm:ss')}
+ */
 @Data
 public class ${classInfo.className} implements Serializable {
 

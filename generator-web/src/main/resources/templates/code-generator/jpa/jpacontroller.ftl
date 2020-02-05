@@ -15,9 +15,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
-* ${classInfo.classComment}
-* @author ${authorName} ${.now?string('yyyy-MM-dd')}
-*/
+ * @description ${classInfo.classComment}
+ * @author ${authorName}
+ * @date ${.now?string('yyyy-MM-dd HH:mm:ss')}
+ */
 @RestController
 @RequestMapping("/${classInfo.className?uncap_first}")
 public class ${classInfo.className}Controller {

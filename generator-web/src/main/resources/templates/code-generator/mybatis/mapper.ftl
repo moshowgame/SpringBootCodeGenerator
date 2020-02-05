@@ -4,51 +4,51 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
-* ${classInfo.classComment}
-* @author ${authorName}
-* @date ${.now?string('yyyy/MM/dd')}
-*/
+ * @description ${classInfo.classComment}
+ * @author ${authorName}
+ * @date ${.now?string('yyyy-MM-dd HH:mm:ss')}
+ */
 @Mapper
 @Repository
 public interface ${classInfo.className}Mapper {
 
     /**
-    * [新增]
+    * 新增
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
     int insert(${classInfo.className} ${classInfo.className?uncap_first});
 
     /**
-    * [刪除]
+    * 刪除
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
     int delete(int id);
 
     /**
-    * [更新]
+    * 更新
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
     int update(${classInfo.className} ${classInfo.className?uncap_first});
 
     /**
-    * [查询] 根据主键 id 查询
+    * 查询 根据主键 id 查询
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
     ${classInfo.className} load(int id);
 
     /**
-    * [查询] 分页查询
+    * 查询 分页查询
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
     List<${classInfo.className}> pageList(int offset,int pagesize);
 
     /**
-    * [查询] 分页查询 count
+    * 查询 分页查询 count
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
