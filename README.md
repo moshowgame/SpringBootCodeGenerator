@@ -27,6 +27,7 @@
 
 |更新日期|更新内容|
 |-|-|
+|20200206|1.新增历史记录功能，自动保存最近生成的对象 2.新增swagger开关选项和修复@Column带name参数(感谢@liuyu-struggle的建议)|
 |20191229|1.修复bejson安全防护策略拦截问题(感谢@liangbintao和@1808083642的反馈) 2.优化字段名含date字符串的处理(感谢@smilexzh的反馈) 3.控制台动态输出项目访问地址(感谢@gaohanghang的提交)|
 |20191128|1.修复支持string-copy导致的以n结尾的字母不显示问题 2.jpa-entity新增swagger@ApiModel@ApiModelProperty注解和SQL字段@Column注解(感谢@yjq907的建议) |   
 |20191126|1.springboot2内置tomcat更换为性能更强大的undertow 2.修复tinyintTransType参数丢失问题 |   

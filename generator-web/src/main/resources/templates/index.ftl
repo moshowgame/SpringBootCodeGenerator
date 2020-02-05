@@ -59,6 +59,12 @@
             });
             return o;
         };
+        var historyCount=0;
+        //初始化清除session
+        if (window.sessionStorage){
+            //修复当F5刷新的时候，session没有清空各个值，但是页面的button没了。
+            sessionStorage.clear();
+        }
         /**
          * 生成代码
          */
@@ -70,7 +76,8 @@
                 "authorName":$("#authorName").val(),
                 "dataType":$("#dataType").val(),
                 "tinyintTransType":$("#tinyintTransType").val(),
-                "nameCaseType":$("#nameCaseType").val()
+                "nameCaseType":$("#nameCaseType").val(),
+                "swagger":$("#isSwagger").val()
             };
             $.ajax({
                 type: 'POST',
@@ -81,9 +88,11 @@
                 success: function (data) {
                     if (data.code === 200) {
                         codeData = data.data;
-                        genCodeArea.setValue(codeData.beetlentity);
+                        genCodeArea.setValue(codeData.entity);
                         genCodeArea.setSize('auto', 'auto');
                         $.toast("√ 代码生成成功");
+                        //添加历史记录
+                        addHistory(codeData);
                     } else {
                         $.toast("× 代码生成失败 :"+data.msg);
                     }
@@ -91,6 +100,45 @@
             });
             return false;
         });
+        /**
+         * 切换历史记录
+         */
+        function getHistory(tableName){
+            if (window.sessionStorage){
+                var valueSession = sessionStorage.getItem(tableName);
+                codeData = JSON.parse(valueSession);
+                $.toast("$ 切换历史记录成功:"+tableName);
+                genCodeArea.setValue(codeData.entity);
+            }else{
+                console.log("浏览器不支持sessionStorage");
+            }
+        }
+        /**
+         * 添加历史记录
+         */
+        function addHistory(data){
+            if (window.sessionStorage){
+                //console.log(historyCount);
+                if(historyCount>=9){
+                    $("#history").find(".btn:last").remove();
+                    historyCount--;
+                }
+                var tableName=data.tableName;
+                var valueSession = sessionStorage.getItem(tableName);
+                if(valueSession!==undefined && valueSession!=null){
+                    sessionStorage.removeItem(tableName);
+                }else{
+                    $("#history").prepend('<button id="his-'+tableName+'" type="button" class="btn">'+tableName+'</button>');
+                    //$("#history").prepend('<button id="his-'+tableName+'" onclick="getHistory(\''+tableName+'\');" type="button" class="btn">'+tableName+'</button>');
+                    $("#his-"+tableName).bind('click', function () {getHistory(tableName)});
+                }
+                sessionStorage.setItem(tableName,JSON.stringify(data));
+                historyCount++;
+            }else{
+                console.log("浏览器不支持sessionStorage");
+            }
+        }
+
         /**
          * 按钮事件组
          */
@@ -169,7 +217,7 @@
     <div class="container">
         <h2>Spring Boot Code Generator!</h2>
         <p class="lead">
-            √基于SpringBoot2+Freemarker的代码生成器，√以释放双手为目的，√支持mysql/oracle/pgsql三大数据库，<br>
+            √基于SpringBoot2+Freemarker的<a class="lead" href="https://github.com/moshowgame/SpringBootCodeGenerator">代码生成器</a>，√以释放双手为目的，√支持mysql/oracle/pgsql三大数据库，<br>
             √用DDL-SQL语句生成JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL相关代码。<br>
             如果发现有SQL语句不能识别，请<a href="https://github.com/moshowgame/SpringBootCodeGenerator/issues">留言</a>，同时欢迎大家提<a href="https://github.com/moshowgame/SpringBootCodeGenerator/pulls">PR</a>和<a href="#" id="donate1">赞赏</a>，谢谢！<a id="version" href="#">查看版本</a>
         </p>
@@ -219,6 +267,14 @@
                 <option value="UnderScoreCase">下划线</option>
                 <#--<option value="UpperUnderScoreCase">大写下划线</option>-->
             </select>
+            <div class="input-group-prepend">
+                <span class="input-group-text">swagger-ui</span>
+            </div>
+            <select type="text" class="form-control" id="isSwagger"
+                    name="isSwagger">
+                <option value="false">关闭</option>
+                <option value="true">开启</option>
+            </select>
         </div>
         <textarea id="ddlSqlArea" placeholder="请输入表结构信息..." class="form-control btn-lg" style="height: 250px;">
 CREATE TABLE 'userinfo' (
@@ -229,6 +285,7 @@ CREATE TABLE 'userinfo' (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息'
         </textarea><br>
         <p><button class="btn btn-primary btn-lg disabled" id="btnGenCode" role="button" data-toggle="popover" data-content="">开始生成 »</button> <button class="btn alert-secondary" id="btnCopy">一键复制</button></p>
+        <div id="history" class="btn-group" role="group" aria-label="Basic example"></div>
         <hr>
         <!-- Example row of columns -->
         <div class="row" style="margin-top: 10px;">

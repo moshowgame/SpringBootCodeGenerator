@@ -18,8 +18,8 @@ import io.swagger.annotations.ApiModelProperty;
 */
 @Entity
 @Data
-@Table(name="${classInfo.tableName}")
-@ApiModel("${classInfo.classComment}")
+@Table(name="${classInfo.tableName}")<#if swagger?exists && swagger==true>
+@ApiModel("${classInfo.classComment}")</#if>
 public class ${classInfo.className} implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,9 +30,9 @@ public class ${classInfo.className} implements Serializable {
 <#list classInfo.fieldList as fieldItem >
     /**
     * ${fieldItem.fieldComment}
-    */
-    @ApiModelProperty("${fieldItem.fieldComment}")
-    @Column("${fieldItem.columnName}")
+    */<#if swagger?exists && swagger==true>
+    @ApiModelProperty("${fieldItem.fieldComment}")</#if>
+    @Column(name="${fieldItem.columnName}")
     private ${fieldItem.fieldClass} ${fieldItem.fieldName};
 
 </#list>

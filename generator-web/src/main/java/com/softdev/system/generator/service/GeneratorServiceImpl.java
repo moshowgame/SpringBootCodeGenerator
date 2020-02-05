@@ -25,7 +25,7 @@ public class GeneratorServiceImpl implements GeneratorService {
     public Map<String, String> getResultByParams(Map<String, Object> params) throws IOException, TemplateException {
         // result
         Map<String, String> result = new HashMap<String, String>(32);
-
+        result.put("tableName",params.get("tableName")+"");
         //UI
         result.put("swagger-ui", freemarkerTool.processString("code-generator/ui/swagger-ui.ftl", params));
         result.put("element-ui", freemarkerTool.processString("code-generator/ui/element-ui.ftl", params));
