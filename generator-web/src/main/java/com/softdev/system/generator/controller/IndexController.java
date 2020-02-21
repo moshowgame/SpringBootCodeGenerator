@@ -1,5 +1,6 @@
 package com.softdev.system.generator.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.softdev.system.generator.entity.ClassInfo;
 import com.softdev.system.generator.entity.ParamInfo;
 import com.softdev.system.generator.entity.ReturnT;
@@ -60,9 +61,14 @@ public class IndexController {
             // process the param
             Map<String, Object> params = new HashMap<String, Object>(8);
             params.put("classInfo", classInfo);
+            params.put("tableName", classInfo==null?System.currentTimeMillis():classInfo.getTableName());
             params.put("authorName", paramInfo.getAuthorName());
             params.put("packageName", paramInfo.getPackageName());
             params.put("returnUtil", paramInfo.getReturnUtil());
+            params.put("swagger", paramInfo.isSwagger());
+
+            //log the params
+            //log.info(JSON.toJSONString(paramInfo));
 
             log.info("generator table:"+(classInfo==null?"":classInfo.getTableName())
                     +",field size:"+((classInfo==null||classInfo.getFieldList()==null)?"":classInfo.getFieldList().size()));
