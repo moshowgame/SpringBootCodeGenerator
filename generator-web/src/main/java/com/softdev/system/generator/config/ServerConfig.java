@@ -15,16 +15,14 @@ import org.springframework.stereotype.Component;
 public class ServerConfig implements ApplicationListener<WebServerInitializedEvent> {
 
     private int serverPort;
-
-    public int getPort() {
-        return this.serverPort;
-    }
+    private String serverPath;
 
     @Override
     public void onApplicationEvent(WebServerInitializedEvent event) {
         this.serverPort = event.getWebServer().getPort();
-        //log.info("Get WebServer port {}", serverPort);
-        log.info("项目启动启动成功！访问地址: http://localhost:{}/generator", serverPort);
+        //新增动态path by zhengkai
+        this.serverPath = event.getApplicationContext().getApplicationName();
+        log.info("项目启动启动成功！访问地址: http://localhost:{}{}", serverPort,serverPath);
     }
 
 }

@@ -30,6 +30,8 @@ public class GeneratorServiceImpl implements GeneratorService {
         result.put("swagger-ui", freemarkerTool.processString("code-generator/ui/swagger-ui.ftl", params));
         result.put("element-ui", freemarkerTool.processString("code-generator/ui/element-ui.ftl", params));
         result.put("bootstrap-ui", freemarkerTool.processString("code-generator/ui/bootstrap-ui.ftl", params));
+        result.put("layui-edit", freemarkerTool.processString("code-generator/ui/layui-edit.ftl", params));
+        result.put("layui-list", freemarkerTool.processString("code-generator/ui/layui-list.ftl", params));
         //mybatis old
         result.put("controller", freemarkerTool.processString("code-generator/mybatis/controller.ftl", params));
         result.put("service", freemarkerTool.processString("code-generator/mybatis/service.ftl", params));
