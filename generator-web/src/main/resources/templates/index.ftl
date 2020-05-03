@@ -324,6 +324,7 @@ CREATE TABLE 'userinfo' (
                     </div>
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-default generator" id="plusentity">entity</button>
                     <button type="button" class="btn btn-default generator" id="plusmapper">mapper</button>
                     <button type="button" class="btn btn-default generator" id="pluscontroller">controller</button>
                 </div>
@@ -397,16 +398,6 @@ CREATE TABLE 'userinfo' (
             </div>
         </div>
         <div class="row" style="margin-top: 10px;">
-            <div class="btn-toolbar col-md-5" role="toolbar" aria-label="Toolbar with button groups">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="btn btn-secondary disabled setWidth" id="btnGroupAddon">DTO</div>
-                    </div>
-                </div>
-                <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-default generator" id="beetlentitydto">entitydto(lombok+swagger)</button>
-                </div>
-            </div>
             <div class="btn-toolbar col-md-5" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="input-group">
                     <div class="input-group-prepend">

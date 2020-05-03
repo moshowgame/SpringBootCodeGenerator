@@ -6,8 +6,8 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="request.contextPath/static/lib/layui-v2.5.5/css/layui.css" media="all">
-    <link rel="stylesheet" href="request.contextPath/static/css/public.css" media="all">
+    <link rel="stylesheet" href="￥{request.contextPath}/static/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="￥{request.contextPath}/static/css/public.css" media="all">
 </head>
 <body>
 <div class="layuimini-container">
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">${classInfo.classComment}Name</label>
+                            <label class="layui-form-label">${classInfo.classComment}名称</label>
                             <div class="layui-input-inline">
                                 <input type="text" name="${classInfo.className?uncap_first}Name" autocomplete="off" class="layui-input">
                             </div>
@@ -41,7 +41,7 @@
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
                 <button class="layui-btn layui-btn-sm data-add-btn"> 添加${classInfo.classComment} </button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn"> 删除${classInfo.classComment} </button>
+               <#-- <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn"> 删除${classInfo.classComment} </button>-->
             </div>
         </script>
 
@@ -61,7 +61,7 @@
         </script>
     </div>
 </div>
-<script src="request.contextPath/static/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="￥{request.contextPath}/static/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script>
     layui.use(['form', 'table'], function () {
         var $ = layui.jquery,
@@ -72,7 +72,7 @@
         table.render({
             elem: '#currentTableId',
             method: 'post',
-            url: 'request.contextPath/${classInfo.className?uncap_first}/list',
+            url: '￥{request.contextPath}/${classInfo.className?uncap_first}/list',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print', {
                 title: '提示',
@@ -88,8 +88,8 @@
                 </#if>
                 {title: '操作', minWidth: 50, templet: '#currentTableBar', fixed: "right", align: "center"}
             ]],
-            limits: [5, 20, 50 , 100],
-            limit: 5,
+            limits: [10, 20, 50 , 100],
+            limit: 10,
             page: true
         });
 
@@ -123,12 +123,9 @@
                 maxmin:true,
                 shadeClose: true,
                 area: ['800px', '500px'],
-                content: 'request.contextPath/${classInfo.className?uncap_first}/edit?id=0',
+                content: '￥{request.contextPath}/${classInfo.className?uncap_first}/edit?id=0',
             });
-            $(window).on("resize", function () {
-                obj.del();
-                layer.full(index);
-            });
+            layer.full(index);
             return false;
         });
 
@@ -149,24 +146,21 @@
             var data = obj.data;
             if (obj.event === 'edit') {
                 var index = layer.open({
-                    title: '编辑用户',
+                    title: '编辑${classInfo.classComment}',
                     type: 2,
                     shade: 0.2,
                     maxmin:true,
                     shadeClose: true,
                     area: ['800px', '500px'],
-                    content: 'request.contextPath/${classInfo.className?uncap_first}/edit?id='+obj.data.${classInfo.className?uncap_first}Id,
+                    content: '￥{request.contextPath}/${classInfo.className?uncap_first}/edit?id='+obj.data.${classInfo.className?uncap_first}Id,
                 });
-                $(window).on("resize", function () {
-                    obj.del();
-                    layer.full(index);
-                });
+                layer.full(index);
                 return false;
             } else if (obj.event === 'delete') {
                 layer.confirm('真的删除行么', function (index) {
                     $.ajax({
                         type: 'POST',
-                        url: "request.contextPath/${classInfo.className?uncap_first}/delete",
+                        url: "￥{request.contextPath}/${classInfo.className?uncap_first}/delete",
                         data:{"id":obj.data.${classInfo.className?uncap_first}Id},
                         success: function (responseData) {
                             if (responseData.code === 200) {

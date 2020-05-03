@@ -37,7 +37,13 @@ public class FreemarkerTool {
         template.process(model, result);
         return result.toString();
     }
-
+    /**
+    * 传入需要转义的字符串进行转义
+    * 20200503 zhengkai.blog.csdn.net
+    * */
+    public String escapeString(String originStr){
+        return originStr.replaceAll("井","\\#").replaceAll("￥","\\$");
+    }
     /**
      * process String
      *
@@ -49,9 +55,10 @@ public class FreemarkerTool {
      */
     public String processString(String templateName, Map<String, Object> params)
             throws IOException, TemplateException {
-
+        //获取对应的模板
         Template template = configuration.getTemplate(templateName);
-        String htmlText = processTemplateIntoString(template, params);
+        //处理为template并进行转义
+        String htmlText = escapeString(processTemplateIntoString(template, params));
         return htmlText;
     }
 

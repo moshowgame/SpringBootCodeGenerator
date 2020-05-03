@@ -49,11 +49,11 @@ public class GeneratorServiceImpl implements GeneratorService {
         //beetsql
         result.put("beetlmd", freemarkerTool.processString("code-generator/beetlsql/beetlmd.ftl", params));
         result.put("beetlentity", freemarkerTool.processString("code-generator/beetlsql/beetlentity.ftl", params));
-        result.put("beetlentitydto", freemarkerTool.processString("code-generator/beetlsql/beetlentitydto.ftl", params));
         result.put("beetlcontroller", freemarkerTool.processString("code-generator/beetlsql/beetlcontroller.ftl", params));
         //mybatis plus
         result.put("pluscontroller", freemarkerTool.processString("code-generator/mybatis-plus/pluscontroller.ftl", params));
         result.put("plusmapper", freemarkerTool.processString("code-generator/mybatis-plus/plusmapper.ftl", params));
+        result.put("plusentity", freemarkerTool.processString("code-generator/mybatis-plus/plusentity.ftl", params));
         //util
         result.put("util", freemarkerTool.processString("code-generator/util/util.ftl", params));
         result.put("json", freemarkerTool.processString("code-generator/util/json.ftl", params));
