@@ -88,7 +88,7 @@
                 success: function (data) {
                     if (data.code === 200) {
                         codeData = data.data;
-                        genCodeArea.setValue(codeData.entity);
+                        genCodeArea.setValue(codeData.beetlentity);
                         genCodeArea.setSize('auto', 'auto');
                         $.toast("√ 代码生成成功");
                         //添加历史记录
@@ -231,7 +231,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">返回封装</span>
             </div>
-            <input type="text" class="form-control" id="returnUtil" name="returnUtil" value="ApiReturnObject">
+            <input type="text" class="form-control" id="returnUtil" name="returnUtil" value="new ReturnT<>">
             <div class="input-group-prepend">
                 <span class="input-group-text">包名路径</span>
             </div>
@@ -324,12 +324,13 @@ CREATE TABLE 'userinfo' (
                     </div>
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-default generator" id="plusentity">entity</button>
                     <button type="button" class="btn btn-default generator" id="plusmapper">mapper</button>
                     <button type="button" class="btn btn-default generator" id="pluscontroller">controller</button>
                 </div>
             </div>
 
-            <div class="btn-toolbar col-md-5" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-toolbar col-md-7" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <div class="btn btn-secondary disabled setWidth" id="btnGroupAddon">UI</div>
@@ -339,6 +340,8 @@ CREATE TABLE 'userinfo' (
                     <button type="button" class="btn btn-default generator" id="swagger-ui">swagger-ui</button>
                     <button type="button" class="btn btn-default generator" id="element-ui">element-ui</button>
                     <button type="button" class="btn btn-default generator" id="bootstrap-ui">bootstrap-ui</button>
+                    <button type="button" class="btn btn-default generator" id="layui-edit">layui-edit</button>
+                    <button type="button" class="btn btn-default generator" id="layui-list">layui-list</button>
                 </div>
             </div>
         </div>
@@ -395,16 +398,6 @@ CREATE TABLE 'userinfo' (
             </div>
         </div>
         <div class="row" style="margin-top: 10px;">
-            <div class="btn-toolbar col-md-5" role="toolbar" aria-label="Toolbar with button groups">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="btn btn-secondary disabled setWidth" id="btnGroupAddon">DTO</div>
-                    </div>
-                </div>
-                <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-default generator" id="beetlentitydto">entitydto(lombok+swagger)</button>
-                </div>
-            </div>
             <div class="btn-toolbar col-md-5" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="input-group">
                     <div class="input-group-prepend">

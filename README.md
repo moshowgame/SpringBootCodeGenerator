@@ -27,6 +27,8 @@
 
 |更新日期|更新内容|
 |-|-|
+|20200503|1.优化对特殊字符的处理，对于包含#和$等特殊字符的，在模板使用井和￥代替便可，escapeString方法会自动处理<br> 2.优化mybatisplus实体类相关(感谢@chunchengmeigui的反馈) 3.修优化对所有类型的判断(感谢@cnlw的反馈) 4.移除swagger-entity，该功能已经包含在‘swagger-ui’的下拉选项中  5.升级hutool和lombok版本|
+|20200306|1.提交一套layuimini+mybatisplus的模板. 2.修复mybatisplus一些相关问题. |
 |20200206|1.新增历史记录功能，自动保存最近生成的对象 2.新增swagger开关选项和修复@Column带name参数(感谢@liuyu-struggle的建议) 3.去除mybatis模板中的方括号[]和修改模板里的类注释样式(感谢@gaohanghang的PR)|
 |20191229|1.修复bejson安全防护策略拦截问题(感谢@liangbintao和@1808083642的反馈) 2.优化字段名含date字符串的处理(感谢@smilexzh的反馈) 3.控制台动态输出项目访问地址(感谢@gaohanghang的提交)|
 |20191128|1.修复支持string-copy导致的以n结尾的字母不显示问题 2.jpa-entity新增swagger@ApiModel@ApiModelProperty注解和SQL字段@Column注解(感谢@yjq907的建议) |   
