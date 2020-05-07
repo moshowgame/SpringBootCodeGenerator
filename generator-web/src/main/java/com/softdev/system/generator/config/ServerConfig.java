@@ -27,7 +27,7 @@ public class ServerConfig implements ApplicationListener<WebServerInitializedEve
             int serverPort = event.getWebServer().getPort();
             // 新增动态path by zhengkai
             String serverPath = event.getApplicationContext().getApplicationName();
-            log.info("项目启动启动成功！访问地址: http://{}:{}{}", hostAddress, serverPort, serverPath);
+            log.info("项目启动成功！访问地址: http://{}:{}{}", hostAddress, serverPort, serverPath);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
