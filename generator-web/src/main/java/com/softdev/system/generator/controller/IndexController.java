@@ -77,10 +77,7 @@ public class IndexController {
             Map<String, String> result = generatorService.getResultByParams(params);
 
             return new ReturnT<>(result);
-        } catch (IOException | TemplateException e) {
-            log.error(e.getMessage(), e);
-            return new ReturnT<>(ReturnT.FAIL_CODE, e.getMessage());
-        } catch (CodeGenerateException e) {
+        } catch (IOException | TemplateException | CodeGenerateException e) {
             log.error(e.getMessage(), e);
             return new ReturnT<>(ReturnT.FAIL_CODE, e.getMessage());
         }
