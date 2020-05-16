@@ -5,6 +5,8 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +20,20 @@ import java.util.Map;
  * @author xuxueli 2018-05-02 19:56:00
  */
 @Slf4j
+@Component
 public class FreemarkerUtil {
+
+
+    @Autowired
+    private Configuration configuration;
+
+    /**
+     * 传入需要转义的字符串进行转义
+     * 20200503 zhengkai.blog.csdn.net
+     * */
+    public String escapeString(String originStr){
+        return originStr.replaceAll("井","\\#").replaceAll("￥","\\$");
+    }
 
     /**
      * freemarker config
@@ -32,7 +47,7 @@ public class FreemarkerUtil {
         }
 
         try {
-            freemarkerConfig.setDirectoryForTemplateLoading(new File(templatePath, "templates/xxl-code-generator"));
+            freemarkerConfig.setDirectoryForTemplateLoading(new File(templatePath, "templates/code-generator"));
             freemarkerConfig.setNumberFormat("#");
             freemarkerConfig.setClassicCompatible(true);
             freemarkerConfig.setDefaultEncoding("UTF-8");

@@ -17,13 +17,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * 表格解析Util
  * @author zhengkai.blog.csdn.net
  */
 public class TableParseUtil {
 
     /**
-     * 解析建表SQL生成代码（model-dao-xml）
-     *
+     * 解析DDL SQL生成类信息
      * @param paramInfo
      * @return
      */
@@ -35,7 +35,7 @@ public class TableParseUtil {
         String tinyintTransType=paramInfo.getTinyintTransType();
 
         if (tableSql==null || tableSql.trim().length()==0) {
-            throw new CodeGenerateException("Table structure can not be empty.");
+            throw new CodeGenerateException("Table structure can not be empty. 表结构不能为空。");
         }
         //deal with special character
         tableSql = tableSql.trim().replaceAll("'","`").replaceAll("\"","`").replaceAll("，",",").toLowerCase();
@@ -48,7 +48,7 @@ public class TableParseUtil {
         } else if (tableSql.contains("table") && tableSql.contains("(")) {
             tableName = tableSql.substring(tableSql.indexOf("table")+5, tableSql.indexOf("("));
         } else {
-            throw new CodeGenerateException("Table structure anomaly.");
+            throw new CodeGenerateException("Table structure incorrect.表结构不正确。");
         }
 
         //新增处理create table if not exists members情况
@@ -307,7 +307,7 @@ public class TableParseUtil {
         return codeJavaInfo;
     }
     /**
-     * parse JSON
+     * 解析JSON生成类信息
      * @param paramInfo
      * @return
      */

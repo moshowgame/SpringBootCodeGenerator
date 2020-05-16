@@ -206,7 +206,7 @@
             <a class="navbar-brand" href="http://www.bejson.com">BeJSON在线工具站</a>
             <ul class="nav navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="http://zhengkai.blog.csdn.net">大狼狗CSDN</a>
+                    <a class="nav-link" href="http://zhengkai.blog.csdn.net">zhengkai.blog.csdn.net</a>
                 </li>
             </ul>
         </nav>
