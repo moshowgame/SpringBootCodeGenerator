@@ -154,7 +154,7 @@
          */
         function donate(){
             if($("#donate").attr("show")=="no"){
-                $("#donate").html('<img src="http://upyun.bejson.com/img/zhengkai.png"></img>');
+                $("#donate").html('<img src="https://raw.githubusercontent.com/moshowgame/SpringBootCodeGenerator/master/donate.png"></img>');
                 $("#donate").attr("show","yes");
             }else{
                 $("#donate").html('<p>谢谢赞赏！</p>');
