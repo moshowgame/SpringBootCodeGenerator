@@ -31,7 +31,7 @@ public class FreemarkerUtil {
      * 传入需要转义的字符串进行转义
      * 20200503 zhengkai.blog.csdn.net
      * */
-    public String escapeString(String originStr){
+    public static String escapeString(String originStr){
         return originStr.replaceAll("井","\\#").replaceAll("￥","\\$");
     }
 
@@ -88,7 +88,7 @@ public class FreemarkerUtil {
             throws IOException, TemplateException {
 
         Template template = freemarkerConfig.getTemplate(templateName);
-        String htmlText = processTemplateIntoString(template, params);
+        String htmlText = escapeString(processTemplateIntoString(template, params));
         return htmlText;
     }
 

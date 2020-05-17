@@ -217,7 +217,9 @@
     <div class="container">
         <h2>Spring Boot Code Generator!</h2>
         <p class="lead">
-            √基于SpringBoot2+Freemarker的<a class="lead" href="https://github.com/moshowgame/SpringBootCodeGenerator">代码生成器</a>，√以释放双手为目的，√支持mysql/oracle/pgsql三大数据库，<br>
+            √基于SpringBoot2+Freemarker的<a class="lead" href="https://github.com/moshowgame/SpringBootCodeGenerator">代码生成器</a><br>
+            √以解放双手为目的，减少大量重复的CRUD工作<br>
+            √支持mysql/oracle/pgsql三大数据库<br>
             √用DDL-SQL语句生成JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL相关代码。<br>
             如果发现有SQL语句不能识别，请<a href="https://github.com/moshowgame/SpringBootCodeGenerator/issues">留言</a>，同时欢迎大家提<a href="https://github.com/moshowgame/SpringBootCodeGenerator/pulls">PR</a>和<a href="#" id="donate1">赞赏</a>，谢谢！<a id="version" href="#">查看版本</a>
         </p>
@@ -279,7 +281,7 @@
         <textarea id="ddlSqlArea" placeholder="请输入表结构信息..." class="form-control btn-lg" style="height: 250px;">
 CREATE TABLE 'userinfo' (
   'user_id' int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  'username' varchar(255) NOT NULL COMMENT '用户名',
+  'user_name' varchar(255) NOT NULL COMMENT '用户名',
   'addtime' datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY ('user_id')
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息'
@@ -307,10 +309,11 @@ CREATE TABLE 'userinfo' (
                     </div>
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-default generator" id="mybatis">mybatis</button>
+                    <button type="button" class="btn btn-default generator" id="mybatis">ibatisXml</button>
                     <button type="button" class="btn btn-default generator" id="mapper">mapper</button>
+                    <button type="button" class="btn btn-default generator" id="mapper2">mapper2</button>
                     <button type="button" class="btn btn-default generator" id="service">service</button>
-                    <button type="button" class="btn btn-default generator" id="service_impl">service_impl</button>
+                    <button type="button" class="btn btn-default generator" id="service_impl">serviceImpl</button>
                     <button type="button" class="btn btn-default generator" id="controller">controller</button>
                 </div>
             </div>

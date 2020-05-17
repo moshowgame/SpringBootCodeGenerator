@@ -12,8 +12,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
  * @author ${authorName}
  * @date ${.now?string('yyyy-MM-dd HH:mm:ss')}
  */
-@Data
-<#if swagger?exists && swagger==true>@ApiModel("${classInfo.classComment}")</#if>
+@Data<#if swagger?exists && swagger==true>
+@ApiModel("${classInfo.classComment}")</#if>
 public class ${classInfo.className} implements Serializable {
 
     private static final long serialVersionUID = 1L;

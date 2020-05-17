@@ -66,6 +66,12 @@
     "description": "model"
   },
   {
+    "id": "26",
+    "name": "mapper2",
+    "group": "mybatis",
+    "description": "mapper annotation"
+  },
+  {
     "id": "30",
     "name": "entity",
     "group": "jpa",

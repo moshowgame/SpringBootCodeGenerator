@@ -7,9 +7,15 @@
 
 # Description
 - √ 基于SpringBoot2+Freemarker+Bootstrap
-- √ 以释放双手为目的
+- √ 以解放双手为目的，减少大量重复的CRUD工作
 - √ 支持mysql/oracle/pgsql三大数据库
 - √ 用DDL-SQL语句生成JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL相关代码.
+
+# Advantage 
+- 自动记忆最近生成的内容，最多保留9个
+- 支持特殊字符模板(`#`请用`井`代替;`$`请用`￥`代替)
+- 提供众多通用模板，易于使用，复制粘贴加简单修改即可完成CRUD操作
+- 支持JSON逆向生成(只支持简单的一级树)
 
 
 # Url
@@ -20,14 +26,14 @@
 |CSDN博客|http://zhengkai.blog.csdn.net|
 |最新Jar包|https://github.com/moshowgame/SpringBootCodeGenerator/releases|
 
-感谢bejson三叔将他部署在[BEJSON](www.bejson.com)上，目前是besjon专供工具(线上版本不一定是最新的，会有延迟，请谅解，谢谢).
+感谢bejson三叔将他部署在[BEJSON](www.bejson.com)上，目前是besjon专供的金牌工具(线上版本不一定是最新的，会有延迟，请谅解，谢谢).
 
 
 # Update
 
 |更新日期|更新内容|
 |-|-|
-|20200517|1.代码重构！异常处理优化，Freemarker相关工具类优化，简化模板生成部分，通过template.json来配置需要生成的模板，不需要配置java文件。 2.修复包含comment关键字时注释无法识别的问题。(感谢@1nchaos的反馈) 3.赞赏优化，感谢大家的赞赏|
+|20200517|1.代码重构！异常处理优化，Freemarker相关工具类优化，简化模板生成部分，通过template.json来配置需要生成的模板，不需要配置java文件。 2.修复包含comment关键字时注释无法识别的问题。(感谢@1nchaos的反馈) 3.赞赏优化，感谢大家的赞赏 4.新增mapper2(Mybatis-Annotation模板)(感谢@baisi525和@CHKEGit的建议)。|
 |20200503|1.优化对特殊字符的处理，对于包含#和$等特殊字符的，在模板使用井和￥代替便可，escapeString方法会自动处理<br> 2.优化mybatisplus实体类相关(感谢@chunchengmeigui的反馈) 3.修优化对所有类型的判断(感谢@cnlw的反馈) 4.移除swagger-entity，该功能已经包含在‘swagger-ui’的下拉选项中  5.升级hutool和lombok版本|
 |20200306|1.提交一套layuimini+mybatisplus的模板. 2.修复mybatisplus一些相关问题. |
 |20200206|1.新增历史记录功能，自动保存最近生成的对象 2.新增swagger开关选项和修复@Column带name参数(感谢@liuyu-struggle的建议) 3.去除mybatis模板中的方括号[]和修改模板里的类注释样式(感谢@gaohanghang的PR)|
