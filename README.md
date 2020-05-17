@@ -27,7 +27,7 @@
 
 |更新日期|更新内容|
 |-|-|
-|20200517|1.代码重构！异常处理优化，Freemarker相关工具类优化，简化模板生成部分，通过template.json来配置需要生成的模板，不需要配置java文件。|
+|20200517|1.代码重构！异常处理优化，Freemarker相关工具类优化，简化模板生成部分，通过template.json来配置需要生成的模板，不需要配置java文件。 2.修复包含comment关键字时注释无法识别的问题。(感谢@1nchaos的反馈)|
 |20200503|1.优化对特殊字符的处理，对于包含#和$等特殊字符的，在模板使用井和￥代替便可，escapeString方法会自动处理<br> 2.优化mybatisplus实体类相关(感谢@chunchengmeigui的反馈) 3.修优化对所有类型的判断(感谢@cnlw的反馈) 4.移除swagger-entity，该功能已经包含在‘swagger-ui’的下拉选项中  5.升级hutool和lombok版本|
 |20200306|1.提交一套layuimini+mybatisplus的模板. 2.修复mybatisplus一些相关问题. |
 |20200206|1.新增历史记录功能，自动保存最近生成的对象 2.新增swagger开关选项和修复@Column带name参数(感谢@liuyu-struggle的建议) 3.去除mybatis模板中的方括号[]和修改模板里的类注释样式(感谢@gaohanghang的PR)|

@@ -263,12 +263,13 @@ public class TableParseUtil {
                         fieldComment=columnName;
                         while(columnCommentMatcher.find()){
                             String columnCommentTmp = columnCommentMatcher.group();
-                            System.out.println(columnCommentTmp);
+                            //System.out.println(columnCommentTmp);
                             fieldComment = tableSql.substring(tableSql.indexOf(columnCommentTmp)+columnCommentTmp.length()).trim();
                             fieldComment = fieldComment.substring(0,fieldComment.indexOf("`")).trim();
                         }
-                    }else if (columnLine.contains("comment")) {
-                        String commentTmp = columnLine.substring(columnLine.indexOf("comment")+7).trim();
+                    }else if (columnLine.contains(" comment")) {
+                        //20200518 zhengkai 修复包含comment关键字的问题
+                        String commentTmp = columnLine.substring(columnLine.lastIndexOf("comment")+7).trim();
                         // '用户ID',
                         if (commentTmp.contains("`") || commentTmp.indexOf("`")!=commentTmp.lastIndexOf("`")) {
                             commentTmp = commentTmp.substring(commentTmp.indexOf("`")+1, commentTmp.lastIndexOf("`"));
