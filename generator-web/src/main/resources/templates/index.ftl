@@ -245,9 +245,10 @@
             </div>
             <select type="text" class="form-control" id="dataType"
                     name="dataType">
-                <option value="sql">sql</option>
+                <option value="sql">ddl-sql</option>
                 <option value="json">json</option>
-                <option value="sql-regex">sql-regex</option>
+                <option value="insert-sql">insert-sql</option>
+                <#--<option value="sql-regex">sql-regex</option>-->
             </select>
             <div class="input-group-prepend">
                 <span class="input-group-text">tinyint转换类型</span>

@@ -11,8 +11,10 @@ import com.softdev.system.generator.entity.ParamInfo;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -420,5 +422,62 @@ public class TableParseUtil {
             throw new CodeGenerateException("JSON解析失败");
         }
         return fieldList;
+    }
+
+    public static ClassInfo processInsertSqlToClassInfo(ParamInfo paramInfo) {
+        // field List
+        List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
+        //return classInfo
+        ClassInfo codeJavaInfo = new ClassInfo();
+
+        //get origin sql
+        String fieldSqlStr = paramInfo.getTableSql().toLowerCase().trim();
+        fieldSqlStr=fieldSqlStr.replaceAll("  "," ").replaceAll("\\\\n`","")
+                .replaceAll("\\+","").replaceAll("``","`").replaceAll("\\\\","");
+        String valueStr = fieldSqlStr.substring(fieldSqlStr.lastIndexOf("values")+6).replaceAll(" ","").replaceAll("\\(","").replaceAll("\\)","");
+        //get the string between insert into and values
+        fieldSqlStr=fieldSqlStr.substring(0,fieldSqlStr.lastIndexOf("values"));
+
+        System.out.println(fieldSqlStr);
+
+        String insertSqlPattenStr = "insert into (?<tableName>.*) \\((?<columnsSQL>.*)\\)";
+        //String DDL_PATTEN_STR="\\s*create\\s+table\\s+(?<tableName>\\S+)[^\\(]*\\((?<columnsSQL>[\\s\\S]+)\\)[^\\)]+?(comment\\s*(=|on\\s+table)\\s*'(?<tableComment>.*?)'\\s*;?)?$";
+
+        Matcher matcher1 = Pattern.compile(insertSqlPattenStr).matcher(fieldSqlStr);
+        while(matcher1.find()){
+
+            String tableName = matcher1.group("tableName");
+            //System.out.println("tableName:"+tableName);
+            codeJavaInfo.setClassName(tableName);
+            codeJavaInfo.setTableName(tableName);
+
+            String columnsSQL = matcher1.group("columnsSQL");
+            //System.out.println("columnsSQL:"+columnsSQL);
+
+            List<String> valueList = new ArrayList<>();
+            //add values as comment
+            Arrays.stream(valueStr.split(",")).forEach(column->{
+                valueList.add(column);
+            });
+            AtomicInteger n= new AtomicInteger(0);
+            //add column to fleldList
+            Arrays.stream(columnsSQL.replaceAll(" ", "").split(",")).forEach(column->{
+                FieldInfo fieldInfo2 = new FieldInfo();
+                fieldInfo2.setFieldName(column);
+                fieldInfo2.setColumnName(column);
+                fieldInfo2.setFieldClass(String.class.getSimpleName());
+                if(n.get()<valueList.size()){
+                    fieldInfo2.setFieldComment(column+" , eg."+valueList.get(n.get()));
+                }
+                fieldList.add(fieldInfo2);
+                n.getAndIncrement();
+            });
+
+        }
+        if(fieldList.size()<1){
+            throw new CodeGenerateException("INSERT SQL解析失败");
+        }
+        codeJavaInfo.setFieldList(fieldList);
+        return codeJavaInfo;
     }
 }

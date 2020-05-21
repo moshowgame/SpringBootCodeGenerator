@@ -45,6 +45,8 @@ public class IndexController {
         switch (paramInfo.getDataType()){
             //JSON模式：parse field from json string
             case "json":classInfo = TableParseUtil.processJsonToClassInfo(paramInfo);break;
+            //INSERT SQL模式：parse field from insert sql
+            case "insert-sql":classInfo = TableParseUtil.processInsertSqlToClassInfo(paramInfo);break;
             //正则表达式模式（非完善版本）：parse sql by regex
             case "sql-regex":classInfo = TableParseUtil.processTableToClassInfoByRegex(paramInfo);break;
             //默认模式：default parse sql by java
