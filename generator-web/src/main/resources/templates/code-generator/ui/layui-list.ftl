@@ -40,8 +40,8 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-sm data-add-btn"> 添加${classInfo.classComment} </button>
-               <#-- <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn"> 删除${classInfo.classComment} </button>-->
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add">  <i class="layui-icon layui-icon-addition"></i>${classInfo.classComment} </button>
+               <#-- <button class="layui-btn layui-btn-normal layui-btn-sm layui-btn-danger data-delete-btn" lay-event="del"> 删除${classInfo.classComment} </button>-->
             </div>
         </script>
 
@@ -52,11 +52,20 @@
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
         </script>
 
-        <script type="text/html" id="statusTemplate">
-            {{#  if(d.status = 1){ }}
-            启用
+        <script type="text/html" id="typeTemplate">
+            {{#  if(d.type == '1'){ }}
+            常规
+            {{#  } else if(d.type =='2') { }}
+            专项
             {{#  } else { }}
-            停用
+            其它
+            {{#  } }}
+        </script>
+        <script type="text/html" id="statusTemplate">
+            {{#  if(d.status == '1' ){ }}
+            <i class="layui-icon layui-icon-ok"></i>已发布
+            {{#  } else { }}
+            - 未发布
             {{#  } }}
         </script>
     </div>
@@ -66,8 +75,7 @@
     layui.use(['form', 'table'], function () {
         var $ = layui.jquery,
             form = layui.form,
-            table = layui.table,
-            layuimini = layui.layuimini;
+            table = layui.table;
 
         table.render({
             elem: '#currentTableId',
@@ -83,23 +91,26 @@
                 {type: "checkbox", width: 50, fixed: "left"},
                 <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
                 <#list classInfo.fieldList as fieldItem >
-                    {field: '${fieldItem.fieldName}', width: 150, title: '${fieldItem.fieldComment}', sort: true}, <#if fieldItem_has_next> </#if>
+                    {field: '${fieldItem.fieldName}', title: '${fieldItem.fieldComment}', sort: true}, <#if fieldItem_has_next> </#if>
                 </#list>
                 </#if>
-                {title: '操作', minWidth: 50, templet: '#currentTableBar', fixed: "right", align: "center"}
+                /* 需要时间请自行解封
+                {title: '创建时间', sort: true,templet: "<div>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd')}}</div>"},
+                {title: '修改时间', sort: true,templet: "<div>{{layui.util.toDateString(d.updateTime, 'yyyy-MM-dd')}}</div>"},
+                */
+                {title: '操作', minWidth: 400, templet: '#currentTableBar', fixed: "right", align: "center"}
             ]],
-            limits: [10, 20, 50 , 100],
-            limit: 10,
+            limits: [20 , 50 , 100],
+            limit: 20,
             page: true
         });
 
         var result;
-        // 监听搜索操作
+        /**
+         * submit(data-search-btn):监听搜索操作
+         */
         form.on('submit(data-search-btn)', function (data) {
             result = JSON.stringify(data.field);
-            // layer.alert(result, {
-            //     title: '最终的搜索信息'
-            // });
 
             //执行搜索重载
             table.reload('currentTableId', {
@@ -113,51 +124,54 @@
 
             return false;
         });
+
         var searchBtn = $("#searchBtn");
-        // 监听添加操作
-        $(".data-add-btn").on("click", function () {
-            var index = layer.open({
-                title: '添加${classInfo.classComment}',
-                type: 2,
-                shade: 0.2,
-                maxmin:true,
-                shadeClose: true,
-                area: ['800px', '500px'],
-                content: '￥{request.contextPath}/${classInfo.className?uncap_first}/edit?id=0',
-            });
-            layer.full(index);
-            return false;
-        });
-
-        // 监听删除操作
-        $(".data-delete-btn").on("click", function () {
-            var checkStatus = table.checkStatus('currentTableId')
-                , data = checkStatus.data;
-            layer.alert(JSON.stringify(data));
-        });
-
-        //监听表格复选框选择
-        table.on('checkbox(currentTableFilter)', function (obj) {
-            console.log(obj)
-        });
-
-        //监听表格编辑删除等功能按钮
-        table.on('tool(currentTableFilter)', function (obj) {
-            var data = obj.data;
-            if (obj.event === 'edit') {
+        /**
+         * toolbar监听事件:表格添加按钮
+         */
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'add') {
                 var index = layer.open({
-                    title: '编辑${classInfo.classComment}',
+                    title: '添加',
                     type: 2,
                     shade: 0.2,
                     maxmin:true,
                     shadeClose: true,
-                    area: ['800px', '500px'],
+                    area: ['1000px', '700px'],
+                    content: '￥{request.contextPath}/${classInfo.className?uncap_first}/edit?id=0',
+                });
+                return false;
+            }else if(obj.event === 'del') {
+                var checkStatus = table.checkStatus('currentTableId')
+                    , data = checkStatus.data;
+                layer.alert(JSON.stringify(data));
+            }
+        });
+        /**
+         * checkbox(currentTableFilter):表格复选框选择
+         */
+        table.on('checkbox(currentTableFilter)', function (obj) {
+            //console.log(obj)
+        });
+
+        /**
+         * tool监听事件:表格编辑删除等功能按钮
+         */
+        table.on('tool(currentTableFilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+                var index = layer.open({
+                    title: '编辑',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin:true,
+                    shadeClose: true,
+                    area: ['1000px', '700px'],
                     content: '￥{request.contextPath}/${classInfo.className?uncap_first}/edit?id='+obj.data.${classInfo.className?uncap_first}Id,
                 });
-                layer.full(index);
                 return false;
             } else if (obj.event === 'delete') {
-                layer.confirm('真的删除行么', function (index) {
+                layer.confirm('确认删除该记录吗？', function (index) {
                     $.ajax({
                         type: 'POST',
                         url: "￥{request.contextPath}/${classInfo.className?uncap_first}/delete",

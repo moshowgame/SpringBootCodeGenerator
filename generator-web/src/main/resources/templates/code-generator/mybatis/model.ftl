@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @description ${classInfo.classComment}
  * @author ${authorName}
- * @date ${.now?string('yyyy-MM-dd HH:mm:ss')}
+ * @date ${.now?string('yyyy-MM-dd')}
  */
 public class ${classInfo.className} implements Serializable {
 

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @description ${classInfo.classComment}
  * @author ${authorName}
- * @date ${.now?string('yyyy-MM-dd HH:mm:ss')}
+ * @date ${.now?string('yyyy-MM-dd')}
  */
 @Repository
 public class ${classInfo.className}DaoImpl implements I${classInfo.className}Dao{

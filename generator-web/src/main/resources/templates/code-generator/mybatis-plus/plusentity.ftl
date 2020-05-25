@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 /**
  * @description ${classInfo.classComment}
  * @author ${authorName}
- * @date ${.now?string('yyyy-MM-dd HH:mm:ss')}
+ * @date ${.now?string('yyyy-MM-dd')}
  */
 @Data<#if swagger?exists && swagger==true>
 @ApiModel("${classInfo.classComment}")</#if>

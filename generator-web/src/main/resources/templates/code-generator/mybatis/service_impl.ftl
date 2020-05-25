@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * @description ${classInfo.classComment}
  * @author ${authorName}
- * @date ${.now?string('yyyy-MM-dd HH:mm:ss')}
+ * @date ${.now?string('yyyy-MM-dd')}
  */
 @Service
 public class ${classInfo.className}ServiceImpl implements ${classInfo.className}Service {
@@ -23,25 +23,25 @@ public class ${classInfo.className}ServiceImpl implements ${classInfo.className}
 
 		// valid
 		if (${classInfo.className?uncap_first} == null) {
-			return new ReturnT<String>(ReturnT.FAIL_CODE, "必要参数缺失");
+			return ${returnUtil}.ERROR("必要参数缺失");
         }
 
 		${classInfo.className?uncap_first}Mapper.insert(${classInfo.className?uncap_first});
-        return ReturnT.SUCCESS;
+        return ${returnUtil}.SUCCESS;
 	}
 
 
 	@Override
 	public ReturnT<String> delete(int id) {
 		int ret = ${classInfo.className?uncap_first}Mapper.delete(id);
-		return ret>0?ReturnT.SUCCESS:ReturnT.FAIL;
+		return ret>0?${returnUtil}.SUCCESS():${returnUtil}.ERROR();
 	}
 
 
 	@Override
 	public ReturnT<String> update(${classInfo.className} ${classInfo.className?uncap_first}) {
 		int ret = ${classInfo.className?uncap_first}Mapper.update(${classInfo.className?uncap_first});
-		return ret>0?ReturnT.SUCCESS:ReturnT.FAIL;
+		return ret>0?${returnUtil}.SUCCESS():${returnUtil}.ERROR();
 	}
 
 

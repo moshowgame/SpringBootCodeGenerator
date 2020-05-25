@@ -14,9 +14,9 @@
 # Advantage 
 - 支持DDL SQL/INSERT SQL/SIMPLE JSON生成模式
 - 自动记忆最近生成的内容，最多保留9个
-- 支持特殊字符模板(`#`请用`井`代替;`$`请用`￥`代替)
 - 提供众多通用模板，易于使用，复制粘贴加简单修改即可完成CRUD操作
-
+- 支持特殊字符模板(`#`请用`井`代替;`$`请用`￥`代替)
+- 根据comment=(mysql)或者comment on table(pgsql/oracle)生成类名注释
 
 # Url
 
@@ -33,6 +33,7 @@
 
 |更新日期|更新内容|
 |----|----|
+|20200525|1.一些fix,关于封装工具类以及layui模板优化等.<br> 2.优化表备注的获取逻辑.<br> 3.生成时间格式改为yyyy-MM-dd,移除具体的时间,只保留日期|
 |20200522|1.新增insert-sql模式,支持对"insert into table (xxx) values (xxx)"语句进行处理,生成java代码(感谢三叔的建议).|
 |20200517|1.代码重构！异常处理优化,Freemarker相关工具类优化,简化模板生成部分,通过template.json来配置需要生成的模板,不需要配置java文件.<br> 2.修复包含comment关键字时注释无法识别的问题.(感谢@1nchaos的反馈).<br> 3.赞赏优化,感谢大家的赞赏.<br> 4.新增mapper2(Mybatis-Annotation模板)(感谢@baisi525和@CHKEGit的建议).|
 |20200503|1.优化对特殊字符的处理,对于包含#和$等特殊字符的,在模板使用井和￥代替便可,escapeString方法会自动处理.<br> 2.优化mybatisplus实体类相关(感谢@chunchengmeigui的反馈).<br> 3.修优化对所有类型的判断(感谢@cnlw的反馈).<br> 4.移除swagger-entity,该功能已经包含在‘swagger-ui’的下拉选项中  <br> 5.升级hutool和lombok版本|

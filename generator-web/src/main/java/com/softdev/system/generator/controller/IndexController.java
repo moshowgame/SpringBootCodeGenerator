@@ -34,10 +34,10 @@ public class IndexController {
 
     @PostMapping("/genCode")
     @ResponseBody
-    public ReturnT<Map<String, String>> codeGenerate(@RequestBody ParamInfo paramInfo ) throws Exception {
+    public ReturnT codeGenerate(@RequestBody ParamInfo paramInfo ) throws Exception {
 
         if (paramInfo.getTableSql().trim().length()<1) {
-            return new ReturnT<>(ReturnT.FAIL_CODE, "表结构信息不可为空");
+            return ReturnT.ERROR("表结构信息不可为空");
         }
 
         //1.Parse Table Structure 表结构解析
@@ -68,7 +68,7 @@ public class IndexController {
         //3.generate the code by freemarker template and param . Freemarker根据参数和模板生成代码
         Map<String, String> result = generatorService.getResultByParams(params);
 
-        return new ReturnT<>(result);
+        return ReturnT.SUCCESS(result);
     }
 
 }

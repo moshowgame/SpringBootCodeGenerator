@@ -229,11 +229,11 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">作者名称</span>
             </div>
-            <input type="text" class="form-control" id="authorName" name="authorName" value="大狼狗">
+            <input type="text" class="form-control" id="authorName" name="authorName" value="zhengkai.blog.csdn.net">
             <div class="input-group-prepend">
                 <span class="input-group-text">返回封装</span>
             </div>
-            <input type="text" class="form-control" id="returnUtil" name="returnUtil" value="new ReturnT<>">
+            <input type="text" class="form-control" id="returnUtil" name="returnUtil" value="ReturnT">
             <div class="input-group-prepend">
                 <span class="input-group-text">包名路径</span>
             </div>

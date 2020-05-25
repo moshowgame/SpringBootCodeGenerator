@@ -20,7 +20,7 @@ import java.util.Map;
 /**
 * @description ${classInfo.classComment}
 * @author ${authorName}
-* @date ${.now?string('yyyy-MM-dd HH:mm:ss')}
+* @date ${.now?string('yyyy-MM-dd')}
 */
 @Slf4j
 @RestController
@@ -37,17 +37,17 @@ public class ${classInfo.className}Controller {
     public Object save(@RequestBody ${classInfo.className} ${classInfo.className?uncap_first}){
         log.info("${classInfo.className?uncap_first}:"+JSON.toJSONString(${classInfo.className?uncap_first}));
         ${classInfo.className} old${classInfo.className} = ${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("${classInfo.className?uncap_first}_id",${classInfo.className?uncap_first}.get${classInfo.className}Id()));
-        ${classInfo.className?uncap_first}.setModifyDate(new Date());
+        ${classInfo.className?uncap_first}.setUpdateTime(new Date());
         if(old${classInfo.className}!=null){
             ${classInfo.className?uncap_first}Mapper.updateById(${classInfo.className?uncap_first});
         }else{
         if(${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("${classInfo.className?uncap_first}_name",${classInfo.className?uncap_first}.get${classInfo.className}Name()))!=null){
-            return new ReturnT<>(ReturnT.FAIL_CODE,"保存失败，名字重复");
+            return ${returnUtil}.ERROR("保存失败，名字重复");
         }
-        ${classInfo.className?uncap_first}.setCreateDate(new Date());
+        ${classInfo.className?uncap_first}.setCreateTime(new Date());
         ${classInfo.className?uncap_first}Mapper.insert(${classInfo.className?uncap_first});
         }
-        return new ReturnT<>(ReturnT.SUCCESS_CODE,"保存成功");
+        return ${returnUtil}.SUCCESS("保存成功");
     }
 
     /**
@@ -58,9 +58,9 @@ public class ${classInfo.className}Controller {
     ${classInfo.className} ${classInfo.className?uncap_first} = ${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("${classInfo.className?uncap_first}_id",id));
         if(${classInfo.className?uncap_first}!=null){
             ${classInfo.className?uncap_first}Mapper.deleteById(id);
-            return new ReturnT<>(ReturnT.SUCCESS_CODE,"删除成功");
+            return ${returnUtil}.SUCCESS("删除成功");
         }else{
-            return new ReturnT<>(ReturnT.FAIL_CODE,"没有找到该对象");
+            return ${returnUtil}.ERROR("没有找到该对象");
         }
     }
 
@@ -71,14 +71,14 @@ public class ${classInfo.className}Controller {
     public Object find(int id){
     ${classInfo.className} ${classInfo.className?uncap_first} = ${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("${classInfo.className?uncap_first}_id",id));
         if(${classInfo.className?uncap_first}!=null){
-            return new ReturnT<>(${classInfo.className?uncap_first});
+            return ${returnUtil}.SUCCESS(${classInfo.className?uncap_first});
         }else{
-            return new ReturnT<>(ReturnT.FAIL_CODE,"没有找到该对象");
+            return ${returnUtil}.ERROR("没有找到该对象");
         }
     }
 
     /**
-    * 分页查询
+    * 自动分页查询
     */
     @PostMapping("/list")
     public Object list(String searchParams,
@@ -96,12 +96,33 @@ public class ${classInfo.className}Controller {
         //执行分页
         IPage<${classInfo.className}> pageList = ${classInfo.className?uncap_first}Mapper.selectPage(buildPage, queryWrapper);
         //返回结果
-        return new ReturnT<>(pageList.getRecords(),Integer.parseInt(pageList.getTotal()+""));
+        return ${returnUtil}.PAGE(pageList.getRecords(),pageList.getTotal());
+    }
+    /**
+    * 手工分页查询(按需使用)
+    */
+    @PostMapping("/list2")
+    public ReturnT list2(String searchParams,
+    @RequestParam(required = false, defaultValue = "0") int page,
+    @RequestParam(required = false, defaultValue = "10") int limit) {
+        log.info("searchParams:"+ JSON.toJSONString(searchParams));
+        //通用模式
+        ${classInfo.className} queryParamDTO = JSON.parseObject(searchParams, ${classInfo.className}.class);
+        //专用DTO模式
+        //QueryParamDTO queryParamDTO = JSON.parseObject(searchParams, QueryParamDTO.class);
+        //queryParamDTO.setPage((page - 1)* limit);
+        //queryParamDTO.setLimit(limit);
+        //(page - 1) * limit, limit
+        List<${classInfo.className}> itemList = ${classInfo.className?uncap_first}Mapper.pageAll(queryParamDTO,(page - 1)* limit,limit);
+        Integer itemCount = ${classInfo.className?uncap_first}Mapper.countAll(queryParamDTO);
+        //返回结果
+        return ReturnT.PAGE(itemList,itemCount);
     }
     @GetMapping("/list")
     public ModelAndView listPage(){
         return new ModelAndView("cms/${classInfo.className?uncap_first}-list");
     }
+
     @GetMapping("/edit")
     public ModelAndView editPage(int id){
         ${classInfo.className} ${classInfo.className?uncap_first} = ${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("${classInfo.className?uncap_first}_id",id));

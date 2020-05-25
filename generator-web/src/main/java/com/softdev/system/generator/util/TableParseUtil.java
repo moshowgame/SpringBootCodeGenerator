@@ -80,28 +80,17 @@ public class TableParseUtil {
         // class Comment
         String classComment = null;
         //mysql是comment=,pgsql/oracle是comment on table,
-        if (tableSql.contains("comment=")) {
-            String classCommentTmp = tableSql.substring(tableSql.lastIndexOf("comment=")+8).replaceAll("`","").trim();
-            if (classCommentTmp.indexOf(" ")!=classCommentTmp.lastIndexOf(" ")) {
-                classCommentTmp = classCommentTmp.substring(classCommentTmp.indexOf(" ")+1, classCommentTmp.lastIndexOf(" "));
-            }
-            if (classCommentTmp!=null && classCommentTmp.trim().length()>0) {
-                classComment = classCommentTmp;
-            }else{
-                //修复表备注为空问题
-                classComment = className;
-            }
-        }else if(tableSql.contains("comment on table")) {
-            //COMMENT ON TABLE CT_BAS_FEETYPE IS 'CT_BAS_FEETYPE';
-            String classCommentTmp = tableSql.substring(tableSql.lastIndexOf("comment on table")+17).trim();
-            //证明这是一个常规的COMMENT ON TABLE  xxx IS 'xxxx'
+        //2020-05-25 优化表备注的获取逻辑
+        if (tableSql.contains("comment=")||tableSql.contains("comment on table")) {
+            String classCommentTmp = (tableSql.contains("comment="))?
+                    tableSql.substring(tableSql.lastIndexOf("comment=")+8).trim():tableSql.substring(tableSql.lastIndexOf("comment on table")+17).trim();
             if (classCommentTmp.contains("`")) {
                 classCommentTmp = classCommentTmp.substring(classCommentTmp.indexOf("`")+1);
                 classCommentTmp = classCommentTmp.substring(0,classCommentTmp.indexOf("`"));
                 classComment = classCommentTmp;
             }else{
                 //非常规的没法分析
-                classComment = tableName;
+                classComment = className;
             }
         }else{
             //修复表备注为空问题
