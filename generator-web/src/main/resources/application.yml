@@ -42,6 +42,7 @@ spring:
         expose-spring-macro-helpers: true
         settings:
           number_format: 0.##
+          default_encoding: UTF-8
           #template_loader: /templates/
     mvc:
       static-path-pattern: /static/**
