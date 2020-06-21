@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -44,6 +45,10 @@ public class FreemarkerUtil {
             freemarkerConfig.setClassForTemplateLoading(FreemarkerUtil.class, "/templates/code-generator");
             freemarkerConfig.setTemplateLoader(new ClassTemplateLoader(FreemarkerUtil.class, "/templates/code-generator"));
             //freemarkerConfig.setDirectoryForTemplateLoading(new File(templatePath, "templates/code-generator"));
+            freemarkerConfig.setNumberFormat("#");
+            freemarkerConfig.setClassicCompatible(true);
+            freemarkerConfig.setDefaultEncoding("UTF-8");
+            freemarkerConfig.setLocale(Locale.CHINA);
             freemarkerConfig.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
