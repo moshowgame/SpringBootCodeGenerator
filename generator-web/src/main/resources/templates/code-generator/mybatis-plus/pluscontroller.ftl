@@ -128,6 +128,25 @@ public class ${classInfo.className}Controller {
         ${classInfo.className} ${classInfo.className?uncap_first} = ${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("${classInfo.className?uncap_first}_id",id));
         return new ModelAndView("cms/${classInfo.className?uncap_first}-edit","${classInfo.className?uncap_first}",${classInfo.className?uncap_first});
     }
+
+    /**
+    * 发布/暂停(如不需要请屏蔽)
+    */
+    @PostMapping("/publish")
+    public Object publish(int id,Integer status){
+        ${classInfo.className} ${classInfo.className?uncap_first} = ${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("${classInfo.className?uncap_first}_id",id));
+        if(${classInfo.className?uncap_first}!=null){
+            ${classInfo.className?uncap_first}.setUpdateTime(new Date());
+            ${classInfo.className?uncap_first}.setStatus(status);
+            ${classInfo.className?uncap_first}Mapper.updateById(${classInfo.className?uncap_first});
+            return ReturnT.SUCCESS((status==1)?"已发布":"已暂停");
+        }else if(status.equals(${classInfo.className?uncap_first}.getStatus())){
+            return ReturnT.SUCCESS("状态不正确");
+        }else{
+            return ReturnT.ERROR();
+        }
+    }
+
 }
 
 

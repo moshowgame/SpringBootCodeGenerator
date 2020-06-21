@@ -183,9 +183,36 @@
                                 });
                             } else {
                                 layer.msg(responseData.msg, function () {
-                                    //window.location = '/index.html';
                                 });
                             }
+                        }
+                    });
+                    layer.close(index);
+                });
+            }else if (obj.event === 'publish') {
+                layer.confirm('确定要发布吗？', function (index) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "￥{request.contextPath}/${classInfo.className?uncap_first}/publish",
+                        data:{"id":obj.data.${classInfo.className?uncap_first}Id,"status":"1"},
+                        success: function (responseData) {
+                            searchBtn.click();
+                            layer.msg(responseData.msg, function () {
+                            });
+                        }
+                    });
+                    layer.close(index);
+                });
+            }else if (obj.event === 'unpublish') {
+                layer.confirm('确定要停止吗？', function (index) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "￥{request.contextPath}/${classInfo.className?uncap_first}/publish",
+                        data:{"id":obj.data.${classInfo.className?uncap_first}Id,"status":"0"},
+                        success: function (responseData) {
+                            searchBtn.click();
+                            layer.msg(responseData.msg, function () {
+                            });
                         }
                     });
                     layer.close(index);
