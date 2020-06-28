@@ -17,6 +17,8 @@
 - 提供众多通用模板，易于使用，复制粘贴加简单修改即可完成CRUD操作
 - 支持特殊字符模板(`#`请用`井`代替;`$`请用`￥`代替)
 - 根据comment=(mysql)或者comment on table(pgsql/oracle)生成类名注释
+- BeanUtil提供一些基本对象的使用方法供COPY
+
 
 # Url
 
@@ -33,6 +35,7 @@
 
 |更新日期|更新内容|
 |----|----|
+|20200628|优化Util下的BeanUtil，支持更多map.put的操作。整合CRUD模板到SQL(CRUD)模板。|
 |20200621|修复FreemarkerUtil的Path问题导致JAR包运行时无法获取template的问题。|
 |20200525|1.一些fix,关于封装工具类以及layui模板优化等.<br> 2.优化表备注的获取逻辑.<br> 3.生成时间格式改为yyyy-MM-dd,移除具体的时间,只保留日期|
 |20200522|1.新增insert-sql模式,支持对"insert into table (xxx) values (xxx)"语句进行处理,生成java代码(感谢三叔的建议).|

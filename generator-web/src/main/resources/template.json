@@ -139,9 +139,9 @@
   },
   {
     "id": "70",
-    "name": "util",
+    "name": "beanutil",
     "group": "util",
-    "description": "util"
+    "description": "beanutil"
   },
   {
     "id": "71",
@@ -156,27 +156,9 @@
     "description": "xml"
   },
   {
-    "id": "80",
-    "name": "select",
-    "group": "sql",
-    "description": "select"
-  },
-  {
-    "id": "81",
-    "name": "insert",
-    "group": "sql",
-    "description": "insert"
-  },
-  {
-    "id": "82",
-    "name": "update",
-    "group": "sql",
-    "description": "update"
-  },
-  {
-    "id": "83",
-    "name": "delete",
-    "group": "sql",
-    "description": "delete"
+    "id": "73",
+    "name": "sql",
+    "group": "util",
+    "description": "sql"
   }
 ]

@@ -306,16 +306,14 @@ CREATE TABLE 'userinfo' (
             <div class="btn-toolbar col-md-7" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <div class="btn btn-secondary disabled setWidth" id="btnGroupAddon">Mybatis</div>
+                        <div class="btn btn-secondary disabled setWidth" id="btnGroupAddon">常用Util</div>
                     </div>
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-default generator" id="mybatis">ibatisXml</button>
-                    <button type="button" class="btn btn-default generator" id="mapper">mapper</button>
-                    <button type="button" class="btn btn-default generator" id="mapper2">mapper2</button>
-                    <button type="button" class="btn btn-default generator" id="service">service</button>
-                    <button type="button" class="btn btn-default generator" id="service_impl">serviceImpl</button>
-                    <button type="button" class="btn btn-default generator" id="controller">controller</button>
+                    <button type="button" class="btn btn-default generator" id="beanutil">BeanUtil</button>
+                    <button type="button" class="btn btn-default generator" id="sql">SQL(CRUD)</button>
+                    <button type="button" class="btn btn-default generator" id="json">JSON</button>
+                    <button type="button" class="btn btn-default generator" id="xml">XML</button>
                 </div>
             </div>
         </div>
@@ -390,28 +388,16 @@ CREATE TABLE 'userinfo' (
             <div class="btn-toolbar col-md-7" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <div class="btn btn-secondary disabled setWidth" id="btnGroupAddon">SQL</div>
+                        <div class="btn btn-secondary disabled setWidth" id="btnGroupAddon">Mybatis</div>
                     </div>
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-default generator" id="select">select</button>
-                    <button type="button" class="btn btn-default generator" id="insert">insert</button>
-                    <button type="button" class="btn btn-default generator" id="update">update</button>
-                    <button type="button" class="btn btn-default generator" id="delete">delete</button>
-                </div>
-            </div>
-        </div>
-        <div class="row" style="margin-top: 10px;">
-            <div class="btn-toolbar col-md-5" role="toolbar" aria-label="Toolbar with button groups">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="btn btn-secondary disabled setWidth" id="btnGroupAddon">Util</div>
-                    </div>
-                </div>
-                <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-default generator" id="util">bean get set</button>
-                    <button type="button" class="btn btn-default generator" id="json">json</button>
-                    <button type="button" class="btn btn-default generator" id="xml">xml</button>
+                    <button type="button" class="btn btn-default generator" id="mybatis">ibatisXml</button>
+                    <button type="button" class="btn btn-default generator" id="mapper">mapper</button>
+                    <button type="button" class="btn btn-default generator" id="mapper2">mapper2</button>
+                    <button type="button" class="btn btn-default generator" id="service">service</button>
+                    <button type="button" class="btn btn-default generator" id="service_impl">serviceImpl</button>
+                    <button type="button" class="btn btn-default generator" id="controller">controller</button>
                 </div>
             </div>
         </div>
