@@ -14,7 +14,7 @@ import java.util.Map;
  * @date ${.now?string('yyyy-MM-dd')}
  */
 @RestController
-@RequestMapping(value = "/${classInfo.className}")
+@RequestMapping(value = "/${classInfo.className?uncap_first}")
 public class ${classInfo.className}Controller {
 
     @Resource
