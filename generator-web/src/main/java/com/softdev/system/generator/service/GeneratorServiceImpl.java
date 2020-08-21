@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 /**
  * GeneratorService
+ *
  * @author zhengkai.blog.csdn.net
  */
 @Slf4j
@@ -28,15 +29,17 @@ public class GeneratorServiceImpl implements GeneratorService {
     @Autowired
     private FreemarkerUtil freemarkerTool;
 
-    String templateCpnfig=null;
+    String templateCpnfig = null;
+
     /**
      * 从项目中的JSON文件读取String
+     *
      * @author zhengkai.blog.csdn.net
      */
     public String getTemplateConfig() throws IOException {
-        templateCpnfig=null;
-        if(templateCpnfig!=null){
-        }else{
+        templateCpnfig = null;
+        if (templateCpnfig != null) {
+        } else {
             InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("template.json");
             templateCpnfig = new BufferedReader(new InputStreamReader(inputStream))
                     .lines().collect(Collectors.joining(System.lineSeparator()));
@@ -45,18 +48,21 @@ public class GeneratorServiceImpl implements GeneratorService {
         //log.info(JSON.toJSONString(templateCpnfig));
         return templateCpnfig;
     }
+
     /**
      * 根据配置的Template模板进行遍历解析，得到生成好的String
+     *
      * @author zhengkai.blog.csdn.net
      */
     @Override
     public Map<String, String> getResultByParams(Map<String, Object> params) throws IOException, TemplateException {
         Map<String, String> result = new LinkedHashMap<>(32);
-        result.put("tableName",params.get("tableName")+"");
-        List<TemplateConfig> templateConfigList = JSON.parseArray(getTemplateConfig(),TemplateConfig.class);
-        for (TemplateConfig item:templateConfigList){
-            result.put(item.getName(), freemarkerTool.processString(item.getGroup()+"/"+item.getName()+".ftl", params));
+        result.put("tableName", params.get("tableName") + "");
+        List<TemplateConfig> templateConfigList = JSON.parseArray(getTemplateConfig(), TemplateConfig.class);
+        for (TemplateConfig item : templateConfigList) {
+            result.put(item.getName(), freemarkerTool.processString(item.getGroup() + "/" + item.getName() + ".ftl", params));
         }
         return result;
     }
+
 }
