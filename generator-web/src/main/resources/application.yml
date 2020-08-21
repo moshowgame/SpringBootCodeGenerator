@@ -40,6 +40,9 @@ spring:
         expose-request-attributes: true
         expose-session-attributes: true
         expose-spring-macro-helpers: true
-        #template-loader-path: classpath:/templates/
+        settings:
+          number_format: 0.##
+          default_encoding: UTF-8
+          #template_loader: /templates/
     mvc:
       static-path-pattern: /static/**

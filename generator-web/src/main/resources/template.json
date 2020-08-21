@@ -1,0 +1,164 @@
+[
+  {
+    "id": "10",
+    "name": "swagger-ui",
+    "group": "ui",
+    "description": "swagger-ui"
+  },
+  {
+    "id": "11",
+    "name": "element-ui",
+    "group": "ui",
+    "description": "element-ui"
+  },
+  {
+    "id": "12",
+    "name": "bootstrap-ui",
+    "group": "ui",
+    "description": "bootstrap-ui"
+  },
+  {
+    "id": "13",
+    "name": "layui-edit",
+    "group": "ui",
+    "description": "layui-edit"
+  },
+  {
+    "id": "14",
+    "name": "layui-list",
+    "group": "ui",
+    "description": "layui-list"
+  },
+  {
+    "id": "20",
+    "name": "controller",
+    "group": "mybatis",
+    "description": "controller"
+  },
+  {
+    "id": "21",
+    "name": "service",
+    "group": "mybatis",
+    "description": "service"
+  },
+  {
+    "id": "22",
+    "name": "service_impl",
+    "group": "mybatis",
+    "description": "service_impl"
+  },
+  {
+    "id": "23",
+    "name": "mapper",
+    "group": "mybatis",
+    "description": "mapper"
+  },
+  {
+    "id": "24",
+    "name": "mybatis",
+    "group": "mybatis",
+    "description": "mybatis"
+  },
+  {
+    "id": "25",
+    "name": "model",
+    "group": "mybatis",
+    "description": "model"
+  },
+  {
+    "id": "26",
+    "name": "mapper2",
+    "group": "mybatis",
+    "description": "mapper annotation"
+  },
+  {
+    "id": "30",
+    "name": "entity",
+    "group": "jpa",
+    "description": "entity"
+  },
+  {
+    "id": "31",
+    "name": "repository",
+    "group": "jpa",
+    "description": "repository"
+  },
+  {
+    "id": "32",
+    "name": "jpacontroller",
+    "group": "jpa",
+    "description": "jpacontroller"
+  },
+  {
+    "id": "40",
+    "name": "jtdao",
+    "group": "jdbc-template",
+    "description": "jtdao"
+  },
+  {
+    "id": "41",
+    "name": "jtdaoimpl",
+    "group": "jdbc-template",
+    "description": "jtdaoimpl"
+  },
+  {
+    "id": "50",
+    "name": "beetlmd",
+    "group": "beetlsql",
+    "description": "beetlmd"
+  },
+  {
+    "id": "51",
+    "name": "beetlentity",
+    "group": "beetlsql",
+    "description": "beetlentity"
+  },
+  {
+    "id": "52",
+    "name": "beetlcontroller",
+    "group": "beetlsql",
+    "description": "beetlcontroller"
+  },
+  {
+    "id": "60",
+    "name": "pluscontroller",
+    "group": "mybatis-plus",
+    "description": "pluscontroller"
+  },
+  {
+    "id": "61",
+    "name": "plusmapper",
+    "group": "mybatis-plus",
+    "description": "plusmapper"
+  },
+  {
+    "id": "62",
+    "name": "plusentity",
+    "group": "mybatis-plus",
+    "description": "plusentity"
+  },
+  {
+    "id": "70",
+    "name": "beanutil",
+    "group": "util",
+    "description": "beanutil"
+  },
+  {
+    "id": "71",
+    "name": "json",
+    "group": "util",
+    "description": "json"
+  },
+  {
+    "id": "72",
+    "name": "xml",
+    "group": "util",
+    "description": "xml"
+  },
+  {
+    "id": "73",
+    "name": "sql",
+    "group": "util",
+    "description": "sql"
+  }
+]

@@ -154,7 +154,7 @@
          */
         function donate(){
             if($("#donate").attr("show")=="no"){
-                $("#donate").html('<img src="http://upyun.bejson.com/img/zhengkai.png"></img>');
+                $("#donate").html('<img src="https://raw.githubusercontent.com/moshowgame/SpringBootCodeGenerator/master/donate.png"></img>');
                 $("#donate").attr("show","yes");
             }else{
                 $("#donate").html('<p>谢谢赞赏！</p>');
@@ -206,7 +206,7 @@
             <a class="navbar-brand" href="http://www.bejson.com">BeJSON在线工具站</a>
             <ul class="nav navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="http://zhengkai.blog.csdn.net">大狼狗CSDN</a>
+                    <a class="nav-link" href="http://zhengkai.blog.csdn.net">zhengkai.blog.csdn.net</a>
                 </li>
             </ul>
         </nav>
@@ -217,7 +217,9 @@
     <div class="container">
         <h2>Spring Boot Code Generator!</h2>
         <p class="lead">
-            √基于SpringBoot2+Freemarker的<a class="lead" href="https://github.com/moshowgame/SpringBootCodeGenerator">代码生成器</a>，√以释放双手为目的，√支持mysql/oracle/pgsql三大数据库，<br>
+            √基于SpringBoot2+Freemarker的<a class="lead" href="https://github.com/moshowgame/SpringBootCodeGenerator">代码生成器</a><br>
+            √以解放双手为目的，减少大量重复的CRUD工作<br>
+            √支持mysql/oracle/pgsql三大数据库<br>
             √用DDL-SQL语句生成JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL相关代码。<br>
             如果发现有SQL语句不能识别，请<a href="https://github.com/moshowgame/SpringBootCodeGenerator/issues">留言</a>，同时欢迎大家提<a href="https://github.com/moshowgame/SpringBootCodeGenerator/pulls">PR</a>和<a href="#" id="donate1">赞赏</a>，谢谢！<a id="version" href="#">查看版本</a>
         </p>
@@ -227,11 +229,11 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">作者名称</span>
             </div>
-            <input type="text" class="form-control" id="authorName" name="authorName" value="大狼狗">
+            <input type="text" class="form-control" id="authorName" name="authorName" value="zhengkai.blog.csdn.net">
             <div class="input-group-prepend">
                 <span class="input-group-text">返回封装</span>
             </div>
-            <input type="text" class="form-control" id="returnUtil" name="returnUtil" value="new ReturnT<>">
+            <input type="text" class="form-control" id="returnUtil" name="returnUtil" value="ReturnT">
             <div class="input-group-prepend">
                 <span class="input-group-text">包名路径</span>
             </div>
@@ -243,9 +245,10 @@
             </div>
             <select type="text" class="form-control" id="dataType"
                     name="dataType">
-                <option value="sql">sql</option>
+                <option value="sql">ddl-sql</option>
                 <option value="json">json</option>
-                <option value="sql-regex">sql-regex</option>
+                <option value="insert-sql">insert-sql</option>
+                <#--<option value="sql-regex">sql-regex</option>-->
             </select>
             <div class="input-group-prepend">
                 <span class="input-group-text">tinyint转换类型</span>
@@ -279,7 +282,7 @@
         <textarea id="ddlSqlArea" placeholder="请输入表结构信息..." class="form-control btn-lg" style="height: 250px;">
 CREATE TABLE 'userinfo' (
   'user_id' int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  'username' varchar(255) NOT NULL COMMENT '用户名',
+  'user_name' varchar(255) NOT NULL COMMENT '用户名',
   'addtime' datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY ('user_id')
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息'
@@ -303,15 +306,14 @@ CREATE TABLE 'userinfo' (
             <div class="btn-toolbar col-md-7" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <div class="btn btn-secondary disabled setWidth" id="btnGroupAddon">Mybatis</div>
+                        <div class="btn btn-secondary disabled setWidth" id="btnGroupAddon">常用Util</div>
                     </div>
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-default generator" id="mybatis">mybatis</button>
-                    <button type="button" class="btn btn-default generator" id="mapper">mapper</button>
-                    <button type="button" class="btn btn-default generator" id="service">service</button>
-                    <button type="button" class="btn btn-default generator" id="service_impl">service_impl</button>
-                    <button type="button" class="btn btn-default generator" id="controller">controller</button>
+                    <button type="button" class="btn btn-default generator" id="beanutil">BeanUtil</button>
+                    <button type="button" class="btn btn-default generator" id="sql">SQL(CRUD)</button>
+                    <button type="button" class="btn btn-default generator" id="json">JSON</button>
+                    <button type="button" class="btn btn-default generator" id="xml">XML</button>
                 </div>
             </div>
         </div>
@@ -386,28 +388,16 @@ CREATE TABLE 'userinfo' (
             <div class="btn-toolbar col-md-7" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <div class="btn btn-secondary disabled setWidth" id="btnGroupAddon">SQL</div>
+                        <div class="btn btn-secondary disabled setWidth" id="btnGroupAddon">Mybatis</div>
                     </div>
                 </div>
                 <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-default generator" id="select">select</button>
-                    <button type="button" class="btn btn-default generator" id="insert">insert</button>
-                    <button type="button" class="btn btn-default generator" id="update">update</button>
-                    <button type="button" class="btn btn-default generator" id="delete">delete</button>
-                </div>
-            </div>
-        </div>
-        <div class="row" style="margin-top: 10px;">
-            <div class="btn-toolbar col-md-5" role="toolbar" aria-label="Toolbar with button groups">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="btn btn-secondary disabled setWidth" id="btnGroupAddon">Util</div>
-                    </div>
-                </div>
-                <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-default generator" id="util">bean get set</button>
-                    <button type="button" class="btn btn-default generator" id="json">json</button>
-                    <button type="button" class="btn btn-default generator" id="xml">xml</button>
+                    <button type="button" class="btn btn-default generator" id="mybatis">ibatisXml</button>
+                    <button type="button" class="btn btn-default generator" id="mapper">mapper</button>
+                    <button type="button" class="btn btn-default generator" id="mapper2">mapper2</button>
+                    <button type="button" class="btn btn-default generator" id="service">service</button>
+                    <button type="button" class="btn btn-default generator" id="service_impl">serviceImpl</button>
+                    <button type="button" class="btn btn-default generator" id="controller">controller</button>
                 </div>
             </div>
         </div>

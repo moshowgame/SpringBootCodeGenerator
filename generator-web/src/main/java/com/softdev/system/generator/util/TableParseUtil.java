@@ -11,19 +11,21 @@ import com.softdev.system.generator.entity.ParamInfo;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * 表格解析Util
  * @author zhengkai.blog.csdn.net
  */
 public class TableParseUtil {
 
     /**
-     * 解析建表SQL生成代码（model-dao-xml）
-     *
+     * 解析DDL SQL生成类信息
      * @param paramInfo
      * @return
      */
@@ -35,7 +37,7 @@ public class TableParseUtil {
         String tinyintTransType=paramInfo.getTinyintTransType();
 
         if (tableSql==null || tableSql.trim().length()==0) {
-            throw new CodeGenerateException("Table structure can not be empty.");
+            throw new CodeGenerateException("Table structure can not be empty. 表结构不能为空。");
         }
         //deal with special character
         tableSql = tableSql.trim().replaceAll("'","`").replaceAll("\"","`").replaceAll("，",",").toLowerCase();
@@ -48,7 +50,7 @@ public class TableParseUtil {
         } else if (tableSql.contains("table") && tableSql.contains("(")) {
             tableName = tableSql.substring(tableSql.indexOf("table")+5, tableSql.indexOf("("));
         } else {
-            throw new CodeGenerateException("Table structure anomaly.");
+            throw new CodeGenerateException("Table structure incorrect.表结构不正确。");
         }
 
         //新增处理create table if not exists members情况
@@ -78,28 +80,17 @@ public class TableParseUtil {
         // class Comment
         String classComment = null;
         //mysql是comment=,pgsql/oracle是comment on table,
-        if (tableSql.contains("comment=")) {
-            String classCommentTmp = tableSql.substring(tableSql.lastIndexOf("comment=")+8).replaceAll("`","").trim();
-            if (classCommentTmp.indexOf(" ")!=classCommentTmp.lastIndexOf(" ")) {
-                classCommentTmp = classCommentTmp.substring(classCommentTmp.indexOf(" ")+1, classCommentTmp.lastIndexOf(" "));
-            }
-            if (classCommentTmp!=null && classCommentTmp.trim().length()>0) {
-                classComment = classCommentTmp;
-            }else{
-                //修复表备注为空问题
-                classComment = className;
-            }
-        }else if(tableSql.contains("comment on table")) {
-            //COMMENT ON TABLE CT_BAS_FEETYPE IS 'CT_BAS_FEETYPE';
-            String classCommentTmp = tableSql.substring(tableSql.lastIndexOf("comment on table")+17).trim();
-            //证明这是一个常规的COMMENT ON TABLE  xxx IS 'xxxx'
+        //2020-05-25 优化表备注的获取逻辑
+        if (tableSql.contains("comment=")||tableSql.contains("comment on table")) {
+            String classCommentTmp = (tableSql.contains("comment="))?
+                    tableSql.substring(tableSql.lastIndexOf("comment=")+8).trim():tableSql.substring(tableSql.lastIndexOf("comment on table")+17).trim();
             if (classCommentTmp.contains("`")) {
                 classCommentTmp = classCommentTmp.substring(classCommentTmp.indexOf("`")+1);
                 classCommentTmp = classCommentTmp.substring(0,classCommentTmp.indexOf("`"));
                 classComment = classCommentTmp;
             }else{
                 //非常规的没法分析
-                classComment = tableName;
+                classComment = className;
             }
         }else{
             //修复表备注为空问题
@@ -263,12 +254,13 @@ public class TableParseUtil {
                         fieldComment=columnName;
                         while(columnCommentMatcher.find()){
                             String columnCommentTmp = columnCommentMatcher.group();
-                            System.out.println(columnCommentTmp);
+                            //System.out.println(columnCommentTmp);
                             fieldComment = tableSql.substring(tableSql.indexOf(columnCommentTmp)+columnCommentTmp.length()).trim();
                             fieldComment = fieldComment.substring(0,fieldComment.indexOf("`")).trim();
                         }
-                    }else if (columnLine.contains("comment")) {
-                        String commentTmp = columnLine.substring(columnLine.indexOf("comment")+7).trim();
+                    }else if (columnLine.contains(" comment")) {
+                        //20200518 zhengkai 修复包含comment关键字的问题
+                        String commentTmp = columnLine.substring(columnLine.lastIndexOf("comment")+7).trim();
                         // '用户ID',
                         if (commentTmp.contains("`") || commentTmp.indexOf("`")!=commentTmp.lastIndexOf("`")) {
                             commentTmp = commentTmp.substring(commentTmp.indexOf("`")+1, commentTmp.lastIndexOf("`"));
@@ -307,7 +299,7 @@ public class TableParseUtil {
         return codeJavaInfo;
     }
     /**
-     * parse JSON
+     * 解析JSON生成类信息
      * @param paramInfo
      * @return
      */
@@ -419,5 +411,62 @@ public class TableParseUtil {
             throw new CodeGenerateException("JSON解析失败");
         }
         return fieldList;
+    }
+
+    public static ClassInfo processInsertSqlToClassInfo(ParamInfo paramInfo) {
+        // field List
+        List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
+        //return classInfo
+        ClassInfo codeJavaInfo = new ClassInfo();
+
+        //get origin sql
+        String fieldSqlStr = paramInfo.getTableSql().toLowerCase().trim();
+        fieldSqlStr=fieldSqlStr.replaceAll("  "," ").replaceAll("\\\\n`","")
+                .replaceAll("\\+","").replaceAll("``","`").replaceAll("\\\\","");
+        String valueStr = fieldSqlStr.substring(fieldSqlStr.lastIndexOf("values")+6).replaceAll(" ","").replaceAll("\\(","").replaceAll("\\)","");
+        //get the string between insert into and values
+        fieldSqlStr=fieldSqlStr.substring(0,fieldSqlStr.lastIndexOf("values"));
+
+        System.out.println(fieldSqlStr);
+
+        String insertSqlPattenStr = "insert into (?<tableName>.*) \\((?<columnsSQL>.*)\\)";
+        //String DDL_PATTEN_STR="\\s*create\\s+table\\s+(?<tableName>\\S+)[^\\(]*\\((?<columnsSQL>[\\s\\S]+)\\)[^\\)]+?(comment\\s*(=|on\\s+table)\\s*'(?<tableComment>.*?)'\\s*;?)?$";
+
+        Matcher matcher1 = Pattern.compile(insertSqlPattenStr).matcher(fieldSqlStr);
+        while(matcher1.find()){
+
+            String tableName = matcher1.group("tableName");
+            //System.out.println("tableName:"+tableName);
+            codeJavaInfo.setClassName(tableName);
+            codeJavaInfo.setTableName(tableName);
+
+            String columnsSQL = matcher1.group("columnsSQL");
+            //System.out.println("columnsSQL:"+columnsSQL);
+
+            List<String> valueList = new ArrayList<>();
+            //add values as comment
+            Arrays.stream(valueStr.split(",")).forEach(column->{
+                valueList.add(column);
+            });
+            AtomicInteger n= new AtomicInteger(0);
+            //add column to fleldList
+            Arrays.stream(columnsSQL.replaceAll(" ", "").split(",")).forEach(column->{
+                FieldInfo fieldInfo2 = new FieldInfo();
+                fieldInfo2.setFieldName(column);
+                fieldInfo2.setColumnName(column);
+                fieldInfo2.setFieldClass(String.class.getSimpleName());
+                if(n.get()<valueList.size()){
+                    fieldInfo2.setFieldComment(column+" , eg."+valueList.get(n.get()));
+                }
+                fieldList.add(fieldInfo2);
+                n.getAndIncrement();
+            });
+
+        }
+        if(fieldList.size()<1){
+            throw new CodeGenerateException("INSERT SQL解析失败");
+        }
+        codeJavaInfo.setFieldList(fieldList);
+        return codeJavaInfo;
     }
 }

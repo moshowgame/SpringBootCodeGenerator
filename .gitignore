@@ -198,4 +198,7 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
+#rebel
+rebel.xml
+rebel-remote.xml
 # End of https://www.gitignore.io/api/java,maven,eclipse,java-web,intellij+all

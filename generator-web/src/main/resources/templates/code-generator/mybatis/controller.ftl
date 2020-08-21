@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * @description ${classInfo.classComment}
  * @author ${authorName}
- * @date ${.now?string('yyyy-MM-dd HH:mm:ss')}
+ * @date ${.now?string('yyyy-MM-dd')}
  */
 @RestController
 @RequestMapping(value = "/${classInfo.className}")
