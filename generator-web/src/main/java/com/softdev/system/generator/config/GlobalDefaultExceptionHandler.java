@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class GlobalDefaultExceptionHandler {
-	
-	@ExceptionHandler(Exception.class)
-	@ResponseBody
-	public ReturnT defaultExceptionHandler(HttpServletRequest req,Exception e) {
-		e.printStackTrace();
-		return ReturnT.ERROR(e.getMessage());
-	}
-	
+
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public ReturnT defaultExceptionHandler(HttpServletRequest req, Exception e) {
+        e.printStackTrace();
+        return ReturnT.ERROR(e.getMessage());
+    }
+
 }

@@ -23,23 +23,23 @@ import java.util.Map;
 @Component
 public class FreemarkerUtil {
 
-
     @Autowired
     private Configuration configuration;
 
     /**
      * 传入需要转义的字符串进行转义
      * 20200503 zhengkai.blog.csdn.net
-     * */
-    public static String escapeString(String originStr){
-        return originStr.replaceAll("井","\\#").replaceAll("￥","\\$");
+     */
+    public static String escapeString(String originStr) {
+        return originStr.replaceAll("井", "\\#").replaceAll("￥", "\\$");
     }
 
     /**
      * freemarker config
      */
     private static Configuration freemarkerConfig = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
-    static{
+
+    static {
         try {
             //2020-06-21 zhengkai 修复path问题导致jar无法运行而本地项目可以运行的bug
             freemarkerConfig.setClassForTemplateLoading(FreemarkerUtil.class, "/templates/code-generator");
@@ -88,6 +88,5 @@ public class FreemarkerUtil {
         String htmlText = escapeString(processTemplateIntoString(template, params));
         return htmlText;
     }
-
 
 }

@@ -17,7 +17,7 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-/*    @Override
+   /* @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("*")
@@ -46,4 +46,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
         converters.add(stringConverter);
         converters.add(fastConverter);
     }
+
 }
