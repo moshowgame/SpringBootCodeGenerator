@@ -17,9 +17,9 @@ public interface ${classInfo.className}Mapper {
     public ${classInfo.className} getById(Integer id);
 
     @Options(useGeneratedKeys=true,keyProperty="${classInfo.className?uncap_first}Id")
-    @Insert("insert into ${classInfo.tableName}"
-            "(<#list classInfo.fieldList as fieldItem >${fieldItem.columnName}<#if fieldItem_has_next>,</#if></#list>)"
-            "values(<#list classInfo.fieldList as fieldItem >${fieldItem.fieldName}<#if fieldItem_has_next>,</#if>)</#list>")
+    @Insert("insert into ${classInfo.tableName}" +
+        " (<#list classInfo.fieldList as fieldItem >${fieldItem.columnName}<#if fieldItem_has_next>,</#if></#list>)" +
+        " values(<#list classInfo.fieldList as fieldItem >${fieldItem.fieldName}<#if fieldItem_has_next>,<#else>)</#if></#list>")
     public Integer insert(${classInfo.className} ${classInfo.className?uncap_first});
 
     @Delete(value = "delete from ${classInfo.tableName} where ${classInfo.tableName}_id=井{${classInfo.className?uncap_first}Id}")
