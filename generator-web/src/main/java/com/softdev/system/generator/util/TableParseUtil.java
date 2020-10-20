@@ -36,7 +36,6 @@ public class TableParseUtil {
         //process the param
         String tableSql = paramInfo.getTableSql();
         String nameCaseType = paramInfo.getNameCaseType();
-        String tinyintTransType = paramInfo.getTinyintTransType();
 
         if (tableSql == null || tableSql.trim().length() == 0) {
             throw new CodeGenerateException("Table structure can not be empty. 表结构不能为空。");
@@ -152,8 +151,10 @@ public class TableParseUtil {
                 // 2018-11-8 zhengkai 修复tornadoorz反馈的KEY FK_permission_id (permission_id),KEY FK_role_id (role_id)情况
                 // 2019-2-22 zhengkai 要在条件中使用复杂的表达式
                 // 2019-4-29 zhengkai 优化对普通和特殊storage关键字的判断（感谢@AhHeadFloating的反馈 ）
-                boolean specialFlag = (!columnLine.contains("key ") && !columnLine.contains("constraint") && !columnLine.contains("using") && !columnLine.contains("unique")
+                // 2020-10-20 zhengkai 优化对fulltext/index关键字的处理（感谢@WEGFan的反馈）
+                boolean specialFlag = (!columnLine.contains("key ") && !columnLine.contains("constraint") && !columnLine.contains("using") && !columnLine.contains("unique ")
                         && !(columnLine.contains("primary ") && columnLine.indexOf("storage") + 3 > columnLine.indexOf("("))
+                        && !columnLine.contains("fulltext ") && !columnLine.contains("index ")
                         && !columnLine.contains("pctincrease")
                         && !columnLine.contains("buffer_pool") && !columnLine.contains("tablespace")
                         && !(columnLine.contains("primary ") && i > 3));
@@ -190,19 +191,20 @@ public class TableParseUtil {
                     //2018-9-16 zhengk 补充char/clob/blob/json等类型，如果类型未知，默认为String
                     //2018-11-22 lshz0088 处理字段类型的时候，不严谨columnLine.contains(" int") 类似这种的，可在前后适当加一些空格之类的加以区分，否则当我的字段包含这些字符的时候，产生类型判断问题。
                     //2020-05-03 MOSHOW.K.ZHENG 优化对所有类型的处理
+                    //2020-10-20 zhengkai 新增包装类型的转换选择
                     if (columnLine.contains(" tinyint")) {
                         //20191115 MOSHOW.K.ZHENG 支持对tinyint的特殊处理
-                        fieldClass = tinyintTransType;
+                        fieldClass = paramInfo.getTinyintTransType();
                     } else if (columnLine.contains(" int") || columnLine.contains(" smallint")) {
-                        fieldClass = Integer.class.getSimpleName();
+                        fieldClass = (paramInfo.isPackageType())?Integer.class.getSimpleName():"int";
                     } else if (columnLine.contains(" bigint")) {
-                        fieldClass = Long.class.getSimpleName();
+                        fieldClass = (paramInfo.isPackageType())?Long.class.getSimpleName():"long";
                     } else if (columnLine.contains(" float")) {
-                        fieldClass = Float.class.getSimpleName();
+                        fieldClass = (paramInfo.isPackageType())?Float.class.getSimpleName():"float";
                     } else if (columnLine.contains(" double")) {
-                        fieldClass = Double.class.getSimpleName();
+                        fieldClass = (paramInfo.isPackageType())?Double.class.getSimpleName():"double";
                     } else if (columnLine.contains(" time") || columnLine.contains(" date") || columnLine.contains(" datetime") || columnLine.contains(" timestamp")) {
-                        fieldClass = Date.class.getSimpleName();
+                        fieldClass = paramInfo.getTimeTransType();
                     } else if (columnLine.contains(" varchar") || columnLine.contains(" text") || columnLine.contains(" char")
                             || columnLine.contains(" clob") || columnLine.contains(" blob") || columnLine.contains(" json")) {
                         fieldClass = String.class.getSimpleName();
@@ -227,9 +229,9 @@ public class TableParseUtil {
                                 }
                                 //数字范围9位及一下用Integer，大的用Long
                                 if (length <= 9) {
-                                    fieldClass = Integer.class.getSimpleName();
+                                    fieldClass = (paramInfo.isPackageType())?Integer.class.getSimpleName():"int";
                                 } else {
-                                    fieldClass = Long.class.getSimpleName();
+                                    fieldClass = (paramInfo.isPackageType())?Long.class.getSimpleName():"long";
                                 }
                             } else {
                                 //有小数位数一律使用BigDecimal
@@ -240,7 +242,7 @@ public class TableParseUtil {
                         }
                     } else if (columnLine.contains(" boolean")) {
                         //20190910 MOSHOW.K.ZHENG 新增对boolean的处理（感谢@violinxsc的反馈）以及修复tinyint类型字段无法生成boolean类型问题（感谢@hahaYhui的反馈）
-                        fieldClass = Boolean.class.getSimpleName();
+                        fieldClass = (paramInfo.isPackageType())?Boolean.class.getSimpleName():"boolean";
                     } else {
                         fieldClass = String.class.getSimpleName();
                     }

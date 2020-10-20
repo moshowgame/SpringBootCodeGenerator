@@ -14,10 +14,18 @@ public class ParamInfo {
     private String authorName;
     private String packageName;
     private String returnUtil;
+    /**命名转换规则*/
     private String nameCaseType;
+    /**tinyint转换类型*/
     private String tinyintTransType;
+    /**时间转换类型*/
+    private String timeTransType;
+    /**数据类型：ddl-sql json*/
     private String dataType;
+    /**是否启用swagger*/
     private boolean swagger;
+    /**是否启用包装类型*/
+    private boolean packageType;
 
     @Data
     public static class NAME_CASE_TYPE {

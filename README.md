@@ -35,6 +35,7 @@
 
 |更新日期|更新内容|
 |----|----|
+|20201020|1.修复mapper2 insert代码问题（感谢@mXiaoWan的PR）<br>2.优化对fulltext/index关键字的处理（感谢@WEGFan的反馈）。<br>3.新增日期类型的转换选择（感谢@qingkediguo的建议）。<br>4.新增是否包装类型的转换选择。|
 |20200628|优化Util下的BeanUtil，支持更多map.put的操作。整合CRUD模板到SQL(CRUD)模板。|
 |20200621|修复FreemarkerUtil的Path问题导致JAR包运行时无法获取template的问题。|
 |20200525|1.一些fix,关于封装工具类以及layui模板优化等.<br> 2.优化表备注的获取逻辑.<br> 3.生成时间格式改为yyyy-MM-dd,移除具体的时间,只保留日期|

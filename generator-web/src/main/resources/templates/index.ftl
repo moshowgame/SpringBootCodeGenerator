@@ -77,8 +77,11 @@
                 "dataType":$("#dataType").val(),
                 "tinyintTransType":$("#tinyintTransType").val(),
                 "nameCaseType":$("#nameCaseType").val(),
-                "swagger":$("#isSwagger").val()
+                "swagger":$("#isSwagger").val(),
+                "timeTransType":$("#timeTransType").val(),
+                "packageType":$("#packageType").val()
             };
+            console.log($("#timeTransType").val());
             $.ajax({
                 type: 'POST',
                 url: base_url + "/genCode",
@@ -227,20 +230,6 @@
         <hr>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group-text">作者名称</span>
-            </div>
-            <input type="text" class="form-control" id="authorName" name="authorName" value="zhengkai.blog.csdn.net">
-            <div class="input-group-prepend">
-                <span class="input-group-text">返回封装</span>
-            </div>
-            <input type="text" class="form-control" id="returnUtil" name="returnUtil" value="ReturnT">
-            <div class="input-group-prepend">
-                <span class="input-group-text">包名路径</span>
-            </div>
-            <input type="text" class="form-control" id="packageName" name="packageName" value="com.softdev.system">
-        </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
                 <span class="input-group-text">数据类型</span>
             </div>
             <select type="text" class="form-control" id="dataType"
@@ -251,7 +240,21 @@
                 <#--<option value="sql-regex">sql-regex</option>-->
             </select>
             <div class="input-group-prepend">
-                <span class="input-group-text">tinyint转换类型</span>
+                <span class="input-group-text">作者</span>
+            </div>
+            <input type="text" class="form-control" id="authorName" name="authorName" value="zhengkai.blog.csdn.net">
+            <div class="input-group-prepend">
+                <span class="input-group-text">返回</span>
+            </div>
+            <input type="text" class="form-control" id="returnUtil" name="returnUtil" value="ReturnT">
+            <div class="input-group-prepend">
+                <span class="input-group-text">包名</span>
+            </div>
+            <input type="text" class="form-control" id="packageName" name="packageName" value="com.softdev.system">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">tinyint转换</span>
             </div>
             <select type="text" class="form-control" id="tinyintTransType"
                     name="tinyintTransType">
@@ -262,7 +265,21 @@
                 <option value="String">String</option>
             </select>
             <div class="input-group-prepend">
-                <span class="input-group-text">命名转换规则</span>
+                <span class="input-group-text">时间类型</span>
+            </div>
+            <select type="text" class="form-control" id="timeTransType"
+                    name="timeTransType">
+                <option value="Date">Date</option>
+                <option value="DateTime">DateTime</option>
+                <option value="Time">Time</option>
+                <option value="Timestamp">Timestamp</option>
+                <option value="Calendar">Calendar</option>
+                <option value="LocalDate">LocalDate</option>
+                <option value="LocalDateTime">LocalDateTime</option>
+                <option value="LocalTime">LocalTime</option>
+            </select>
+            <div class="input-group-prepend">
+                <span class="input-group-text">命名规则</span>
             </div>
             <select type="text" class="form-control" id="nameCaseType"
                     name="nameCaseType">
@@ -271,12 +288,20 @@
                 <#--<option value="UpperUnderScoreCase">大写下划线</option>-->
             </select>
             <div class="input-group-prepend">
+                <span class="input-group-text">包装类型</span>
+            </div>
+            <select type="text" class="form-control" id="packageType"
+                    name="packageType">
+                <option value="true">启用</option>
+                <option value="false">关闭</option>
+            </select>
+            <div class="input-group-prepend">
                 <span class="input-group-text">swagger-ui</span>
             </div>
             <select type="text" class="form-control" id="isSwagger"
                     name="isSwagger">
                 <option value="false">关闭</option>
-                <option value="true">开启</option>
+                <option value="true">启用</option>
             </select>
         </div>
         <textarea id="ddlSqlArea" placeholder="请输入表结构信息..." class="form-control btn-lg" style="height: 250px;">
