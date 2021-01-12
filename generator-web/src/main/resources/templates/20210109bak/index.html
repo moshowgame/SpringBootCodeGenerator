@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>代码生成器</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="//cdn.staticfile.org/element-ui/2.14.1/theme-chalk/index.min.css">
+    <link rel="stylesheet" href="//cdn.staticfile.org/codemirror/5.58.3/codemirror.min.css">
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <el-header> <span>SQL转JAVA代码生成器<el-tag>{{date|formatDate(this)}}</el-tag></span></el-header>
+        <el-container>
+            <el-aside width="200px">
+                <el-tree
+                        :data="data"
+                        show-checkbox
+                        node-key="id"
+                        :default-expanded-keys="[2, 3]"
+                        :default-checked-keys="[5]"
+                        :props="defaultProps">
+                </el-tree>
+
+            </el-aside>
+            <el-container>
+                <el-main>
+                    <textarea id="sqlArea" ></textarea>
+                    <textarea id="codeArea" ></textarea>
+                </el-main>
+                <el-footer>Footer</el-footer>
+            </el-container>
+        </el-container>
+    </el-container>
+
+</div>
+</body>
+<!-- import Vue before Element -->
+<script src="//cdn.staticfile.org/vue/2.6.11/vue.min.js"></script>
+<!-- import JavaScript -->
+<script src="//cdn.staticfile.org/element-ui/2.14.1/index.js"></script>
+<script src="//cdn.staticfile.org/element-ui/2.14.1/locale/zh-CN.min.js"></script>
+<script src="//cdn.staticfile.org/codemirror/5.58.3/codemirror.min.js"></script>
+<script src="//cdn.staticfile.org/codemirror/5.58.3/addon/display/placeholder.min.js"></script>
+<script src="//cdn.staticfile.org/codemirror/5.58.3/mode/clike/clike.min.js"></script>
+<script src="//cdn.staticfile.org/codemirror/5.58.3/mode/sql/sql.min.js"></script>
+<script src="//cdn.staticfile.org/codemirror/5.58.3/mode/xml/xml.min.js"></script>
+<script>
+    /**
+     * 初始化sqlArea
+     */
+    const sqlArea = CodeMirror.fromTextArea(document.getElementById("sqlArea"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        mode: "text/x-sql",
+        lineWrapping: false,
+        readOnly: false,
+        foldGutter: true
+    });
+    //sqlArea.setSize('auto','auto');
+    /**
+     * 初始化codeArea
+     */
+    const codeArea = CodeMirror.fromTextArea(document.getElementById("codeArea"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        mode: "text/x-java",
+        lineWrapping:true,
+        readOnly:false,
+    });
+    //codeArea.setSize('auto','auto');
+
+    let vue = new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                date: new Date(),
+                data: [{
+                    id: 1,
+                    label: '一级 1',
+                    children: [{
+                        id: 4,
+                        label: '二级 1-1',
+                        children: [{
+                            id: 9,
+                            label: '三级 1-1-1'
+                        }, {
+                            id: 10,
+                            label: '三级 1-1-2'
+                        }]
+                    }]
+                }, {
+                    id: 2,
+                    label: '一级 2',
+                    children: [{
+                        id: 5,
+                        label: '二级 2-1'
+                    }, {
+                        id: 6,
+                        label: '二级 2-2'
+                    }]
+                }, {
+                    id: 3,
+                    label: '一级 3',
+                    children: [{
+                        id: 7,
+                        label: '二级 3-1'
+                    }, {
+                        id: 8,
+                        label: '二级 3-2'
+                    }]
+                }],
+                defaultProps: {
+                    children: 'children',
+                    label: 'label'
+                }
+            }
+        },
+        methods:{
+            setZero(a) {//设置小于10的数字在加0
+                return a < 10 ? "0" + a : a;
+            },
+        },
+        filters:{
+            formatDate(date,vm) {  //当前时间格式化处理
+                let str = "";
+                let weekDay = [
+                    "星期天",
+                    "星期一",
+                    "星期二",
+                    "星期三",
+                    "星期四",
+                    "星期五",
+                    "星期六"
+                ];
+                str += vm.setZero(date.getFullYear()) + "年"; //获取年份
+                str += vm.setZero(date.getMonth() + 1) + "月"; //获取月份
+                str += vm.setZero(date.getDate()) + "日"; //获取日
+                str += " " + weekDay[date.getDay()]; //获取星期
+                return str;
+            }
+        }
+    })
+</script>
+</html>

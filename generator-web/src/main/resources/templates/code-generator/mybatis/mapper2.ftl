@@ -1,9 +1,9 @@
-package ${packageName}.mapper;
-
+<#if isWithPackage?exists && isWithPackage==true>package ${packageName}.mapper;</#if>
+<#if isAutoImport?exists && isAutoImport==true>
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 import java.util.List;
-
+</#if>
 /**
  * @description ${classInfo.classComment}Mapper
  * @author ${authorName}

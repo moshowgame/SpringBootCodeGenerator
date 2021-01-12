@@ -14,7 +14,7 @@ public class GlobalDefaultExceptionHandler {
     @ResponseBody
     public ReturnT defaultExceptionHandler(HttpServletRequest req, Exception e) {
         e.printStackTrace();
-        return ReturnT.ERROR(e.getMessage());
+        return ReturnT.error(e.getMessage());
     }
 
 }

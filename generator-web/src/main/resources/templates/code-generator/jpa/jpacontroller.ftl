@@ -1,5 +1,5 @@
-package ${packageName}.controller;
-
+<#if isWithPackage?exists && isWithPackage==true>package ${packageName}.controller;</#if>
+<#if isAutoImport?exists && isAutoImport==true>
 import ${packageName}.entity.${classInfo.className};
 import ${packageName}.repository.${classInfo.className}Repository;
 import org.springframework.data.domain.Example;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
-
+</#if>
 /**
  * @description ${classInfo.classComment}
  * @author ${authorName}

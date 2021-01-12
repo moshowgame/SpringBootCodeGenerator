@@ -1,6 +1,6 @@
-
+<#if isAutoImport?exists && isAutoImport==true>
 import java.util.List;
-
+</#if>
 /**
  * @description ${classInfo.classComment}
  * @author ${authorName}

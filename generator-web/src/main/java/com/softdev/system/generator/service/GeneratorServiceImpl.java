@@ -1,8 +1,11 @@
 package com.softdev.system.generator.service;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.softdev.system.generator.entity.TemplateConfig;
 import com.softdev.system.generator.util.FreemarkerUtil;
+import com.softdev.system.generator.util.MapUtil;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,9 +30,6 @@ import java.util.stream.Collectors;
 @Service
 public class GeneratorServiceImpl implements GeneratorService {
 
-    @Autowired
-    private FreemarkerUtil freemarkerTool;
-
     String templateCpnfig = null;
 
     /**
@@ -36,6 +37,7 @@ public class GeneratorServiceImpl implements GeneratorService {
      *
      * @author zhengkai.blog.csdn.net
      */
+    @Override
     public String getTemplateConfig() throws IOException {
         templateCpnfig = null;
         if (templateCpnfig != null) {
@@ -56,11 +58,15 @@ public class GeneratorServiceImpl implements GeneratorService {
      */
     @Override
     public Map<String, String> getResultByParams(Map<String, Object> params) throws IOException, TemplateException {
-        Map<String, String> result = new LinkedHashMap<>(32);
-        result.put("tableName", params.get("tableName") + "");
-        List<TemplateConfig> templateConfigList = JSON.parseArray(getTemplateConfig(), TemplateConfig.class);
-        for (TemplateConfig item : templateConfigList) {
-            result.put(item.getName(), freemarkerTool.processString(item.getGroup() + "/" + item.getName() + ".ftl", params));
+        Map<String, String> result = new HashMap<>(32);
+        result.put("tableName", MapUtil.getString(params,"tableName"));
+        JSONArray parentTemplates = JSONArray.parseArray(getTemplateConfig());
+        for (int i = 0; i <parentTemplates.size() ; i++) {
+            JSONObject parentTemplateObj = parentTemplates.getJSONObject(i);
+            for (int x = 0; x <parentTemplateObj.getJSONArray("templates").size() ; x++) {
+                JSONObject childTemplate = parentTemplateObj.getJSONArray("templates").getJSONObject(x);
+                result.put(childTemplate.getString("name"), FreemarkerUtil.processString(parentTemplateObj.getString("group") + "/" +childTemplate.getString("name")+ ".ftl", params));
+            }
         }
         return result;
     }

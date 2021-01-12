@@ -21,7 +21,7 @@ ${classInfo.className?uncap_first}.set${fieldItem.fieldName?cap_first}(${classIn
 
 <#list classInfo.fieldList as fieldItem>
 // ${fieldItem.fieldComment}
-map.put("${fieldItem.fieldName?cap_first}",${classInfo.className?uncap_first}.get${fieldItem.fieldName?cap_first}());
+map.put("${fieldItem.fieldName?uncap_first}",${classInfo.className?uncap_first}.get${fieldItem.fieldName?cap_first}());
 </#list>
 
 <#list classInfo.fieldList as fieldItem>
@@ -35,7 +35,7 @@ map.put("${fieldItem.fieldComment}",${classInfo.className?uncap_first}.get${fiel
 
 <#list classInfo.fieldList as fieldItem>
 // ${fieldItem.fieldComment}
-map.put("${fieldItem.fieldName?cap_first}",${classInfo.className?uncap_first}.get${fieldItem.fieldName?cap_first}());
+map.put("${fieldItem.fieldName?uncap_first}",${classInfo.className?uncap_first}.get${fieldItem.fieldName?cap_first}());
 </#list>
 
 </#if>

@@ -1,7 +1,8 @@
+<#if isAutoImport?exists && isAutoImport==true>
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
+</#if>
 /**
  * @description ${classInfo.classComment}
  * @author ${authorName}
@@ -13,9 +14,9 @@ public class ${classInfo.className} implements Serializable {
 
 <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
 <#list classInfo.fieldList as fieldItem >
-    /**
+    <#if isComment?exists && isComment==true>/**
     * ${fieldItem.fieldComment}
-    */
+    */</#if>
     private ${fieldItem.fieldClass} ${fieldItem.fieldName};
 
 </#list>

@@ -1,5 +1,5 @@
-package ${packageName}.controller;
-
+<#if isWithPackage?exists && isWithPackage==true>package ${packageName}.controller;</#if>
+<#if isAutoImport?exists && isAutoImport==true>
 import com.alibaba.fastjson.JSON;
 import ${packageName}.entity.${classInfo.className};
 import ${packageName}.mapper.${classInfo.className}Mapper;
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
+</#if>
 /**
 * @description ${classInfo.classComment}
 * @author ${authorName}
@@ -120,13 +120,13 @@ public class ${classInfo.className}Controller {
     }
     @GetMapping("/list")
     public ModelAndView listPage(){
-        return new ModelAndView("cms/${classInfo.className?uncap_first}-list");
+        return new ModelAndView("${classInfo.className?uncap_first}-list");
     }
 
     @GetMapping("/edit")
     public ModelAndView editPage(int id){
         ${classInfo.className} ${classInfo.className?uncap_first} = ${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("${classInfo.className?uncap_first}_id",id));
-        return new ModelAndView("cms/${classInfo.className?uncap_first}-edit","${classInfo.className?uncap_first}",${classInfo.className?uncap_first});
+        return new ModelAndView("${classInfo.className?uncap_first}-edit","${classInfo.className?uncap_first}",${classInfo.className?uncap_first});
     }
 
     /**
@@ -147,6 +147,14 @@ public class ${classInfo.className}Controller {
         }
     }
 
+    /**
+    * 执行(如不需要请屏蔽)
+    */
+    @PostMapping("/execute")
+    public Object execute(){
+        return ReturnT.SUCCESS();
+    }
+}
 }
 
 
