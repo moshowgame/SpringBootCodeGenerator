@@ -14,14 +14,6 @@ const vm = new Vue({
 	},
 	methods: {
 		donate: function () {
-			layer.open({
-				type: 2,
-				title: false,
-				area: ['806px', '467px'],
-				closeBtn: 1,
-				shadeClose: false,
-				content: ['https://github.com/moshowgame/SpringBootCodeGenerator/blob/master/donate.png?raw=true', 'no']
-			});
 		}
 	},
 	created: function () {
