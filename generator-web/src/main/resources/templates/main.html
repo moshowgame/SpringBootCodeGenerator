@@ -9,6 +9,9 @@
         /*.el-form-item--mini .el-form-item__content, .el-form-item--mini .el-form-item__label{
             line-height : 10px;
         }*/
+        .el-button-group-top {
+            padding-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -95,6 +98,14 @@
             <!--generate button-->
                 <el-button type="primary" icon="el-icon-caret-right" @click="generate">生成</el-button>
                 <el-button type="primary" icon="el-icon-document-copy" @click="copy" plain>复制</el-button>
+                <span  v-if="historicalData.length>0" >
+                    <el-button-group>
+                        <el-button type="primary" plain disabled round>历史记录</el-button>
+                        <span v-for="(item, index) in historicalData" :key="index">
+                                <el-button @click="switchHistoricalData" >{{item}}</el-button>
+                            </span>
+                    </el-button-group>
+                </span>
             <hr>
             <!--templates area-->
             <el-form ref="form" :inline="true" :model="formData"  label-width="100px" size="mini">

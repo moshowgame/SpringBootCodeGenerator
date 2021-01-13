@@ -60,6 +60,7 @@ const vm = new Vue({
 			}
 		},
 		templates:[{}],
+		historicalData:[],
 		outputStr: "xxx",
 		outputJson: {}
 	},
@@ -69,6 +70,23 @@ const vm = new Vue({
 			const targetModel = event.target.innerText.trim();
 			console.log(targetModel);
 			vm.outputStr=vm.outputJson[targetModel];
+			$.outputArea.setValue(vm.outputStr);
+			//console.log(vm.outputStr);
+			$.outputArea.setSize('auto', 'auto');
+		},
+		//switch HistoricalData
+		switchHistoricalData: function (event) {
+			const tableName = event.target.innerText.trim();
+			console.log(tableName);
+			if (window.sessionStorage){
+				const valueSession = sessionStorage.getItem(tableName);
+				vm.outputJson = JSON.parse(valueSession);
+				console.log(valueSession);
+				alert("切换历史记录成功:"+tableName);
+			}else{
+				alert("浏览器不支持sessionStorage");
+			}
+			vm.outputStr=vm.outputJson["plusentity"];
 			$.outputArea.setValue(vm.outputStr);
 			//console.log(vm.outputStr);
 			$.outputArea.setSize('auto', 'auto');
@@ -86,6 +104,25 @@ const vm = new Vue({
 				//console.log(vm.outputStr);
 				$.outputArea.setValue(vm.outputStr);
 				$.outputArea.setSize('auto', 'auto');
+				//add to historicalData
+				const tableName = res.outputJson.tableName;
+				//add new table only
+				if(vm.historicalData.indexOf(tableName)<0){
+					vm.historicalData.unshift(tableName);
+				}
+				//remove last record , if more than N
+				if(vm.historicalData.length>9){
+					vm.historicalData.splice(9,1);
+				}
+				//get and set to session data
+				const valueSession = sessionStorage.getItem(tableName);
+				//remove if exists
+				if(valueSession!==undefined && valueSession!=null){
+					sessionStorage.removeItem(tableName);
+				}
+				//set data to session
+				sessionStorage.setItem(tableName,JSON.stringify(vm.outputJson));
+				//console.log(vm.historicalData);
 			});
 		},
 		copy : function (){
@@ -99,7 +136,7 @@ const vm = new Vue({
 		}).then(function(res){
 			//console.log(res.templates);
 			vm.templates = JSON.parse(res.templates);
-			console.log(vm.templates);
+			// console.log(vm.templates);
 		});
 	},
 	updated: function () {
