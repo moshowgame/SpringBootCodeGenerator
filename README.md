@@ -6,7 +6,7 @@
 ![image](https://img.shields.io/badge/CodeGenerator-%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%85-blue.svg)
 [![Build Status](https://travis-ci.org/moshowgame/SpringBootCodeGenerator.svg?branch=master)](https://travis-ci.org/moshowgame/SpringBootCodeGenerator)
 
-#Author
+# Author
 >powered by `Moshow郑锴(大狼狗)` , [https://zhengkai.blog.csdn.net](https://zhengkai.blog.csdn.net)
 
 # Description
@@ -57,7 +57,7 @@
 # Update Logs
 |更新日期|更新内容|
 |----|----|
-|2021.01.16|全新3.0版本：一、前端半vue半js化，更多动态加载项。二、支持更多生成设置，优化生成场景。|
+|2021.01.16|全新3.0版本：一、前端半vue半js化，更多动态加载项。二、支持更多生成设置，优化生成场景。三、js导入支持本地/CDN模式，支持断网环境轻松使用。|
 |2020.10.22|1.tinyint多加一个Short类型转换（感谢@wttHero的建议）|
 |2020.10.20|1.修复mapper2 insert代码问题（感谢@mXiaoWan的PR）<br>2.优化对fulltext/index关键字的处理（感谢@WEGFan的反馈）。<br>3.新增日期类型的转换选择（感谢@qingkediguo的建议）。<br>4.新增是否包装类型的转换选择。|
 |2020.06.28|优化Util下的BeanUtil，支持更多map.put的操作。整合CRUD模板到SQL(CRUD)模板。|
@@ -107,19 +107,16 @@
 |-|-|
 |packageName|自定义的包名|
 |authorName|自定义的作者名|
-|returnUtil|自定义的返回Util|
 |tableName|sql中的表名|
 |className|java类名|
 |classComment|sql表备注/java类备注|
 |fieldName|字段名|
 |fieldComment|字段备注|
 
-# how to add a new template
-1. code-generator中找到对应分类，新增一个.ftl文件
-2. 根据类信息编写freemarker模板.ftl文件
-3. 修改template.json文件，新增模板信息
-4. index页面增加一个button
-5. reload,test,complete
+# How to add a new template
+1. `resources/templates/code-generator`中找到对应类型
+2. COPY并编写freemarker模板文件`.ftl`
+3. 修改`template.json`文件，新增模板信息，页面可动态加载
 
 <img src="./codegenerator1.png">
 <img src="./codegenerator2.png">

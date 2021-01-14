@@ -96,6 +96,10 @@ const vm = new Vue({
 			//get value from codemirror
 			vm.formData.tableSql=$.inputArea.getValue();
 			axios.post("code/generate",vm.formData).then(function(res){
+				if(res.code===500){
+					error("生成失败");
+					return;
+				}
 				//console.log(res.outputJson);
 				vm.outputJson=res.outputJson;
 				// console.log(vm.outputJson["bootstrap-ui"]);
