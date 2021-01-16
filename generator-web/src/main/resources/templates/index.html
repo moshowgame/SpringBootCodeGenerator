@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <#include "/header.html">
+    <style>
+        .content-wrapper, .right-side, .main-footer{
+            margin-left: 0px;
+        }
+    </style>
+</head>
+<!-- ADD THE CLASS layout-boxed TO GET A BOXED LAYOUT -->
+<body class="hold-transition skin-blue sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper" id="rrapp" v-cloak>
+  <header class="main-header">
+    <a href="javascript:void(0);" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>大狼狗</b></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>JAVA代码生成平台</b></span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <!--<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>-->
+	  <div style="float:left;color:#fff;padding:15px 10px;">For reducing the repetitive CRUD work</div>
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <li><a target="_blank" href="https://github.com/moshowgame/SpringBootCodeGenerator/blob/master/README.md"><i class="el-icon-share"></i> &nbsp;说明手册</a></li>
+          <li><a target="_blank" href="https://github.com/moshowgame/SpringBootCodeGenerator"><i class="el-icon-star-on"></i>  github</a></li>
+		</ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div> <!--class="content-wrapper"-->
+    <!-- Content Header (Page header) -->
+    <!--<section class="content-header">
+
+    </section>-->
+
+    <!-- Main content -->
+    <section class="content" style="background:#fff;">
+      <iframe scrolling="yes" frameborder="0" style="width:100%;height:100%;overflow:visible;background:#fff;" :src="main"></iframe>
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      Version 2021.1
+    </div>
+      Powered by Moshow郑锴(大狼狗) <a href="https://zhengkai.blog.csdn.net" target="_blank"><i class="el-icon-location"></i>zhengkai.blog.csdn.net</a> <a href="https://github.com/moshowgame/SpringBootCodeGenerator/blob/master/donate.png?raw=true" target="_blank"><i class="el-icon-money"></i>打赏</a>
+  </footer>
+
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+  
+
+</div>
+<!-- ./wrapper -->
+
+<script src="${request.contextPath}/statics/js/index.js"></script>
+</body>
+</html>

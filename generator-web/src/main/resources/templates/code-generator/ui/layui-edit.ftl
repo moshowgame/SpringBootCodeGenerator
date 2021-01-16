@@ -1,19 +1,5 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>layuimini</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="￥{request.contextPath}/static/lib/layui-v2.5.5/css/layui.css" media="all">
-    <link rel="stylesheet" href="￥{request.contextPath}/static/css/public.css" media="all">
-    <style>
-        body {
-            background-color: #ffffff;
-        }
-    </style>
-</head>
 <body>
 <div class="layui-form layuimini-form">
     <input type="hidden" name="${classInfo.className?uncap_first}Id" value="" class="layui-input">

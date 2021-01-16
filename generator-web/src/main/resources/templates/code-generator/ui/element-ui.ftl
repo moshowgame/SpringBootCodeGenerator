@@ -1,5 +1,3 @@
-
-
 <el-form :inline="true" :model="submitData" class="demo-form-inline" :rules="rules" ref="ruleForm">
     <el-card class="box-card">
         <div slot="header" class="header clearfix">
@@ -10,7 +8,7 @@
         <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
             <#list classInfo.fieldList as fieldItem >
              <el-form-item label="${fieldItem.fieldComment}" prop="${fieldItem.fieldName}">
-                 <el-input placeholder="${fieldItem.fieldComment}" v-model="submitData.${fieldItem.fieldName}"></el-input>
+                 <el-input placeholder="请输入${fieldItem.fieldComment}" v-model="formData.${fieldItem.fieldName}"></el-input>
              </el-form-item>
             </#list>
         </#if>

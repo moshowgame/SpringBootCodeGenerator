@@ -1,7 +1,9 @@
+<#if isAutoImport?exists && isAutoImport==true>
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+</#if>
 
 /**
  * @description ${classInfo.classComment}

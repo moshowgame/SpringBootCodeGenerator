@@ -54,7 +54,9 @@ public class StringUtils {
         }
         return result.toString();
     }
-
+    public static boolean isNotNull(String str){
+        return org.apache.commons.lang3.StringUtils.isNotEmpty(str);
+    }
     public static void main(String[] args) {
 
     }

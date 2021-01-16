@@ -1,3 +1,4 @@
+<#if isAutoImport?exists && isAutoImport==true>
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -7,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
+</#if>
 
 /**
  * @description ${classInfo.classComment}
@@ -26,7 +28,7 @@ public class ${classInfo.className}Controller {
     * @date ${.now?string('yyyy/MM/dd')}
     **/
     @RequestMapping("/insert")
-    public ReturnT<String> insert(${classInfo.className} ${classInfo.className?uncap_first}){
+    public Object insert(${classInfo.className} ${classInfo.className?uncap_first}){
         return ${classInfo.className?uncap_first}Service.insert(${classInfo.className?uncap_first});
     }
 
@@ -56,7 +58,7 @@ public class ${classInfo.className}Controller {
     * @date ${.now?string('yyyy/MM/dd')}
     **/
     @RequestMapping("/load")
-    public ReturnT<String> load(int id){
+    public Object load(int id){
         return ${classInfo.className?uncap_first}Service.load(id);
     }
 

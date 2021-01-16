@@ -1,14 +1,16 @@
 package com.softdev.system.generator;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author zhengkai.blog.csdn.net
+ */
 @SpringBootApplication
-public class GeneratorWebApplication {
+public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(GeneratorWebApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
 }

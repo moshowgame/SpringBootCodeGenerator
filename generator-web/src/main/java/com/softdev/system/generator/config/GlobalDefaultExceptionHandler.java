@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author zhengkai.blog.csdn.net
+ */
 @ControllerAdvice
 public class GlobalDefaultExceptionHandler {
 
@@ -14,7 +17,7 @@ public class GlobalDefaultExceptionHandler {
     @ResponseBody
     public ReturnT defaultExceptionHandler(HttpServletRequest req, Exception e) {
         e.printStackTrace();
-        return ReturnT.ERROR(e.getMessage());
+        return ReturnT.error("代码生成失败:"+e.getMessage());
     }
 
 }

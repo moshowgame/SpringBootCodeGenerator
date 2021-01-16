@@ -1,5 +1,5 @@
-package ${packageName}.controller;
-
+<#if isWithPackage?exists && isWithPackage==true>package ${packageName}.controller;</#if>
+<#if isAutoImport?exists && isAutoImport==true>
 import com.alibaba.fastjson.JSON;
 import ${packageName}.entity.${classInfo.className};
 import ${packageName}.mapper.${classInfo.className}Mapper;
@@ -16,9 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
+</#if>
 /**
-* @description ${classInfo.classComment}
+* @description ${classInfo.classComment}控制器
 * @author ${authorName}
 * @date ${.now?string('yyyy-MM-dd')}
 */
@@ -42,12 +42,12 @@ public class ${classInfo.className}Controller {
             ${classInfo.className?uncap_first}Mapper.updateById(${classInfo.className?uncap_first});
         }else{
         if(${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("${classInfo.className?uncap_first}_name",${classInfo.className?uncap_first}.get${classInfo.className}Name()))!=null){
-            return ${returnUtil}.ERROR("保存失败，名字重复");
+            return ${returnUtilFailure}("保存失败，名字重复");
         }
         ${classInfo.className?uncap_first}.setCreateTime(new Date());
         ${classInfo.className?uncap_first}Mapper.insert(${classInfo.className?uncap_first});
         }
-        return ${returnUtil}.SUCCESS("保存成功");
+        return ${returnUtilSuccess}("保存成功");
     }
 
     /**
@@ -58,9 +58,9 @@ public class ${classInfo.className}Controller {
     ${classInfo.className} ${classInfo.className?uncap_first} = ${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("${classInfo.className?uncap_first}_id",id));
         if(${classInfo.className?uncap_first}!=null){
             ${classInfo.className?uncap_first}Mapper.deleteById(id);
-            return ${returnUtil}.SUCCESS("删除成功");
+            return ${returnUtilSuccess}("删除成功");
         }else{
-            return ${returnUtil}.ERROR("没有找到该对象");
+            return ${returnUtilFailure}("没有找到该对象");
         }
     }
 
@@ -71,9 +71,9 @@ public class ${classInfo.className}Controller {
     public Object find(int id){
     ${classInfo.className} ${classInfo.className?uncap_first} = ${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("${classInfo.className?uncap_first}_id",id));
         if(${classInfo.className?uncap_first}!=null){
-            return ${returnUtil}.SUCCESS(${classInfo.className?uncap_first});
+            return ${returnUtilSuccess}(${classInfo.className?uncap_first});
         }else{
-            return ${returnUtil}.ERROR("没有找到该对象");
+            return ${returnUtilFailure}("没有找到该对象");
         }
     }
 
@@ -101,8 +101,8 @@ public class ${classInfo.className}Controller {
     /**
     * 手工分页查询(按需使用)
     */
-    @PostMapping("/list2")
-    public ReturnT list2(String searchParams,
+    /*@PostMapping("/list2")
+    public Object list2(String searchParams,
     @RequestParam(required = false, defaultValue = "0") int page,
     @RequestParam(required = false, defaultValue = "10") int limit) {
         log.info("searchParams:"+ JSON.toJSONString(searchParams));
@@ -116,17 +116,17 @@ public class ${classInfo.className}Controller {
         List<${classInfo.className}> itemList = ${classInfo.className?uncap_first}Mapper.pageAll(queryParamDTO,(page - 1)* limit,limit);
         Integer itemCount = ${classInfo.className?uncap_first}Mapper.countAll(queryParamDTO);
         //返回结果
-        return ReturnT.PAGE(itemList,itemCount);
-    }
+        return ${returnUtilSuccess}.PAGE(itemList,itemCount);
+    }*/
     @GetMapping("/list")
     public ModelAndView listPage(){
-        return new ModelAndView("cms/${classInfo.className?uncap_first}-list");
+        return new ModelAndView("${classInfo.className?uncap_first}-list");
     }
 
     @GetMapping("/edit")
     public ModelAndView editPage(int id){
         ${classInfo.className} ${classInfo.className?uncap_first} = ${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("${classInfo.className?uncap_first}_id",id));
-        return new ModelAndView("cms/${classInfo.className?uncap_first}-edit","${classInfo.className?uncap_first}",${classInfo.className?uncap_first});
+        return new ModelAndView("${classInfo.className?uncap_first}-edit","${classInfo.className?uncap_first}",${classInfo.className?uncap_first});
     }
 
     /**
@@ -139,14 +139,22 @@ public class ${classInfo.className}Controller {
             ${classInfo.className?uncap_first}.setUpdateTime(new Date());
             ${classInfo.className?uncap_first}.setStatus(status);
             ${classInfo.className?uncap_first}Mapper.updateById(${classInfo.className?uncap_first});
-            return ReturnT.SUCCESS((status==1)?"已发布":"已暂停");
+            return ${returnUtilSuccess}((status==1)?"已发布":"已暂停");
         }else if(status.equals(${classInfo.className?uncap_first}.getStatus())){
-            return ReturnT.SUCCESS("状态不正确");
+            return ${returnUtilFailure}("状态不正确");
         }else{
-            return ReturnT.ERROR();
+            return ${returnUtilFailure}();
         }
     }
 
+    /**
+    * 执行(如不需要请屏蔽)
+    */
+    @PostMapping("/execute")
+    public Object execute(){
+        return ${returnUtilSuccess};
+    }
+}
 }
 
 

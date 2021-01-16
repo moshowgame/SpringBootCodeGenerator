@@ -35,7 +35,8 @@ public class TableParseUtil {
             throws IOException {
         //process the param
         String tableSql = paramInfo.getTableSql();
-        String nameCaseType = paramInfo.getNameCaseType();
+        String nameCaseType = MapUtil.getString(paramInfo.getOptions(),"nameCaseType");
+        Boolean isPackageType = MapUtil.getBoolean(paramInfo.getOptions(),"isPackageType");
 
         if (tableSql == null || tableSql.trim().length() == 0) {
             throw new CodeGenerateException("Table structure can not be empty. 表结构不能为空。");
@@ -71,6 +72,11 @@ public class TableParseUtil {
         } else if (tableName.contains(".")) {
             //优化对likeu.members这种命名的支持
             tableName = tableName.substring(tableName.indexOf(".") + 1);
+        }
+
+        //ignore prefix
+        if(tableName!=null && StringUtils.isNotNull(MapUtil.getString(paramInfo.getOptions(),"ignorePrefix"))){
+            tableName = tableName.replaceAll(MapUtil.getString(paramInfo.getOptions(),"ignorePrefix"),"");
         }
         // class Name
         String className = StringUtils.upperCaseFirst(StringUtils.underlineToCamelCase(tableName));
@@ -194,17 +200,17 @@ public class TableParseUtil {
                     //2020-10-20 zhengkai 新增包装类型的转换选择
                     if (columnLine.contains(" tinyint")) {
                         //20191115 MOSHOW.K.ZHENG 支持对tinyint的特殊处理
-                        fieldClass = paramInfo.getTinyintTransType();
+                        fieldClass = MapUtil.getString(paramInfo.getOptions(),"tinyintTransType");;
                     } else if (columnLine.contains(" int") || columnLine.contains(" smallint")) {
-                        fieldClass = (paramInfo.isPackageType())?Integer.class.getSimpleName():"int";
+                        fieldClass = (isPackageType)?Integer.class.getSimpleName():"int";
                     } else if (columnLine.contains(" bigint")) {
-                        fieldClass = (paramInfo.isPackageType())?Long.class.getSimpleName():"long";
+                        fieldClass = (isPackageType)?Long.class.getSimpleName():"long";
                     } else if (columnLine.contains(" float")) {
-                        fieldClass = (paramInfo.isPackageType())?Float.class.getSimpleName():"float";
+                        fieldClass = (isPackageType)?Float.class.getSimpleName():"float";
                     } else if (columnLine.contains(" double")) {
-                        fieldClass = (paramInfo.isPackageType())?Double.class.getSimpleName():"double";
+                        fieldClass = (isPackageType)?Double.class.getSimpleName():"double";
                     } else if (columnLine.contains(" time") || columnLine.contains(" date") || columnLine.contains(" datetime") || columnLine.contains(" timestamp")) {
-                        fieldClass = paramInfo.getTimeTransType();
+                        fieldClass =  MapUtil.getString(paramInfo.getOptions(),"timeTransType");
                     } else if (columnLine.contains(" varchar") || columnLine.contains(" text") || columnLine.contains(" char")
                             || columnLine.contains(" clob") || columnLine.contains(" blob") || columnLine.contains(" json")) {
                         fieldClass = String.class.getSimpleName();
@@ -229,9 +235,9 @@ public class TableParseUtil {
                                 }
                                 //数字范围9位及一下用Integer，大的用Long
                                 if (length <= 9) {
-                                    fieldClass = (paramInfo.isPackageType())?Integer.class.getSimpleName():"int";
+                                    fieldClass = (isPackageType)?Integer.class.getSimpleName():"int";
                                 } else {
-                                    fieldClass = (paramInfo.isPackageType())?Long.class.getSimpleName():"long";
+                                    fieldClass = (isPackageType)?Long.class.getSimpleName():"long";
                                 }
                             } else {
                                 //有小数位数一律使用BigDecimal
@@ -242,7 +248,7 @@ public class TableParseUtil {
                         }
                     } else if (columnLine.contains(" boolean")) {
                         //20190910 MOSHOW.K.ZHENG 新增对boolean的处理（感谢@violinxsc的反馈）以及修复tinyint类型字段无法生成boolean类型问题（感谢@hahaYhui的反馈）
-                        fieldClass = (paramInfo.isPackageType())?Boolean.class.getSimpleName():"boolean";
+                        fieldClass = (isPackageType)?Boolean.class.getSimpleName():"boolean";
                     } else {
                         fieldClass = String.class.getSimpleName();
                     }
