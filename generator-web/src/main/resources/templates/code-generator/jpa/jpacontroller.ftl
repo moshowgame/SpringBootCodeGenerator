@@ -42,9 +42,9 @@ public class ${classInfo.className}Controller {
         Optional<${classInfo.className}> ${classInfo.className?uncap_first}=${classInfo.className?uncap_first}Repository.findById(id);
         if(${classInfo.className?uncap_first}.isPresent()){
             ${classInfo.className?uncap_first}Repository.deleteById(id);
-            return ${returnUtil}.success("删除成功");
+            return ${returnUtilSuccess}("删除成功");
         }else{
-            return ${returnUtil}.error("没有找到该对象");
+            return ${returnUtilFailure}("没有找到该对象");
         }
     }
 
@@ -55,9 +55,9 @@ public class ${classInfo.className}Controller {
     public Object find(int id){
         Optional<${classInfo.className}> ${classInfo.className?uncap_first}=${classInfo.className?uncap_first}Repository.findById(id);
         if(${classInfo.className?uncap_first}.isPresent()){
-            return ${returnUtil}.success(${classInfo.className?uncap_first}.get());
+            return ${returnUtilSuccess}(${classInfo.className?uncap_first}.get());
         }else{
-            return ${returnUtil}.error("没有找到该对象");
+            return ${returnUtilFailure}("没有找到该对象");
         }
     }
 

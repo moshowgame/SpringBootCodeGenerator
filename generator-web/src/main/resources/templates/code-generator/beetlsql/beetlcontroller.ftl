@@ -27,10 +27,10 @@ public class ${classInfo.className}Controller {
         ${classInfo.className} ${classInfo.className?uncap_first}=sqlManager.unique(${classInfo.className}.class,${classInfo.className?uncap_first}.getId());
         if(${classInfo.className?uncap_first}!=null){
             sqlManager.updateById(${classInfo.className?uncap_first});
-            return ${returnUtil}.success("编辑成功");
+            return ${returnUtilSuccess}("编辑成功");
         }else{
             sqlManager.insert(${classInfo.className?uncap_first});
-            return ${returnUtil}.error("保存成功");
+            return ${returnUtilFailure}("保存成功");
         }
     }
 
@@ -42,9 +42,9 @@ public class ${classInfo.className}Controller {
         ${classInfo.className} ${classInfo.className?uncap_first}=sqlManager.unique(${classInfo.className}.class,id);
         if(${classInfo.className?uncap_first}!=null){
             sqlManager.deleteById(id);
-            return ${returnUtil}.success("删除成功");
+            return ${returnUtilSuccess}("删除成功");
         }else{
-            return ${returnUtil}.error("没有找到该对象");
+            return ${returnUtilFailure}("没有找到该对象");
         }
     }
 
@@ -55,9 +55,9 @@ public class ${classInfo.className}Controller {
     public Object find(int id){
         ${classInfo.className} ${classInfo.className?uncap_first}=sqlManager.unique(${classInfo.className}.class,id);
         if(${classInfo.className?uncap_first}!=null){
-            return ${returnUtil}.success(${classInfo.className?uncap_first});
+            return ${returnUtilSuccess}(${classInfo.className?uncap_first});
         }else{
-            return ${returnUtil}.error("没有找到该对象");
+            return ${returnUtilFailure}("没有找到该对象");
         }
     }
 
@@ -69,7 +69,7 @@ public class ${classInfo.className}Controller {
                         @RequestParam(required = false, defaultValue = "0") int pageNumber,
                         @RequestParam(required = false, defaultValue = "10") int pageSize) {
             List<${classInfo.className}> list = sqlManager.query(${classInfo.className}.class).select();
-            return ${returnUtil}.success(list);
+            return ${returnUtilSuccess}(list);
     }
 
 }

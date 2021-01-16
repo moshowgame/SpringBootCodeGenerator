@@ -7,7 +7,7 @@ import ${packageName}.entity.${classInfo.className};
 import java.util.List;
 </#if>
 /**
- * @description ${classInfo.classComment}
+ * @description ${classInfo.classComment}Mapper
  * @author ${authorName}
  * @date ${.now?string('yyyy-MM-dd')}
  */

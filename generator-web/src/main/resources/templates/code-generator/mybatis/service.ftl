@@ -11,17 +11,17 @@ public interface ${classInfo.className}Service {
     /**
     * 新增
     */
-    public ReturnT<String> insert(${classInfo.className} ${classInfo.className?uncap_first});
+    public Object insert(${classInfo.className} ${classInfo.className?uncap_first});
 
     /**
     * 删除
     */
-    public ReturnT<String> delete(int id);
+    public Object delete(int id);
 
     /**
     * 更新
     */
-    public ReturnT<String> update(${classInfo.className} ${classInfo.className?uncap_first});
+    public Object update(${classInfo.className} ${classInfo.className?uncap_first});
 
     /**
     * 根据主键 id 查询

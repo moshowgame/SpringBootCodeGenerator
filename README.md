@@ -20,23 +20,24 @@
 >          #支持`MySQL`、Oracle、PgSQL三大主流数据库
 >
 >generate to many popular templates by ddl-sql/insert-sql/simple json<br>
->可通过`建表SQL语句`或`INSERT语句`或者`简单JSON`生成`JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL`相关模板代码.
+>   可通过`建表SQL语句`或`INSERT语句`或者`简单JSON`生成`JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL`相关模板代码.
 >
 >thanks for your using and feedback,I'm inspired by the 600PV every day and github more than 700 stars <br>
-> 感谢大家的使用和反馈，每天六百的PV和获得超过七百多的星星是我前进和继续做下去的动力。
+>   感谢大家的使用和反馈，每天六百的PV和获得超过七百多的星星是我前进和继续做下去的动力。
 > 
 >hope everyone can keep good balance on work and life , stay health and safety , be smooth on work as well<br>
-> 愿大家可以维持生活和工作平衡，保持健康和安全，祝大家工作顺利！
+>   愿大家可以维持生活和工作平衡，保持健康和安全，祝大家工作顺利！
 
 # Tips or Features
-- 支持DDL SQL/INSERT SQL/SIMPLE JSON生成模式
-- 自动记忆最近生成的内容，最多保留9个
+- 支持DDL SQL/INSERT SQL/SIMPLE JSON三种生成模式
+- `自动记忆`最近生成的内容，最多保留9个
 - 提供众多`通用模板`，易于使用，复制粘贴加简单修改即可完成CRUD操作
 - 支持`特殊字符`模板(`#`请用`井`代替;`$`请用`￥`代替)
 - `Util集合`提供一些基本对象的使用方法供方便COPY，如对应的CRUD SQL语句、setMap、getMap、get属性等等
-- 关于`类名注释`，根据`comment=(mysql)`或者`comment on table(pgsql/oracle)`生成
+- 关于`类名注释`，可根据`comment=(mysql)`或者`comment on table(pgsql/oracle)`生成
 - 可设置是否`自动引包`(java中的import)及`引入包路径`(java类中的package)，建议取消并配合IDEA的自动引包更智能(Settings→Editor→General→Auto Import,勾选Add unambiguous imports on the fly以及Optimize imports on the fly)。
 - 可设置`表名前缀`，例如sys_user前缀为sys_之后可以正确生成user类
+- 可切换`header.html`中的include文件为`header-local.html`(本地模式)/`header-CDN.html`(云CDN模式)
 
 # Url
 
@@ -58,10 +59,10 @@ Thanks for `JetBrains` providing us the `Licenses for Open Source Development` �
 # Update Logs
 |更新日期|更新内容|
 |:----|:----|
-|2021.01.17|生成后自动trim掉前后空格输出。完善ReadMe文档。|
+|2021.01.17|生成后自动trim掉前后空格输出。<br>完善ReadMe文档。<br>优化云CDN引入部分。<br>优化returnUtil部分。<br>表明前缀选项(感谢@wwlg的建议)。 <br>是否带字段注释设置(感谢@fengpojian的建议)。<br>优化Mybatis的''!=判断(感谢@zhongsb的建议)。<br>Mybatis-Plus增加Service层(感谢@yf466532479的建议)。 |
 |2021.01.16|全新3.0版本：<br>一、前端半vue半js化，更多动态加载项。<br>二、支持更多生成设置，优化生成场景。<br>三、js导入支持本地/CDN模式，支持断网环境轻松使用。|
 |2020.10.22|1.tinyint多加一个Short类型转换（感谢@wttHero的建议）|
-|2020.10.20|1.修复mapper2 insert代码问题（感谢@mXiaoWan的PR）<br>2.优化对fulltext/index关键字的处理（感谢@WEGFan的反馈）。<br>3.新增日期类型的转换选择（感谢@qingkediguo的建议）。<br>4.新增是否包装类型的转换选择。|
+|2020.10.20|1.修复mapper2 insert代码问题（感谢@mXiaoWan的PR）<br>2.优化对fulltext/index关键字的处理（感谢@WEGFan的反馈）。<br>3.新增日期类型的转换选择（感谢@qingkediguo的建议）。<br>4.新增是否包装类型的转换选择(感谢@gzlicanyi的建议)。|
 |2020.06.28|优化Util下的BeanUtil，支持更多map.put的操作。整合CRUD模板到SQL(CRUD)模板。|
 |2020.06.21|修复FreemarkerUtil的Path问题导致JAR包运行时无法获取template的问题。|
 |2020.05.25|1.一些fix,关于封装工具类以及layui模板优化等.<br> 2.优化表备注的获取逻辑.<br> 3.生成时间格式改为yyyy-MM-dd,移除具体的时间,只保留日期|

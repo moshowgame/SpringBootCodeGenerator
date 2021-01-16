@@ -28,7 +28,7 @@ public class ${classInfo.className}Controller {
     * @date ${.now?string('yyyy/MM/dd')}
     **/
     @RequestMapping("/insert")
-    public ReturnT<String> insert(${classInfo.className} ${classInfo.className?uncap_first}){
+    public Object insert(${classInfo.className} ${classInfo.className?uncap_first}){
         return ${classInfo.className?uncap_first}Service.insert(${classInfo.className?uncap_first});
     }
 
@@ -58,7 +58,7 @@ public class ${classInfo.className}Controller {
     * @date ${.now?string('yyyy/MM/dd')}
     **/
     @RequestMapping("/load")
-    public ReturnT<String> load(int id){
+    public Object load(int id){
         return ${classInfo.className?uncap_first}Service.load(id);
     }
 
