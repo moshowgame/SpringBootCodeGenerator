@@ -22,8 +22,8 @@
 >generate to many popular templates by ddl-sql/insert-sql/simple json<br>
 >可通过`建表SQL语句`或`INSERT语句`或者`简单JSON`生成`JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL`相关模板代码.
 >
->thanks for your using , the 600pv per day and the 700 stars totals inspired me<br>
-> 感谢大家的使用和反馈，每天600PV和700的星星是前进和继续做下去的东西。
+>thanks for your using and feedback,I'm inspired by the 600PV every day and github more than 700 stars <br>
+> 感谢大家的使用和反馈，每天六百的PV和获得超过七百多的星星是我前进和继续做下去的动力。
 > 
 >hope everyone can keep good balance on work and life , stay health and safety , be smooth on work as well<br>
 > 愿大家可以维持生活和工作平衡，保持健康和安全，祝大家工作顺利！
@@ -44,9 +44,10 @@
 
 感谢`三叔`将他部署在[DEVTOOLS](https://java.devtools.cn/)上，继续作为Golden Tool开放给大家使用。<br>
 
+Thanks for `JetBrains` providing us the `Licenses for Open Source Development` ，[Get free access to all JetBrains tools for developing your open source project!](https://www.jetbrains.com/community/opensource/#support) .<br>
 
 |访问地址|http://localhost:1234/generator|
-|----|----|
+|:----|:----|
 |BEJSON 在线地址|https://java.bejson.com/generator|
 |DEVTOOLS 在线地址|https://java.devtools.cn|
 |CSDN BLOG|https://zhengkai.blog.csdn.net|
@@ -56,8 +57,9 @@
 
 # Update Logs
 |更新日期|更新内容|
-|----|----|
-|2021.01.16|全新3.0版本：一、前端半vue半js化，更多动态加载项。二、支持更多生成设置，优化生成场景。三、js导入支持本地/CDN模式，支持断网环境轻松使用。|
+|:----|:----|
+|2021.01.17|生成后自动trim掉前后空格输出。完善ReadMe文档。|
+|2021.01.16|全新3.0版本：<br>一、前端半vue半js化，更多动态加载项。<br>二、支持更多生成设置，优化生成场景。<br>三、js导入支持本地/CDN模式，支持断网环境轻松使用。|
 |2020.10.22|1.tinyint多加一个Short类型转换（感谢@wttHero的建议）|
 |2020.10.20|1.修复mapper2 insert代码问题（感谢@mXiaoWan的PR）<br>2.优化对fulltext/index关键字的处理（感谢@WEGFan的反馈）。<br>3.新增日期类型的转换选择（感谢@qingkediguo的建议）。<br>4.新增是否包装类型的转换选择。|
 |2020.06.28|优化Util下的BeanUtil，支持更多map.put的操作。整合CRUD模板到SQL(CRUD)模板。|
@@ -103,8 +105,8 @@
 |2018.08.31|初始化项目.新增JPA系列Entity+Repository模板.|
 
 # ClassInfo/TableInfo
-|字段名|说明|
-|-|-|
+|名称|说明|
+|:----|:----|
 |packageName|自定义的包名|
 |authorName|自定义的作者名|
 |tableName|sql中的表名|
@@ -112,6 +114,26 @@
 |classComment|sql表备注/java类备注|
 |fieldName|字段名|
 |fieldComment|字段备注|
+
+# Options
+|名称|说明|默认值|
+|:----|:----|:----|
+|作者 |authorName|zhengkai.blog.csdn.net|
+|包名 |packageName|cn.devtools|
+|返回(成功)|returnUtilSuccess|Return.SUCCESS|
+|返回(失败)|returnUtilFailure|Return.ERROR|
+|忽略前缀|ignorePrefix |sys_|
+|输入类型 |dataType|DDL SQL|
+|TinyInt转换 |tinyintTransType|int|
+|时间类型 |timeTransType|Date|
+|命名类型 |nameCaseType|CamelCase/驼峰|
+|是否包装类型 |isPackageType|true|
+|是否swaggerUI|isSwagger|false|
+|是否字段注释|isComment|true|
+|是否自动引包|isAutoImport||
+|是否带包路径|isWithPackage||
+|是否Lombok|isLombok|true|
+
 
 # How to add a new template
 1. `resources/templates/code-generator`中找到对应类型

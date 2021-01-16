@@ -7,17 +7,17 @@ $(function(){
 
 	//init input code area
 	$.inputArea = CodeMirror.fromTextArea(document.getElementById("inputArea"), {
-		lineNumbers: true,
-		lineWrapping: false,
-		readOnly: false,
-		foldGutter: true,
-		mode: "text/x-sql"
+		mode: "text/x-sql", // SQL
+		theme: "idea",  // IDEA主题
+		lineNumbers: true,   //显示行号
+		smartIndent: true, // 自动缩进
+		autoCloseBrackets: true// 自动补全括号
 	});
 	$.inputArea.setSize('auto','auto');
 
 	// init output code area
 	$.outputArea = CodeMirror.fromTextArea(document.getElementById("outputArea"), {
-		mode: "text/x-java",  //Java语言
+		theme: "idea",   // IDEA主题
 		lineNumbers: true,   //显示行号
 		smartIndent: true, // 自动缩进
 		autoCloseBrackets: true// 自动补全括号
@@ -70,7 +70,7 @@ const vm = new Vue({
 			const targetModel = event.target.innerText.trim();
 			console.log(targetModel);
 			vm.outputStr=vm.outputJson[targetModel];
-			$.outputArea.setValue(vm.outputStr);
+			$.outputArea.setValue(vm.outputStr.trim());
 			//console.log(vm.outputStr);
 			$.outputArea.setSize('auto', 'auto');
 		},
@@ -86,10 +86,29 @@ const vm = new Vue({
 			}else{
 				alert("浏览器不支持sessionStorage");
 			}
-			vm.outputStr=vm.outputJson["plusentity"];
+			vm.outputStr=vm.outputJson["plusentity"].trim();
 			$.outputArea.setValue(vm.outputStr);
 			//console.log(vm.outputStr);
 			$.outputArea.setSize('auto', 'auto');
+		},
+		setHistoricalData : function (tableName){
+			//add new table only
+			if(vm.historicalData.indexOf(tableName)<0){
+				vm.historicalData.unshift(tableName);
+			}
+			//remove last record , if more than N
+			if(vm.historicalData.length>9){
+				vm.historicalData.splice(9,1);
+			}
+			//get and set to session data
+			const valueSession = sessionStorage.getItem(tableName);
+			//remove if exists
+			if(valueSession!==undefined && valueSession!=null){
+				sessionStorage.removeItem(tableName);
+			}
+			//set data to session
+			sessionStorage.setItem(tableName,JSON.stringify(vm.outputJson));
+			//console.log(vm.historicalData);
 		},
 		//request with formData to generate the code 根据参数生成代码
 		generate : function(){
@@ -103,34 +122,18 @@ const vm = new Vue({
 				//console.log(res.outputJson);
 				vm.outputJson=res.outputJson;
 				// console.log(vm.outputJson["bootstrap-ui"]);
-				vm.outputStr=vm.outputJson["plusentity"];
+				vm.outputStr=vm.outputJson["plusentity"].trim();
 				//console.log(vm.outputJson["bootstrap-ui"]);
 				//console.log(vm.outputStr);
 				$.outputArea.setValue(vm.outputStr);
 				$.outputArea.setSize('auto', 'auto');
 				//add to historicalData
-				const tableName = res.outputJson.tableName;
-				//add new table only
-				if(vm.historicalData.indexOf(tableName)<0){
-					vm.historicalData.unshift(tableName);
-				}
-				//remove last record , if more than N
-				if(vm.historicalData.length>9){
-					vm.historicalData.splice(9,1);
-				}
-				//get and set to session data
-				const valueSession = sessionStorage.getItem(tableName);
-				//remove if exists
-				if(valueSession!==undefined && valueSession!=null){
-					sessionStorage.removeItem(tableName);
-				}
-				//set data to session
-				sessionStorage.setItem(tableName,JSON.stringify(vm.outputJson));
-				//console.log(vm.historicalData);
+				vm.setHistoricalData(res.outputJson.tableName);
+				alert("生成成功");
 			});
 		},
 		copy : function (){
-			navigator.clipboard.writeText(vm.outputStr).then(r => {alert("已复制")});
+			navigator.clipboard.writeText(vm.outputStr.trim()).then(r => {alert("已复制")});
 		}
 	},
 	created: function () {
