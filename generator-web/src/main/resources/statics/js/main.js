@@ -41,10 +41,10 @@ const vm = new Vue({
 			options: {
 				dataType: "sql",
 
-				authorName: "zhengkai.blog.csdn.net",
-				packageName: "cn.devtools",
-				returnUtilSuccess: "Return.SUCCESS",
-				returnUtilFailure: "Return.ERROR",
+				authorName: "${(value.author)!!}",
+				packageName: "${(value.packageName)!!}",
+				returnUtilSuccess: "${(value.returnUtilSuccess)!!}",
+				returnUtilFailure: "${(value.returnUtilFailure)!!}",
 
 				isPackageType: true,
 				isSwagger: false,
@@ -61,7 +61,7 @@ const vm = new Vue({
 		},
 		templates:[{}],
 		historicalData:[],
-		outputStr: "xxx",
+		outputStr: "${(value.outputStr)!!}",
 		outputJson: {}
 	},
 	methods: {

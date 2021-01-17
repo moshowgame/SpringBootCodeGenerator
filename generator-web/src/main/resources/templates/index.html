@@ -15,9 +15,9 @@
   <header class="main-header">
     <a href="javascript:void(0);" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>大狼狗</b></span>
+      <span class="logo-mini"><b>${(value.title)!!}</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>JAVA代码生成平台</b></span>
+      <span class="logo-lg"><b>${(value.title)!!}</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
@@ -25,7 +25,7 @@
       <!--<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>-->
-	  <div style="float:left;color:#fff;padding:15px 10px;">For reducing the repetitive CRUD work</div>
+	  <div style="float:left;color:#fff;padding:15px 10px;">${(value.slogan)!!}</div>
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <li><a target="_blank" href="https://github.com/moshowgame/SpringBootCodeGenerator/blob/master/README.md"><i class="el-icon-share"></i> &nbsp;说明手册</a></li>
@@ -52,9 +52,9 @@
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      Version 2021.1
+      Version ${(value.version)!!}
     </div>
-      Powered by Moshow郑锴(大狼狗) <a href="https://zhengkai.blog.csdn.net" target="_blank"><i class="el-icon-location"></i>zhengkai.blog.csdn.net</a> <a href="https://github.com/moshowgame/SpringBootCodeGenerator/blob/master/donate.png?raw=true" target="_blank"><i class="el-icon-money"></i>打赏</a>
+    ${(value.copyright)!!} <a href="https://zhengkai.blog.csdn.net" target="_blank"><i class="el-icon-location"></i>zhengkai.blog.csdn.net</a> <a href="https://github.com/moshowgame/SpringBootCodeGenerator/blob/master/donate.png?raw=true" target="_blank"><i class="el-icon-money"></i>打赏</a>
   </footer>
 
   <!-- Add the sidebar's background. This div must be placed

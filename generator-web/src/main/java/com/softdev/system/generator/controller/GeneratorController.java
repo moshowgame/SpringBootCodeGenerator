@@ -7,37 +7,40 @@ import com.softdev.system.generator.entity.ReturnT;
 import com.softdev.system.generator.service.GeneratorService;
 import com.softdev.system.generator.util.MapUtil;
 import com.softdev.system.generator.util.TableParseUtil;
+import com.softdev.system.generator.util.ValueUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
 
 /**
- * spring boot code generator
- *
- * @author zhengk/moshow
+ * 代码生成控制器
+ * @author zhengkai.blog.csdn.net
  */
 @Controller
 @Slf4j
 public class GeneratorController {
+    @Autowired
+    private ValueUtil valueUtil;
 
     @Autowired
     private GeneratorService generatorService;
 
     @GetMapping("/")
-    public String defaultPage() {
-        return "index";
+    public ModelAndView defaultPage() {
+        return new ModelAndView("index").addObject("value",valueUtil);
     }
     @GetMapping("/index")
-    public String indexPage() {
-        return "index";
+    public ModelAndView indexPage() {
+        return new ModelAndView("index").addObject("value",valueUtil);
     }
     @GetMapping("/main")
-    public String mainPage() {
-        return "main";
+    public ModelAndView mainPage() {
+        return new ModelAndView("main").addObject("value",valueUtil);
     }
 
     @RequestMapping("/template/all")
