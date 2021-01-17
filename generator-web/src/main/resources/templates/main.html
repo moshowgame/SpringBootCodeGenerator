@@ -16,7 +16,7 @@
 </head>
 <body>
 <div class="panel panel-default" id="rrapp" v-cloak>
-    <div class="panel-heading">SpringBootCodeGenerator JAVA代码生成平台，又名`JAVA在线代码生成平台`、`JPA在线生成平台`、`sql转java`、`大狼狗代码生成器`、`mybatis在线生成器`、`SQL转Java JPA、MYBATIS实现类代码生成平台`</div>
+    <div class="panel-heading">${(value.description)!!}</div>
     <div style="padding: 10px 0 20px 10px;">
         <el-form ref="form" :inline="true" :model="formData"  label-width="100px" size="mini">
             <!-- input area-->
@@ -133,5 +133,13 @@
 </div>
 
 <script src="${request.contextPath}/statics/js/main.js"></script>
+<script>
+    //console.log(vm);
+    vm.formData.options.authorName="${(value.author)!!}";
+    vm.formData.options.packageName="${(value.packageName)!!}";
+    vm.formData.options.returnUtilSuccess="${(value.returnUtilSuccess)!!}";
+    vm.formData.options.returnUtilFailure="${(value.returnUtilFailure)!!}";
+    vm.outputStr="${(value.outputStr)!!}";
+</script>
 </body>
 </html>

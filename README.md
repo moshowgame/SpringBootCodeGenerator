@@ -37,7 +37,8 @@
 - 关于`类名注释`，可根据`comment=(mysql)`或者`comment on table(pgsql/oracle)`生成
 - 可设置是否`自动引包`(java中的import)及`引入包路径`(java类中的package)，建议取消并配合IDEA的自动引包更智能(Settings→Editor→General→Auto Import,勾选Add unambiguous imports on the fly以及Optimize imports on the fly)。
 - 可设置`表名前缀`，例如sys_user前缀为sys_之后可以正确生成user类
-- 可切换`header.html`中的include文件为`header-local.html`(本地模式)/`header-CDN.html`(云CDN模式)
+- 可在`applicaltion.yml`中的`OEM.mode`设置`js/css引入模式`为`local`(本地模式，默认)/`CDN`(云CDN模式，在线网站推荐，省流量)
+- OEM信息可以在`applicaltion.yml`中的`OEM`中更改
 
 # Url
 
@@ -59,6 +60,7 @@ Thanks for `JetBrains` providing us the `Licenses for Open Source Development` �
 # Update Logs
 |更新日期|更新内容|
 |:----|:----|
+|2021.01.18|OEM信息优化，支持多配置文件模式，支持在application*.yml自定义信息，以及切换local/cdn模式。|
 |2021.01.17|生成后自动trim掉前后空格输出。<br>完善ReadMe文档。<br>优化云CDN引入部分。<br>优化returnUtil部分。<br>表明前缀选项(感谢@wwlg的建议)。 <br>是否带字段注释设置(感谢@fengpojian的建议)。<br>优化Mybatis的''!=判断(感谢@zhongsb的建议)。<br>Mybatis-Plus增加Service层(感谢@yf466532479的建议)。 |
 |2021.01.16|全新3.0版本：<br>一、前端半vue半js化，更多动态加载项。<br>二、支持更多生成设置，优化生成场景。<br>三、js导入支持本地/CDN模式，支持断网环境轻松使用。|
 |2020.10.22|1.tinyint多加一个Short类型转换（感谢@wttHero的建议）|
