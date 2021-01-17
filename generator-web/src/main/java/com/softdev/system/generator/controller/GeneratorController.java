@@ -1,6 +1,5 @@
 package com.softdev.system.generator.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.softdev.system.generator.entity.ClassInfo;
 import com.softdev.system.generator.entity.ParamInfo;
 import com.softdev.system.generator.entity.ReturnT;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -52,8 +52,7 @@ public class GeneratorController {
     @PostMapping("/code/generate")
     @ResponseBody
     public ReturnT generateCode(@RequestBody ParamInfo paramInfo) throws Exception {
-
-        log.info(JSON.toJSONString(paramInfo));
+        //log.info(JSON.toJSONString(paramInfo.getOptions()));
         if (StringUtils.isEmpty(paramInfo.getTableSql())) {
             return ReturnT.error("表结构信息为空");
         }
@@ -85,7 +84,7 @@ public class GeneratorController {
 
         //3.generate the code by freemarker templates with parameters . Freemarker根据参数和模板生成代码
         Map<String, String> result = generatorService.getResultByParams(paramInfo.getOptions());
-
+        log.info("table:{} - time:{} ", MapUtil.getString(result,"tableName"),new Date());
         return ReturnT.ok().put("outputJson",result);
     }
 
