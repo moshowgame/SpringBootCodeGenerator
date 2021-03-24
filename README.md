@@ -60,6 +60,7 @@ Thanks for `JetBrains` providing us the `Licenses for Open Source Development` �
 # Update Logs
 |更新日期|更新内容|
 |:----|:----|
+|2021.03.24|修复Mybatis.XML中缺失test=关键字问题。(感谢@BWHN/YUEHUI的反馈)。|
 |2021.01.18|OEM信息优化，支持多配置文件模式，支持在application*.yml自定义信息，以及切换local/cdn模式。|
 |2021.01.17|生成后自动trim掉前后空格输出。<br>完善ReadMe文档。<br>优化云CDN引入部分。<br>优化returnUtil部分。<br>表明前缀选项(感谢@wwlg的建议)。 <br>是否带字段注释设置(感谢@fengpojian的建议)。<br>优化Mybatis的''!=判断(感谢@zhongsb的建议)。<br>Mybatis-Plus增加Service层(感谢@yf466532479的建议)。 |
 |2021.01.16|全新3.0版本：<br>一、前端半vue半js化，更多动态加载项。<br>二、支持更多生成设置，优化生成场景。<br>三、js导入支持本地/CDN模式，支持断网环境轻松使用。|
