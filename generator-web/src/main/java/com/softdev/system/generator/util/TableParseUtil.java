@@ -189,9 +189,24 @@ public class TableParseUtil {
                     } else {
                         fieldName = columnName;
                     }
-
-                    // field class
                     columnLine = columnLine.substring(columnLine.indexOf("`") + 1).trim();
+
+                    //swagger class
+                    String swaggerClass = "string" ;
+                    if (columnLine.contains(" tinyint")) {
+                        swaggerClass = "integer";
+                    } else if (columnLine.contains(" int") || columnLine.contains(" smallint")) {
+                        swaggerClass = "integer";
+                    } else if (columnLine.contains(" bigint")) {
+                        swaggerClass = "integer";
+                    } else if (columnLine.contains(" float")) {
+                        swaggerClass = "number";
+                    } else if (columnLine.contains(" double")) {
+                        swaggerClass = "number";
+                    }  else if (columnLine.contains(" boolean")) {
+                        swaggerClass = "boolean";
+                    }
+                    // field class
                     // int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
                     String fieldClass = Object.class.getSimpleName();
                     //2018-9-16 zhengk 补充char/clob/blob/json等类型，如果类型未知，默认为String
@@ -287,9 +302,11 @@ public class TableParseUtil {
                     }
 
                     FieldInfo fieldInfo = new FieldInfo();
+                    //
                     fieldInfo.setColumnName(columnName);
                     fieldInfo.setFieldName(fieldName);
                     fieldInfo.setFieldClass(fieldClass);
+                    fieldInfo.setSwaggerClass(swaggerClass);
                     fieldInfo.setFieldComment(fieldComment);
 
                     fieldList.add(fieldInfo);
