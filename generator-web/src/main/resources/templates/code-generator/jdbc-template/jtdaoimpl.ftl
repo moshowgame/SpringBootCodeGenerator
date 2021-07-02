@@ -30,7 +30,7 @@ public class ${classInfo.className}DaoImpl implements I${classInfo.className}Dao
         <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
             <#list classInfo.fieldList as fieldItem ><#if fieldItem_index gt 0 >${classInfo.className?uncap_first}.get${fieldItem.fieldName?cap_first}(),</#if></#list>
             <#list classInfo.fieldList as fieldItem ><#if fieldItem_index = 0 >${classInfo.className?uncap_first}.get${fieldItem.fieldName?cap_first}()</#if></#list>
-        </#if>;
+        </#if>);
     }
 
     @Override
@@ -41,9 +41,8 @@ public class ${classInfo.className}DaoImpl implements I${classInfo.className}Dao
     @Override
     public ${classInfo.className} findById(int id) {
         List<${classInfo.className}> list = jdbcTemplate.query("select * from ${classInfo.tableName} where <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0><#list classInfo.fieldList as fieldItem ><#if fieldItem_index = 0>${fieldItem.columnName}=?<#break ></#if></#list></#if>", new Object[]{id}, new BeanPropertyRowMapper<${classInfo.className}>(${classInfo.className}.class));
-        if(list!=null && list.size()>0){
-            ${classInfo.className} ${classInfo.className?uncap_first} = list.get(0);
-            return ${classInfo.className?uncap_first};
+        if(list!=null && !list.isEmpty() ){
+            return  list.get(0);
         }else{
              return null;
         }
@@ -52,10 +51,10 @@ public class ${classInfo.className}DaoImpl implements I${classInfo.className}Dao
     @Override
     public List<${classInfo.className}> findAllList(Map<String,Object> params) {
         List<${classInfo.className}> list = jdbcTemplate.query("select * from ${classInfo.tableName}", new Object[]{}, new BeanPropertyRowMapper<${classInfo.className}>(${classInfo.className}.class));
-        if(list!=null && list.size()>0){
+        if(list!=null && !list.isEmpty() ){
             return list;
         }else{
-            return null;
+            return Collections.emptyList();
         }
     }
 
