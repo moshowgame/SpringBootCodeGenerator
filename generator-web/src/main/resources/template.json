@@ -174,5 +174,20 @@
         "description": "swagger-yml"
       }
     ]
-  }
+  },
+
+  {
+  "group": "common-mapper",
+  "templates": [{
+    "id": "74",
+    "name": "tkentity",
+    "description": "tkentity"
+  },
+    {
+      "id": "75",
+      "name": "tkmapper",
+      "description": "tkmapper"
+    }
+  ]
+}
 ]

@@ -10,8 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
+<#if isSwagger?exists && isSwagger==true>
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModelProperty;</#if>
 </#if>
 /**
  * @description ${classInfo.classComment}
