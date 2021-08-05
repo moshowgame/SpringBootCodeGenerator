@@ -20,7 +20,7 @@
 >          #支持`MySQL`、Oracle、PgSQL三大主流数据库
 >
 >generate to many popular templates by ddl-sql/insert-sql/simple json<br>
->   可通过`建表SQL语句`或`INSERT语句`或者`简单JSON`生成`JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL`相关模板代码.
+>   可通过`建表SQL语句`或`INSERT语句`或者`简单JSON`生成`JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL/CommonMapper`相关模板代码.
 >
 >thanks for your using and feedback,I'm inspired by the 600PV every day and github more than 700 stars <br>
 >   感谢大家的使用和反馈，每天六百的PV和获得超过七百多的星星是我前进和继续做下去的动力。

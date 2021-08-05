@@ -73,7 +73,7 @@ public class TableParseUtil {
             //优化对likeu.members这种命名的支持
             tableName = tableName.substring(tableName.indexOf(".") + 1);
         }
-
+        String originTableName = tableName;
         //ignore prefix
         if(tableName!=null && StringUtils.isNotNull(MapUtil.getString(paramInfo.getOptions(),"ignorePrefix"))){
             tableName = tableName.replaceAll(MapUtil.getString(paramInfo.getOptions(),"ignorePrefix"),"");
@@ -306,6 +306,7 @@ public class TableParseUtil {
         codeJavaInfo.setClassName(className);
         codeJavaInfo.setClassComment(classComment);
         codeJavaInfo.setFieldList(fieldList);
+        codeJavaInfo.setOriginTableName(originTableName);
 
         return codeJavaInfo;
     }
