@@ -22,8 +22,8 @@
 >generate to many popular templates by ddl-sql/insert-sql/simple json<br>
 >   可通过`建表SQL语句`或`INSERT语句`或者`简单JSON`生成`JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL/CommonMapper`相关模板代码.
 >
->thanks for your using and feedback,I'm inspired by the 600PV every day and github more than 700 stars <br>
->   感谢大家的使用和反馈，每天六百的PV和获得超过七百多的星星是我前进和继续做下去的动力。
+>thanks for your using and feedback,I'm inspired by the 600PV every day and github more than 900 stars <br>
+>   感谢大家的使用和反馈，每天六百的PV和获得超过九百多的星星是我前进和继续做下去的动力。
 > 
 >hope everyone can keep good balance on work and life , stay health and safety , be smooth on work as well<br>
 >   愿大家可以维持生活和工作平衡，保持健康和安全，祝大家工作顺利！
@@ -60,6 +60,8 @@ Thanks for `JetBrains` providing us the `Licenses for Open Source Development` �
 # Update Logs
 |更新日期|更新内容|
 |:----|:----|
+|2021.08.07|新增当前模板保持功能，重新生成代码后依然会保持在当前选择模板。<br>新增renren-fast模板。|
+|2021.08.05|解决 update 方法语法错误；调整部分语句避免sonarLint告警(感谢@Henry586的PR);<br>add swagger-yml.ftl(感谢@fuuqiu的PR);<br>支持common-mapper&修复entity和plusentity的swagger引包错误(感谢@chentianming11的PR)|
 |2021.03.24|修复Mybatis.XML中缺失test=关键字问题。(感谢@BWHN/YUEHUI的反馈)。|
 |2021.01.18|OEM信息优化，支持多配置文件模式，支持在application*.yml自定义信息，以及切换local/cdn模式。|
 |2021.01.17|生成后自动trim掉前后空格输出。<br>完善ReadMe文档。<br>优化云CDN引入部分。<br>优化returnUtil部分。<br>表明前缀选项(感谢@wwlg的建议)。 <br>是否带字段注释设置(感谢@fengpojian的建议)。<br>优化Mybatis的''!=判断(感谢@zhongsb的建议)。<br>Mybatis-Plus增加Service层(感谢@yf466532479的建议)。 |

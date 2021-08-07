@@ -61,6 +61,7 @@ const vm = new Vue({
 		},
 		templates:[{}],
 		historicalData:[],
+		currentSelect:'plusentity',
 		outputStr: "${(value.outputStr)!!}",
 		outputJson: {}
 	},
@@ -69,10 +70,13 @@ const vm = new Vue({
 		setOutputModel: function (event) {
 			const targetModel = event.target.innerText.trim();
 			console.log(targetModel);
-			vm.outputStr=vm.outputJson[targetModel];
-			$.outputArea.setValue(vm.outputStr.trim());
-			//console.log(vm.outputStr);
-			$.outputArea.setSize('auto', 'auto');
+			vm.currentSelect = targetModel ;
+			if(vm.outputStr.length>30){
+				vm.outputStr=vm.outputJson[targetModel];
+				$.outputArea.setValue(vm.outputStr.trim());
+				//console.log(vm.outputStr);
+				$.outputArea.setSize('auto', 'auto');
+			}
 		},
 		//switch HistoricalData
 		switchHistoricalData: function (event) {
@@ -86,7 +90,7 @@ const vm = new Vue({
 			}else{
 				alert("浏览器不支持sessionStorage");
 			}
-			vm.outputStr=vm.outputJson["plusentity"].trim();
+			vm.outputStr=vm.outputJson[vm.currentSelect].trim();
 			$.outputArea.setValue(vm.outputStr);
 			//console.log(vm.outputStr);
 			$.outputArea.setSize('auto', 'auto');
@@ -122,7 +126,7 @@ const vm = new Vue({
 				//console.log(res.outputJson);
 				vm.outputJson=res.outputJson;
 				// console.log(vm.outputJson["bootstrap-ui"]);
-				vm.outputStr=vm.outputJson["plusentity"].trim();
+				vm.outputStr=vm.outputJson[vm.currentSelect].trim();
 				//console.log(vm.outputJson["bootstrap-ui"]);
 				//console.log(vm.outputStr);
 				$.outputArea.setValue(vm.outputStr);

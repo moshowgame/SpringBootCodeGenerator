@@ -177,17 +177,57 @@
   },
 
   {
-  "group": "common-mapper",
-  "templates": [{
-    "id": "74",
-    "name": "tkentity",
-    "description": "tkentity"
+    "group": "common-mapper",
+    "templates": [{
+      "id": "81",
+      "name": "tkentity",
+      "description": "tkentity"
+    },
+      {
+        "id": "82",
+        "name": "tkmapper",
+        "description": "tkmapper"
+      }
+    ]
   },
-    {
-      "id": "75",
-      "name": "tkmapper",
-      "description": "tkmapper"
-    }
-  ]
-}
+
+  {
+    "group": "renren-fast",
+    "templates": [{
+      "id": "91",
+      "name": "menu-sql",
+      "description": "menu-sql"
+    },
+      {
+        "id": "92",
+        "name": "vue-list",
+        "description": "vue-list"
+      },
+      {
+        "id": "93",
+        "name": "vue-edit",
+        "description": "vue-edit"
+      },
+      {
+        "id": "94",
+        "name": "rr-controller",
+        "description": "rr-controller"
+      },
+      {
+        "id": "95",
+        "name": "rr-dao",
+        "description": "rr-dao"
+      },
+      {
+        "id": "96",
+        "name": "rr-daoxml",
+        "description": "rr-daoxml"
+      },
+      {
+        "id": "97",
+        "name": "rr-service",
+        "description": "rr-service"
+      }
+    ]
+  }
 ]
