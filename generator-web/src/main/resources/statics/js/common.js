@@ -42,3 +42,28 @@ window.confirm = function(msg, callback){
 function isBlank(value) {
     return !value || !/\S/.test(value)
 }
+
+function setCookie(key, val, expire_second) {
+	var d = new Date();
+	var expires ="";
+	if (expire_second){
+		d.setDate(d.getTime()+(expire_second*1000));
+		expires='; expires=' + d.toGMTSring();
+	}
+	document.cookie = key + "="+ val + expires;
+}
+
+function getCookie(name) {
+	var data = "";
+	if (document.cookie){
+		var arr = document.cookie.split(';');
+		for (var str of arr) {
+			var temp = str.split("=")
+			if (temp[0].replace(/(^\s*)/g,'') === name){
+				data = unescape(temp[1]);
+				break
+			}
+		}
+	}
+	return data;
+}
