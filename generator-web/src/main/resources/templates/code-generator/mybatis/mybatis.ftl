@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="${packageName}.dao.${classInfo.className}Dao">
 
-    <resultMap id="BaseResultMap" type="${packageName}.entity.${classInfo.className}Entity" >
+    <resultMap id="BaseResultMap" type="${packageName}.entity.${classInfo.className}" >
         <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
             <#list classInfo.fieldList as fieldItem >
                 <result column="${fieldItem.columnName}" property="${fieldItem.fieldName}" />
@@ -19,7 +19,7 @@
         </#if>
     </sql>
 
-    <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="${packageName}.entity.${classInfo.className}Entity">
+    <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="${packageName}.entity.${classInfo.className}">
         INSERT INTO ${classInfo.tableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
@@ -56,7 +56,7 @@
         WHERE id = ${r"#{id}"}
     </delete>
 
-    <update id="update" parameterType="${packageName}.entity.${classInfo.className}Entity">
+    <update id="update" parameterType="${packageName}.entity.${classInfo.className}">
         UPDATE ${classInfo.tableName}
         <set>
             <#list classInfo.fieldList as fieldItem >
