@@ -20,7 +20,7 @@
     </sql>
 
     <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="${packageName}.entity.${classInfo.className}">
-        INSERT INTO ${classInfo.tableName}
+        INSERT INTO ${classInfo.originTableName}
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
                 <#list classInfo.fieldList as fieldItem >
@@ -52,12 +52,12 @@
     </insert>
 
     <delete id="delete" >
-        DELETE FROM ${classInfo.tableName}
+        DELETE FROM ${classInfo.originTableName}
         WHERE id = ${r"#{id}"}
     </delete>
 
     <update id="update" parameterType="${packageName}.entity.${classInfo.className}">
-        UPDATE ${classInfo.tableName}
+        UPDATE ${classInfo.originTableName}
         <set>
             <#list classInfo.fieldList as fieldItem >
                 <#if fieldItem.columnName != "id" && fieldItem.columnName != "AddTime" && fieldItem.columnName != "UpdateTime" >
@@ -71,19 +71,19 @@
 
     <select id="load" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List" />
-        FROM ${classInfo.tableName}
+        FROM ${classInfo.originTableName}
         WHERE id = ${r"#{id}"}
     </select>
 
     <select id="pageList" resultMap="BaseResultMap">
         SELECT <include refid="Base_Column_List" />
-        FROM ${classInfo.tableName}
+        FROM ${classInfo.originTableName}
         LIMIT ${r"#{offset}"}, ${r"#{pageSize}"}
     </select>
 
     <select id="pageListCount" resultType="java.lang.Integer">
         SELECT count(1)
-        FROM ${classInfo.tableName}
+        FROM ${classInfo.originTableName}
     </select>
 
 </mapper>
