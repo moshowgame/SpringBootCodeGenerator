@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiModelProperty;</#if>
  */
 @Entity
 <#if isLombok?exists && isLombok==true>@Data</#if>
-<#if isComment?exists && isComment==true>@Table(name="${classInfo.tableName}")</#if><#if isSwagger?exists && isSwagger==true>
+<#if isComment?exists && isComment==true>@Table(name="${classInfo.originTableName}")</#if><#if isSwagger?exists && isSwagger==true>
 @ApiModel("${classInfo.classComment}")</#if>
 public class ${classInfo.className} implements Serializable {
 
