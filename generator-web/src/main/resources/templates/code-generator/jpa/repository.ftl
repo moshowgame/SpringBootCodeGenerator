@@ -1,4 +1,4 @@
-<#if isWithPackage?exists && isWithPackage==true>package ${packageName}.mapper;</#if>
+<#if isWithPackage?exists && isWithPackage==true>package ${packageName}.repository;</#if>
 <#if isAutoImport?exists && isAutoImport==true>import ${packageName}.entity.${classInfo.className};
 
 <#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
