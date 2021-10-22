@@ -166,7 +166,7 @@ function setAllCookie() {
 }
 
 function setOneCookie(key) {
-	setCookie(key, vm.formData.options[key], 60 * 60 * 24 * 7);
+	setCookie(key, vm.formData.options[key]);
 }
 
 /**
