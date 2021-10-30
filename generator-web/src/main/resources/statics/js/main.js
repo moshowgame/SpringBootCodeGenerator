@@ -123,6 +123,7 @@ const vm = new Vue({
 					error("生成失败");
 					return;
 				}
+				setAllCookie();
 				//console.log(res.outputJson);
 				vm.outputJson=res.outputJson;
 				// console.log(vm.outputJson["bootstrap-ui"]);
@@ -154,3 +155,41 @@ const vm = new Vue({
 	}
 });
 
+/**
+ * 将所有 需要 保留历史纪录的字段写入Cookie中
+ */
+function setAllCookie() {
+	var arr = list_key_need_load();
+	for (var str of arr){
+		setOneCookie(str);
+	}
+}
+
+function setOneCookie(key) {
+	setCookie(key, vm.formData.options[key]);
+}
+
+/**
+ * 将所有 历史纪录 重加载回页面
+ */
+function loadAllCookie() {
+	//console.log(vm);
+	var arr = list_key_need_load();
+	for (var str of arr){
+		loadOneCookie(str);
+	}
+}
+
+function loadOneCookie(key) {
+	if (getCookie(key)!==""){
+		vm.formData.options[key] = getCookie(key);
+	}
+}
+
+/**
+ * 将 所有 需要 纪录的 字段写入数组
+ * @returns {[string]}
+ */
+function list_key_need_load() {
+	return ["authorName","packageName","returnUtilSuccess","returnUtilFailure","ignorePrefix","tinyintTransType","timeTransType"];
+}
