@@ -38,7 +38,7 @@ public class ${classInfo.className}Controller {
     * @date ${.now?string('yyyy/MM/dd')}
     **/
     @RequestMapping("/delete")
-    public ReturnT<String> delete(int id){
+    public Object delete(int id){
         return ${classInfo.className?uncap_first}Service.delete(id);
     }
 
@@ -48,7 +48,7 @@ public class ${classInfo.className}Controller {
     * @date ${.now?string('yyyy/MM/dd')}
     **/
     @RequestMapping("/update")
-    public ReturnT<String> update(${classInfo.className} ${classInfo.className?uncap_first}){
+    public Object update(${classInfo.className} ${classInfo.className?uncap_first}){
         return ${classInfo.className?uncap_first}Service.update(${classInfo.className?uncap_first});
     }
 
