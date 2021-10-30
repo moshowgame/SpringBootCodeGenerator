@@ -173,7 +173,13 @@ public class TableParseUtil {
                     String columnName = "";
                     columnLine = columnLine.replaceAll("`", " ").replaceAll("\"", " ").replaceAll("'", "").replaceAll("  ", " ").trim();
                     //如果遇到username varchar(65) default '' not null,这种情况，判断第一个空格是否比第一个引号前
-                    columnName = columnLine.substring(0, columnLine.indexOf(" "));
+                    try {
+                        columnName = columnLine.substring(0, columnLine.indexOf(" "));
+                    } catch (StringIndexOutOfBoundsException e) {
+                        System.out.println("err happened: " + columnLine);
+                        throw e;
+                    }
+
                     // field Name
                     // 2019-09-08 yj 添加是否下划线转换为驼峰的判断
                     String fieldName = null;
