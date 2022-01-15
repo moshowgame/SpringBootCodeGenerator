@@ -229,5 +229,25 @@
         "description": "rr-service"
       }
     ]
+  },
+
+  {
+    "group": "jpa-starp",
+    "templates": [{
+      "id": "101",
+      "name": "starp-entity",
+      "description": "entity"
+    },
+      {
+        "id": "102",
+        "name": "starp-repository",
+        "description": "repository"
+      },
+      {
+        "id": "103",
+        "name": "starp-jpa-controller",
+        "description": "jpacontroller"
+      }
+    ]
   }
 ]
