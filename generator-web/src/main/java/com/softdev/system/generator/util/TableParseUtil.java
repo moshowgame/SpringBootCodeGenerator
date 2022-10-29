@@ -1,6 +1,6 @@
 package com.softdev.system.generator.util;
 
-
+import com.softdev.system.generator.util.mysqlJavaTypeUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -196,84 +196,25 @@ public class TableParseUtil {
                         fieldName = columnName;
                     }
                     columnLine = columnLine.substring(columnLine.indexOf("`") + 1).trim();
-
+                    String mysqlType = columnLine.split("\\s+")[1];
+                    if(mysqlType.contains("(")){
+                        mysqlType = mysqlType.substring(0, mysqlType.indexOf("("));
+                    }
                     //swagger class
                     String swaggerClass = "string" ;
-                    if (columnLine.contains(" tinyint")) {
-                        swaggerClass = "integer";
-                    } else if (columnLine.contains(" int") || columnLine.contains(" smallint")) {
-                        swaggerClass = "integer";
-                    } else if (columnLine.contains(" bigint")) {
-                        swaggerClass = "integer";
-                    } else if (columnLine.contains(" float")) {
-                        swaggerClass = "number";
-                    } else if (columnLine.contains(" double")) {
-                        swaggerClass = "number";
-                    }  else if (columnLine.contains(" boolean")) {
-                        swaggerClass = "boolean";
+                    if(mysqlJavaTypeUtil.getMysqlSwaggerTypeMap().containsKey(mysqlType)){
+                        swaggerClass = mysqlJavaTypeUtil.getMysqlSwaggerTypeMap().get(mysqlType);
                     }
                     // field class
                     // int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-                    String fieldClass = Object.class.getSimpleName();
+                    String fieldClass = "String";
                     //2018-9-16 zhengk 补充char/clob/blob/json等类型，如果类型未知，默认为String
                     //2018-11-22 lshz0088 处理字段类型的时候，不严谨columnLine.contains(" int") 类似这种的，可在前后适当加一些空格之类的加以区分，否则当我的字段包含这些字符的时候，产生类型判断问题。
                     //2020-05-03 MOSHOW.K.ZHENG 优化对所有类型的处理
                     //2020-10-20 zhengkai 新增包装类型的转换选择
-                    if (columnLine.contains(" tinyint")) {
-                        //20191115 MOSHOW.K.ZHENG 支持对tinyint的特殊处理
-                        fieldClass = MapUtil.getString(paramInfo.getOptions(),"tinyintTransType");;
-                    } else if (columnLine.contains(" int") || columnLine.contains(" smallint")) {
-                        fieldClass = (isPackageType)?Integer.class.getSimpleName():"int";
-                    } else if (columnLine.contains(" bigint")) {
-                        fieldClass = (isPackageType)?Long.class.getSimpleName():"long";
-                    } else if (columnLine.contains(" float")) {
-                        fieldClass = (isPackageType)?Float.class.getSimpleName():"float";
-                    } else if (columnLine.contains(" double")) {
-                        fieldClass = (isPackageType)?Double.class.getSimpleName():"double";
-                    } else if (columnLine.contains(" time") || columnLine.contains(" date") || columnLine.contains(" datetime") || columnLine.contains(" timestamp")) {
-                        fieldClass =  MapUtil.getString(paramInfo.getOptions(),"timeTransType");
-                    } else if (columnLine.contains(" varchar") || columnLine.contains(" text") || columnLine.contains(" char")
-                            || columnLine.contains(" clob") || columnLine.contains(" blob") || columnLine.contains(" json")) {
-                        fieldClass = String.class.getSimpleName();
-                    } else if (columnLine.contains(" decimal") || columnLine.contains(" number")) {
-                        //2018-11-22 lshz0088 建议对number类型增加int，long，BigDecimal的区分判断
-                        //如果startKh大于等于0，则表示有设置取值范围
-                        int startKh = columnLine.indexOf("(");
-                        if (startKh >= 0) {
-                            int endKh = columnLine.indexOf(")", startKh);
-                            String[] fanwei = columnLine.substring(startKh + 1, endKh).split("，");
-                            //2019-1-5 zhengk 修复@arthaschan反馈的超出范围错误
-                            //System.out.println("fanwei"+ JSON.toJSONString(fanwei));
-                            //                            //number(20,6) fanwei["20","6"]
-                            //                            //number(0,6) fanwei["0","6"]
-                            //                            //number(20,0) fanwei["20","0"]
-                            //                            //number(20) fanwei["20"]
-                            //如果括号里是1位或者2位且第二位为0，则进行特殊处理。只有有小数位，都设置为BigDecimal。
-                            if ((fanwei.length > 1 && "0".equals(fanwei[1])) || fanwei.length == 1) {
-                                int length = Integer.parseInt(fanwei[0]);
-                                if (fanwei.length > 1) {
-                                    length = Integer.valueOf(fanwei[1]);
-                                }
-                                //数字范围9位及一下用Integer，大的用Long
-                                if (length <= 9) {
-                                    fieldClass = (isPackageType)?Integer.class.getSimpleName():"int";
-                                } else {
-                                    fieldClass = (isPackageType)?Long.class.getSimpleName():"long";
-                                }
-                            } else {
-                                //有小数位数一律使用BigDecimal
-                                fieldClass = BigDecimal.class.getSimpleName();
-                            }
-                        } else {
-                            fieldClass = BigDecimal.class.getSimpleName();
-                        }
-                    } else if (columnLine.contains(" boolean")) {
-                        //20190910 MOSHOW.K.ZHENG 新增对boolean的处理（感谢@violinxsc的反馈）以及修复tinyint类型字段无法生成boolean类型问题（感谢@hahaYhui的反馈）
-                        fieldClass = (isPackageType)?Boolean.class.getSimpleName():"boolean";
-                    } else {
-                        fieldClass = String.class.getSimpleName();
+                    if(mysqlJavaTypeUtil.getMysqlJavaTypeMap().containsKey(mysqlType)){
+                        fieldClass = mysqlJavaTypeUtil.getMysqlJavaTypeMap().get(mysqlType);
                     }
-
                     // field comment，MySQL的一般位于field行，而pgsql和oralce多位于后面。
                     String fieldComment = null;
                     if (tableSql.contains("comment on column") && (tableSql.contains("." + columnName + " is ") || tableSql.contains(".`" + columnName + "` is"))) {
