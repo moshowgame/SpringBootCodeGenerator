@@ -84,7 +84,7 @@ public class GeneratorController {
 
         //3.generate the code by freemarker templates with parameters . Freemarker根据参数和模板生成代码
         Map<String, String> result = generatorService.getResultByParams(paramInfo.getOptions());
-        log.info("result {}",result);
+//        log.info("result {}",result);
         log.info("table:{} - time:{} ", MapUtil.getString(result,"tableName"),new Date());
         return ReturnT.ok().put("outputJson",result);
     }
