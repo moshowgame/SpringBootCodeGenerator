@@ -271,5 +271,25 @@
         "description": "GCP Dataflow JJS"
       }
     ]
+  },
+  {
+    "group": "tk-mybatis",
+    "templates": [
+      {
+        "id": "401",
+        "name": "tk-entity",
+        "description": "tk-entity"
+      },
+      {
+        "id": "402",
+        "name": "tk-mapper",
+        "description": "tk-mapper"
+      },
+      {
+        "id": "403",
+        "name": "tk-controller",
+        "description": "tk-controller"
+      }
+    ]
   }
 ]
