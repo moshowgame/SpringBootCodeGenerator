@@ -43,7 +43,7 @@
 # Url
 
 感谢`卡卡`将他部署在[BEJSON](https://java.bejson.com/generator)上，目前是besjon专供的金牌工具(线上版本不一定是最新的，会有延迟，请谅解，谢谢).<br>
-
+感谢`jully.top`部署的副本 [https://jully.top/generator/](https://jully.top/generator/)。<br>
 感谢`三叔`将他部署在[DEVTOOLS](https://java.devtools.cn/)上，继续作为Golden Tool开放给大家使用。<br>
 
 Thanks for `JetBrains` providing us the `Licenses for Open Source Development` ，[Get free access to all JetBrains tools for developing your open source project!](https://www.jetbrains.com/community/opensource/#support) .<br>
@@ -51,6 +51,7 @@ Thanks for `JetBrains` providing us the `Licenses for Open Source Development` �
 | 访问地址          | http://localhost:1234/generator                               |
 |:--------------|:--------------------------------------------------------------|
 | BEJSON 在线地址   | https://java.bejson.com/generator                             |
+| Jully 在线地址    | https://jully.top/generator/                                  |
 | DEVTOOLS 在线地址 | https://java.devtools.cn                                      |
 | CSDN BLOG     | https://zhengkai.blog.csdn.net                                |
 | GITEE仓库       | https://gitee.com/moshowgame/SpringBootCodeGenerator/releases |
