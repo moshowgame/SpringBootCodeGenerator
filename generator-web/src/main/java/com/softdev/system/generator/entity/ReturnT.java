@@ -1,8 +1,8 @@
 package com.softdev.system.generator.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +11,7 @@ import java.util.Map;
  *
  * @author zhengkai.blog.csdn.net
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class ReturnT extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
