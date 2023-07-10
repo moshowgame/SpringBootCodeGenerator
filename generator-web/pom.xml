@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.softdev.system</groupId>
 		<artifactId>SpringBootCodeGenerator</artifactId>
-		<version>3.0</version>
+		<version>2023</version>
 	</parent>
 
 	<artifactId>generator-web</artifactId>
@@ -42,7 +42,11 @@
             <artifactId>junit</artifactId>
         </dependency>-->
 
-    </dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure</artifactId>
+		</dependency>
+	</dependencies>
 
 
 	<build>
