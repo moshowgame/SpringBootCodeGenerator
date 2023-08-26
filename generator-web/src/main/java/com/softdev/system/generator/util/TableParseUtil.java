@@ -1,18 +1,16 @@
 package com.softdev.system.generator.util;
 
-import com.softdev.system.generator.util.mysqlJavaTypeUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.softdev.system.generator.entity.ClassInfo;
 import com.softdev.system.generator.entity.FieldInfo;
+import com.softdev.system.generator.entity.NonCaseString;
 import com.softdev.system.generator.entity.ParamInfo;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
@@ -34,7 +32,7 @@ public class TableParseUtil {
     public static ClassInfo processTableIntoClassInfo(ParamInfo paramInfo)
             throws IOException {
         //process the param
-        String tableSql = paramInfo.getTableSql();
+        NonCaseString tableSql = NonCaseString.of(paramInfo.getTableSql());
         String nameCaseType = MapUtil.getString(paramInfo.getOptions(),"nameCaseType");
         Boolean isPackageType = MapUtil.getBoolean(paramInfo.getOptions(),"isPackageType");
 
@@ -42,15 +40,20 @@ public class TableParseUtil {
             throw new CodeGenerateException("Table structure can not be empty. 表结构不能为空。");
         }
         //deal with special character
-        tableSql = tableSql.trim().replaceAll("'", "`").replaceAll("\"", "`").replaceAll("，", ",").toLowerCase();
+        tableSql = tableSql.trim()
+                .replaceAll("'", "`")
+                .replaceAll("\"", "`")
+                .replaceAll("，", ",")
+                // 这里全部转小写, 会让驼峰风格的字段名丢失驼峰信息(真有驼峰sql字段名的呢(*￣︶￣)); 下文使用工具方法处理包含等
+                // .toLowerCase()
+        ;
         //deal with java string copy \n"
         tableSql = tableSql.trim().replaceAll("\\\\n`", "").replaceAll("\\+", "").replaceAll("``", "`").replaceAll("\\\\", "");
         // table Name
         String tableName = null;
-        if (tableSql.contains("TABLE") && tableSql.contains("(")) {
-            tableName = tableSql.substring(tableSql.indexOf("TABLE") + 5, tableSql.indexOf("("));
-        } else if (tableSql.contains("table") && tableSql.contains("(")) {
-            tableName = tableSql.substring(tableSql.indexOf("table") + 5, tableSql.indexOf("("));
+        int tableKwIx = tableSql.indexOf("TABLE"); // 包含判断和位置一次搞定
+        if (tableKwIx > -1 && tableSql.contains("(")) {
+            tableName = tableSql.substring(tableKwIx + 5, tableSql.indexOf("(")).get();
         } else {
             throw new CodeGenerateException("Table structure incorrect.表结构不正确。");
         }
@@ -88,9 +91,11 @@ public class TableParseUtil {
         String classComment = null;
         //mysql是comment=,pgsql/oracle是comment on table,
         //2020-05-25 优化表备注的获取逻辑
-        if (tableSql.contains("comment=") || tableSql.contains("comment on table")) {
-            String classCommentTmp = (tableSql.contains("comment=")) ?
-                    tableSql.substring(tableSql.lastIndexOf("comment=") + 8).trim() : tableSql.substring(tableSql.lastIndexOf("comment on table") + 17).trim();
+        if (tableSql.containsAny("comment=", "comment on table")) {
+            int ix = tableSql.lastIndexOf("comment=");
+            String classCommentTmp = (ix > -1) ?
+                    tableSql.substring(ix + 8).trim().get() :
+                    tableSql.substring(tableSql.lastIndexOf("comment on table") + 17).trim().get();
             if (classCommentTmp.contains("`")) {
                 classCommentTmp = classCommentTmp.substring(classCommentTmp.indexOf("`") + 1);
                 classCommentTmp = classCommentTmp.substring(0, classCommentTmp.indexOf("`"));
@@ -109,7 +114,7 @@ public class TableParseUtil {
         List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
 
         // 正常( ) 内的一定是字段相关的定义。
-        String fieldListTmp = tableSql.substring(tableSql.indexOf("(") + 1, tableSql.lastIndexOf(")"));
+        String fieldListTmp = tableSql.substring(tableSql.indexOf("(") + 1, tableSql.lastIndexOf(")")).get();
 
         // 匹配 comment，替换备注里的小逗号, 防止不小心被当成切割符号切割
         String commentPattenStr1 = "comment `(.*?)\\`";
@@ -149,7 +154,8 @@ public class TableParseUtil {
         if (fieldLineList.length > 0) {
             int i = 0;
             //i为了解决primary key关键字出现的地方，出现在前3行，一般和id有关
-            for (String columnLine : fieldLineList) {
+            for (String columnLine0 : fieldLineList) {
+                NonCaseString columnLine = NonCaseString.of(columnLine0);
                 i++;
                 columnLine = columnLine.replaceAll("\n", "").replaceAll("\t", "").trim();
                 // `userid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
@@ -158,13 +164,10 @@ public class TableParseUtil {
                 // 2019-2-22 zhengkai 要在条件中使用复杂的表达式
                 // 2019-4-29 zhengkai 优化对普通和特殊storage关键字的判断（感谢@AhHeadFloating的反馈 ）
                 // 2020-10-20 zhengkai 优化对fulltext/index关键字的处理（感谢@WEGFan的反馈）
-                boolean specialFlag = (!columnLine.contains("key ") && !columnLine.contains("constraint") && !columnLine.contains("using") && !columnLine.contains("unique ")
-                        && !(columnLine.contains("primary ") && columnLine.indexOf("storage") + 3 > columnLine.indexOf("("))
-                        && !columnLine.contains("fulltext ") && !columnLine.contains("index ")
-                        && !columnLine.contains("pctincrease")
-                        && !columnLine.contains("buffer_pool") && !columnLine.contains("tablespace")
-                        && !(columnLine.contains("primary ") && i > 3));
-                if (specialFlag) {
+                // 2023-8-27 zhangfei 改用工具方法判断, 且修改变量名(非特殊标识), 方法抽取
+                boolean notSpecialFlag = isNotSpecialColumnLine(columnLine, i);
+
+                if (notSpecialFlag) {
                     //如果是oracle的number(x,x)，可能出现最后分割残留的,x)，这里做排除处理
                     if (columnLine.length() < 5) {
                         continue;
@@ -174,7 +177,7 @@ public class TableParseUtil {
                     columnLine = columnLine.replaceAll("`", " ").replaceAll("\"", " ").replaceAll("'", "").replaceAll("  ", " ").trim();
                     //如果遇到username varchar(65) default '' not null,这种情况，判断第一个空格是否比第一个引号前
                     try {
-                        columnName = columnLine.substring(0, columnLine.indexOf(" "));
+                        columnName = columnLine.substring(0, columnLine.indexOf(" ")).get();
                     } catch (StringIndexOutOfBoundsException e) {
                         System.out.println("err happened: " + columnLine);
                         throw e;
@@ -182,6 +185,7 @@ public class TableParseUtil {
 
                     // field Name
                     // 2019-09-08 yj 添加是否下划线转换为驼峰的判断
+                    // 2023-8-27 zhangfei 支持原始列名任意命名风格, 不依赖用户是否输入下划线
                     String fieldName = null;
                     if (ParamInfo.NAME_CASE_TYPE.CAMEL_CASE.equals(nameCaseType)) {
                         fieldName = StringUtils.lowerCaseFirst(StringUtils.underlineToCamelCase(columnName));
@@ -189,9 +193,9 @@ public class TableParseUtil {
                             fieldName = fieldName.replaceAll("_", "");
                         }
                     } else if (ParamInfo.NAME_CASE_TYPE.UNDER_SCORE_CASE.equals(nameCaseType)) {
-                        fieldName = StringUtils.lowerCaseFirst(columnName);
+                        fieldName = StringUtils.toUnderline(columnName, false);
                     } else if (ParamInfo.NAME_CASE_TYPE.UPPER_UNDER_SCORE_CASE.equals(nameCaseType)) {
-                        fieldName = StringUtils.lowerCaseFirst(columnName.toUpperCase());
+                        fieldName = StringUtils.toUnderline(columnName.toUpperCase(), true);
                     } else {
                         fieldName = columnName;
                     }
@@ -228,12 +232,12 @@ public class TableParseUtil {
                         while (columnCommentMatcher.find()) {
                             String columnCommentTmp = columnCommentMatcher.group();
                             //System.out.println(columnCommentTmp);
-                            fieldComment = tableSql.substring(tableSql.indexOf(columnCommentTmp) + columnCommentTmp.length()).trim();
+                            fieldComment = tableSql.substring(tableSql.indexOf(columnCommentTmp) + columnCommentTmp.length()).trim().get();
                             fieldComment = fieldComment.substring(0, fieldComment.indexOf("`")).trim();
                         }
                     } else if (columnLine.contains(" comment")) {
                         //20200518 zhengkai 修复包含comment关键字的问题
-                        String commentTmp = columnLine.substring(columnLine.lastIndexOf("comment") + 7).trim();
+                        String commentTmp = columnLine.substring(columnLine.lastIndexOf("comment") + 7).trim().get();
                         // '用户ID',
                         if (commentTmp.contains("`") || commentTmp.indexOf("`") != commentTmp.lastIndexOf("`")) {
                             commentTmp = commentTmp.substring(commentTmp.indexOf("`") + 1, commentTmp.lastIndexOf("`"));
@@ -273,6 +277,24 @@ public class TableParseUtil {
         codeJavaInfo.setOriginTableName(originTableName);
 
         return codeJavaInfo;
+    }
+
+    private static boolean isNotSpecialColumnLine(NonCaseString columnLine, int lineSeq) {
+        return (
+                !columnLine.containsAny(
+                        "key ",
+                        "constraint",
+                        "using",
+                        "unique ",
+                        "fulltext ",
+                        "index ",
+                        "pctincrease",
+                        "buffer_pool",
+                        "tablespace"
+                )
+                && !(columnLine.contains("primary ") && columnLine.indexOf("storage") + 3 > columnLine.indexOf("("))
+                && !(columnLine.contains("primary ") && lineSeq > 3)
+        );
     }
 
     /**
