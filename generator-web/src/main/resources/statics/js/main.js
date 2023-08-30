@@ -36,6 +36,9 @@ const vm = new Vue({
 				"  'user_name' varchar(255) NOT NULL COMMENT '用户名',\n" +
 				"  'status' tinyint(1) NOT NULL COMMENT '状态',\n" +
 				"  'create_time' datetime NOT NULL COMMENT '创建时间',\n" +
+				//下面可以留着方便开发调试时打开
+				// "  `updateTime` datetime NOT NULL COMMENT '更新时间',\n" +
+				// "  ABc_under_Line-Hypen-CamelCase varchar comment '乱七八糟的命名风格',\n" +
 				"  PRIMARY KEY ('user_id')\n" +
 				") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息'",
 			options: {

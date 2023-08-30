@@ -40,7 +40,7 @@ public class StringUtils {
             boolean flag = false;
             for (int i = 0; i < underscoreName.length(); i++) {
                 char ch = underscoreName.charAt(i);
-                if ("_".charAt(0) == ch) {
+                if ('_' == ch) {
                     flag = true;
                 } else {
                     if (flag) {
@@ -54,6 +54,42 @@ public class StringUtils {
         }
         return result.toString();
     }
+
+    /**
+     * 转 user_name 风格
+     *
+     * 不管原始是什么风格
+     */
+    public static String toUnderline(String str, boolean upperCase) {
+        if (str == null || str.trim().isEmpty()) {
+            return str;
+        }
+
+        StringBuilder result = new StringBuilder();
+        boolean preIsUnderscore = false;
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+            if (ch == '_') {
+                preIsUnderscore = true;
+            } else if (ch == '-') {
+                ch = '_';
+                preIsUnderscore = true; // -A -> _a
+            } else if (ch >= 'A' && ch <= 'Z') {
+                // A -> _a
+                if (!preIsUnderscore && i > 0) { // _A -> _a
+                    result.append("_");
+                }
+                preIsUnderscore = false;
+            } else {
+                preIsUnderscore = false;
+            }
+            result.append(upperCase ? Character.toUpperCase(ch) : Character.toLowerCase(ch));
+        }
+
+        return result.toString();
+    }
+
+
     public static boolean isNotNull(String str){
         return org.apache.commons.lang3.StringUtils.isNotEmpty(str);
     }
