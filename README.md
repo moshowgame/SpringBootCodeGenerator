@@ -51,7 +51,7 @@ Thanks for `JetBrains` providing us the `Licenses for Open Source Development` �
 
 | 访问地址                   | http://localhost:1234/generator                               |
 |:-----------------------|:--------------------------------------------------------------|
-| BEJSON 在线地址            | https://java.bejson.com/generator                             |
+| BEJSON 在线地址            | https://java.bejson.com/generator/                            |
 | Jully 在线地址             | https://jully.top/generator/                                  |
 | DEVTOOLS 在线地址（Demised） | https://java.devtools.cn                                      |
 | CSDN BLOG              | https://zhengkai.blog.csdn.net                                |
