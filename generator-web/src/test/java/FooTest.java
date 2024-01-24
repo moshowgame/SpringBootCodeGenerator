@@ -19,6 +19,8 @@ public class FooTest {
         System.out.println(StringUtils.toUnderline("UserName",true));
         System.out.println(StringUtils.toUnderline("user_NameGgg_x-UUU",true));
         System.out.println(StringUtils.toUnderline("username",true));
+
+        System.out.println(StringUtils.underlineToCamelCase("CREATE_TIME"));
     }
 
 

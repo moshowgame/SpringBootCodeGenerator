@@ -47,7 +47,7 @@ public class StringUtils {
                         result.append(Character.toUpperCase(ch));
                         flag = false;
                     } else {
-                        result.append(ch);
+                        result.append(Character.toLowerCase(ch));
                     }
                 }
             }
