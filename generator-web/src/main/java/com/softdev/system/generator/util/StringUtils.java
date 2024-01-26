@@ -14,6 +14,9 @@ public class StringUtils {
      * @return
      */
     public static String upperCaseFirst(String str) {
+        if (str == null || str.trim().isEmpty()) {
+            return str;
+        }
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
@@ -47,7 +50,7 @@ public class StringUtils {
                         result.append(Character.toUpperCase(ch));
                         flag = false;
                     } else {
-                        result.append(Character.toLowerCase(ch));
+                        result.append(ch);
                     }
                 }
             }
@@ -89,12 +92,41 @@ public class StringUtils {
         return result.toString();
     }
 
+    /**
+     * any str ==> lowerCamel
+     */
+    public static String toLowerCamel(String str) {
+        if (str == null || str.trim().isEmpty()) {
+            return str;
+        }
 
-    public static boolean isNotNull(String str){
-        return org.apache.commons.lang3.StringUtils.isNotEmpty(str);
+        StringBuilder result = new StringBuilder();
+        char pre = '\0';
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+            if (ch == '-' || ch == '—' || ch == '_') {
+                ch = '_';
+                pre = ch;
+                continue;
+            }
+            char ch2 = ch;
+            if (pre == '_') {
+                ch2 = Character.toUpperCase(ch);
+                pre = ch2;
+            } else if (pre >= 'A' && pre <= 'Z') {
+                pre = ch;
+                ch2 = Character.toLowerCase(ch);
+            } else {
+                pre = ch;
+            }
+            result.append(ch2);
+        }
+
+        return lowerCaseFirst(result.toString());
     }
-    public static void main(String[] args) {
 
+    public static boolean isNotNull(String str) {
+        return org.apache.commons.lang3.StringUtils.isNotEmpty(str);
     }
 
 }

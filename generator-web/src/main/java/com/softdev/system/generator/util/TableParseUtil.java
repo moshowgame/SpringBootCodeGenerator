@@ -164,7 +164,7 @@ public class TableParseUtil {
                 // 2019-2-22 zhengkai 要在条件中使用复杂的表达式
                 // 2019-4-29 zhengkai 优化对普通和特殊storage关键字的判断（感谢@AhHeadFloating的反馈 ）
                 // 2020-10-20 zhengkai 优化对fulltext/index关键字的处理（感谢@WEGFan的反馈）
-                // 2023-8-27 zhangfei 改用工具方法判断, 且修改变量名(非特殊标识), 方法抽取
+                // 2023-8-27 L&J 改用工具方法判断, 且修改变量名(非特殊标识), 方法抽取
                 boolean notSpecialFlag = isNotSpecialColumnLine(columnLine, i);
 
                 if (notSpecialFlag) {
@@ -185,13 +185,11 @@ public class TableParseUtil {
 
                     // field Name
                     // 2019-09-08 yj 添加是否下划线转换为驼峰的判断
-                    // 2023-8-27 zhangfei 支持原始列名任意命名风格, 不依赖用户是否输入下划线
+                    // 2023-8-27 L&J 支持原始列名任意命名风格, 不依赖用户是否输入下划线
                     String fieldName = null;
                     if (ParamInfo.NAME_CASE_TYPE.CAMEL_CASE.equals(nameCaseType)) {
-                        fieldName = StringUtils.lowerCaseFirst(StringUtils.underlineToCamelCase(columnName));
-                        if (fieldName.contains("_")) {
-                            fieldName = fieldName.replaceAll("_", "");
-                        }
+                        // 2024-1-27 L&J 适配任意(maybe)原始风格转小写驼峰
+                        fieldName = StringUtils.toLowerCamel(columnName);
                     } else if (ParamInfo.NAME_CASE_TYPE.UNDER_SCORE_CASE.equals(nameCaseType)) {
                         fieldName = StringUtils.toUnderline(columnName, false);
                     } else if (ParamInfo.NAME_CASE_TYPE.UPPER_UNDER_SCORE_CASE.equals(nameCaseType)) {
