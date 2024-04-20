@@ -31,7 +31,7 @@
 >   提交你的问题和生成模板，或者提交你的好主意到PR。
 
 
-# Url
+# URL
 
 - 感谢`卡卡`将他部署在[BEJSON](https://java.bejson.com/generator)上，目前是besjon专供的`金牌工具`(线上版本不一定是最新的，会有延迟，请谅解，谢谢).<br>
 - 感谢`jully.top`部署的副本 [https://jully.top/generator/](https://jully.top/generator/)。<br>
@@ -61,6 +61,11 @@
 - OEM信息可以在`applicaltion.yml`中的`OEM`中更改
 - *支持公共js/css的Local/CDN模式切换，方便`本地`或者`工具站`进行部署，可以在`application.yml`的`OEM.Mode=`进行设置，之后请在`header-CDN.html`/`header-local.html`中检查对应js/css配置是否正确。
 
+# Branch Detail 分支介绍
+- Master：主力分支，基于SpringBoot3+，需要JDK17+
+- JDK11：兼容分支，基于SpringBoot2+，支持JDK8/JDK11/JDK17等版本，请自行(切换jdk11分支)[https://github.com/moshowgame/SpringBootCodeGenerator/tree/jdk11]
+- NewUI：新UI界面改版尝鲜
+
 # 更新预告
 1.计划引入DJANGO等其他语言的ORM模板，欢迎大家submit相关代码供参考
 2.计划升级一下UI界面
@@ -68,7 +73,8 @@
 # Update Logs
 | 更新日期       | 更新内容                                                                                                                                                                                                                                                              |
 |:-----------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 2024.04.21 | 修复CDN版本cdn.staticfile.org域名备份失败问题，已同步更新到cdn.staticfile.net（本地版本则不受影响）
+| 2024.04.21 | 推出JDK11分支，支持JDK8/JDK11/JDK17等版本，兼容性较好但维护速度较慢，为了更好兼容旧机器和旧环境
+| 2024.04.20 | 修复CDN版本cdn.staticfile.org域名备份失败问题，已同步更新到cdn.staticfile.net（本地版本则不受影响）
 | 2024.01.26 | 修复大写下滑线列名转驼峰问题（感谢@Nisus-Liu
 的PR）                                                                                                                                                                                                                                                         |
 | 2023.10.22 | 工具站CDN更新。                                                                                                                                                                                                                                                         |
