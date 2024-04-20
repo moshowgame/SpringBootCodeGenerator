@@ -47,7 +47,7 @@ spring:
     #mvc:
     #  static-path-pattern: /statics/**
 OEM:
-  version: 2023.10
+  version: 2024.4
   header: SQL转Java JPA、MYBATIS实现类代码生成平台
   keywords: sql转实体类,sql转DAO,SQL转service,SQL转JPA实现,SQL转MYBATIS实现
   title: JAVA在线代码生成
