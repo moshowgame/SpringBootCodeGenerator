@@ -61,6 +61,9 @@
 - OEM信息可以在`applicaltion.yml`中的`OEM`中更改
 - *支持公共js/css的Local/CDN模式切换，方便`本地`或者`工具站`进行部署，可以在`application.yml`的`OEM.Mode=`进行设置，之后请在`header-CDN.html`/`header-local.html`中检查对应js/css配置是否正确。
 
+# 更新预告
+1.计划引入DJANGO等其他语言的ORM模板，欢迎大家submit相关代码供参考
+2.计划升级一下UI界面
 
 # Update Logs
 | 更新日期       | 更新内容                                                                                                                                                                                                                                                              |
