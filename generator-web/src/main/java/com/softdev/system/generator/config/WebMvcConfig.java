@@ -2,7 +2,9 @@ package com.softdev.system.generator.config;
 
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import jakarta.servlet.DispatcherType;
+// import jakarta.servlet.DispatcherType;
+import javax.servlet.DispatcherType;
+
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
