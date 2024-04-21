@@ -1,7 +1,8 @@
 package com.softdev.system.generator.config;
 
-import com.alibaba.fastjson.support.config.FastJsonConfig;
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+
+// import com.alibaba.fastjson.support.config.FastJsonConfig;
+// import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import jakarta.servlet.DispatcherType;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -12,8 +13,14 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.alibaba.fastjson2.JSONReader;
+import com.alibaba.fastjson2.JSONWriter;
+import com.alibaba.fastjson2.support.config.FastJsonConfig;
+import com.alibaba.fastjson2.support.spring6.http.converter.FastJsonHttpMessageConverter;
+
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 /**
 *  2019-2-11 liutf WebMvcConfig 整合 cors 和 SpringMvc MessageConverter
@@ -36,25 +43,43 @@ public class WebMvcConfig implements WebMvcConfigurer {
         return registration;
     }
 
+    // @Override
+    // public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+    //     converters.clear();
+    //     //FastJsonHttpMessageConverter
+    //     FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
+
+    //     List<MediaType> fastMediaTypes = new ArrayList<>();
+    //     fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
+    //     fastConverter.setSupportedMediaTypes(fastMediaTypes);
+
+    //     FastJsonConfig fastJsonConfig = new FastJsonConfig();
+    //     fastJsonConfig.setCharset(StandardCharsets.UTF_8);
+    //     fastConverter.setFastJsonConfig(fastJsonConfig);
+
+    //     //StringHttpMessageConverter
+    //     StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
+    //     stringConverter.setDefaultCharset(StandardCharsets.UTF_8);
+    //     stringConverter.setSupportedMediaTypes(fastMediaTypes);
+    //     converters.add(stringConverter);
+    //     converters.add(fastConverter);
+    // }
+    /**
+     * FASTJSON2升级 by https://zhengkai.blog.csdn.net/
+     * https://blog.csdn.net/moshowgame/article/details/138013669
+     */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        //FastJsonHttpMessageConverter
-        FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
-
-        List<MediaType> fastMediaTypes = new ArrayList<>();
-        fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
-        fastConverter.setSupportedMediaTypes(fastMediaTypes);
-
-        FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setCharset(StandardCharsets.UTF_8);
-        fastConverter.setFastJsonConfig(fastJsonConfig);
-
-        //StringHttpMessageConverter
-        StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
-        stringConverter.setDefaultCharset(StandardCharsets.UTF_8);
-        stringConverter.setSupportedMediaTypes(fastMediaTypes);
-        converters.add(stringConverter);
-        converters.add(fastConverter);
+        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
+        //自定义配置...
+        FastJsonConfig config = new FastJsonConfig();
+        config.setDateFormat("yyyy-MM-dd HH:mm:ss");
+        config.setReaderFeatures(JSONReader.Feature.FieldBased, JSONReader.Feature.SupportArrayToBean);
+        config.setWriterFeatures(JSONWriter.Feature.WriteMapNullValue, JSONWriter.Feature.PrettyFormat);
+        converter.setFastJsonConfig(config);
+        converter.setDefaultCharset(StandardCharsets.UTF_8);
+        converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
+        converters.add(0, converter);
     }
 
 }
