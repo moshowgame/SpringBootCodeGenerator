@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <#include "/header.html">
+    <style>
+        /* .el-form-item__content{
+            line-height : 10px;
+        } */
+        /*.el-form-item--mini .el-form-item__content, .el-form-item--mini .el-form-item__label{
+            line-height : 10px;
+        }*/
+        /* .el-button-group-top {
+            padding-top: 5px;
+        } */
+        .el-button--primary.is-plain.is-disabled, .el-button--primary.is-plain.is-disabled:active, .el-button--primary.is-plain.is-disabled:focus, .el-button--primary.is-plain.is-disabled:hover {
+        color: #f9faff;
+        background-color: #91979d;
+        border-color: #d9ecff;
+        font-weight: bold;
+      }
+          </style>
+</head>
+<body>
+
+<div id="rrapp" v-cloak>
+    <div>
+        <el-form ref="form" :inline="true" :model="formData"  label-width="100px">
+            <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title m-0">输入SQL</h5>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="折叠">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <!-- <button type="button" class="btn btn-tool" data-card-widget="remove" title="移除">
+                      <i class="fas fa-times"></i>
+                    </button> -->
+                  </div>
+                </div>
+                <div class="card-body">
+                  <!-- <textarea id="inputArea" placeholder="请输入表结构信息..." style="height: 250px;line-height : 10px;" v-model="formData.tableSql"></textarea> -->
+                    <!-- input area-->
+                    <textarea id="inputArea" placeholder="请输入表结构信息..." style="height: 250px;line-height : 10px;" v-model="formData.tableSql"></textarea>
+                </div>
+              </div>
+            
+            <hr>
+            <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title m-0">生成设置</h5>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="折叠">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <!-- <button type="button" class="btn btn-tool" data-card-widget="remove" title="移除">
+                      <i class="fas fa-times"></i>
+                    </button> -->
+                  </div>
+                </div>
+                
+                <div class="card-body">
+                  <!-- setting area-->
+                <el-form-item label="作者">
+                    <el-input v-model="formData.options.authorName"></el-input>
+                </el-form-item>
+                <el-form-item label="包名">
+                    <el-input v-model="formData.options.packageName"></el-input>
+                </el-form-item>
+                <el-form-item label="返回(成功)">
+                    <el-input v-model="formData.options.returnUtilSuccess"></el-input>
+                </el-form-item>
+                <el-form-item label="返回(失败)">
+                    <el-input v-model="formData.options.returnUtilFailure"></el-input>
+                </el-form-item>
+                <el-form-item label="忽略前缀">
+                    <el-input v-model="formData.options.ignorePrefix"></el-input>
+                </el-form-item>
+                <el-form-item label="输入类型">
+                    <el-select v-model="formData.options.dataType" >
+                        <el-option label="DDL SQL" value="sql"></el-option>
+                        <el-option label="JSON" value="json"></el-option>
+                        <el-option label="INSERT SQL" value="insert-sql">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="TinyInt转换">
+                    <el-select v-model="formData.options.tinyintTransType">
+                        <el-option value="boolean" label="boolean"></el-option>
+                        <el-option value="Boolean" label="Boolean"></el-option>
+                        <el-option value="Integer" label="Integer"></el-option>
+                        <el-option value="int" label="int"></el-option>
+                        <el-option value="String" label="String"></el-option>
+                        <el-option value="Short" label="Short"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="时间类型">
+                    <el-select v-model="formData.options.timeTransType">
+                        <el-option value="Date" label="Date"></el-option>
+                        <el-option value="DateTime" label="DateTime"></el-option>
+                        <el-option value="Time" label="Time"></el-option>
+                        <el-option value="Timestamp" label="Timestamp"></el-option>
+                        <el-option value="Calendar" label="Calendar"></el-option>
+                        <el-option value="LocalDate" label="LocalDate"></el-option>
+                        <el-option value="LocalDateTime" label="LocalDateTime"></el-option>
+                        <el-option value="LocalTime" label="LocalTime"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="命名类型">
+                    <el-select v-model="formData.options.nameCaseType">
+                        <el-option label="驼峰" value="CamelCase"></el-option>
+                        <el-option label="下划线" value="UnderScoreCase"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="包装类型">
+                    <el-switch v-model="formData.options.isPackageType"></el-switch>
+                </el-form-item>
+                <el-form-item label="swaggerUI">
+                    <el-switch v-model="formData.options.isSwagger"></el-switch>
+                </el-form-item>
+                <el-form-item label="字段注释">
+                    <el-switch v-model="formData.options.isComment"></el-switch>
+                </el-form-item>
+                <el-form-item label="自动引包">
+                    <el-switch v-model="formData.options.isAutoImport"></el-switch>
+                </el-form-item>
+                <el-form-item label="带包路径">
+                    <el-switch v-model="formData.options.isWithPackage"></el-switch>
+                </el-form-item>
+                <el-form-item label="Lombok">
+                    <el-switch v-model="formData.options.isLombok"></el-switch>
+                </el-form-item>
+  
+                </div>
+              </div>
+            
+            <hr>
+            <div class="card">
+                <div class="card-header">
+                  <!-- <h5 class="card-title m-0">输出代码</h5> -->
+                  <el-button type="primary" icon="el-icon-caret-right" @click="generate">生成</el-button>
+                    <el-button type="primary" icon="el-icon-document-copy" @click="copy" plain>复制</el-button>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="折叠">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <!-- <button type="button" class="btn btn-tool" data-card-widget="remove" title="移除">
+                      <i class="fas fa-times"></i>
+                    </button> -->
+                  </div>
+                </div>
+                <div class="card-body">
+                              <!--generate button-->
+                
+                <span  v-if="historicalData.length>0" >
+                    <el-button-group>
+                        <el-button type="primary" plain disabled round>历史记录</el-button>
+                        <span v-for="(item, index) in historicalData" :key="index">
+                                <el-button @click="switchHistoricalData" >{{item}}</el-button>
+                            </span>
+                    </el-button-group>
+                </span>
+  
+                </div>
+            </div>
+            <hr>
+            <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title m-0">模板选择</h5>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="折叠">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <!-- <button type="button" class="btn btn-tool" data-card-widget="remove" title="移除">
+                      <i class="fas fa-times"></i>
+                    </button> -->
+                  </div>
+                </div>
+                <div class="card-body">
+                  <!--templates area-->
+                    <el-form ref="form" :inline="true" :model="formData"  label-width="100px" size="mini">
+                        <div  v-for="(item, index) in templates" :key="index">
+                            <el-button-group >
+                                <el-button type="primary" plain disabled>{{item.group}}</el-button>
+                                <span v-for="(childItem, index) in item.templates" :key="index">
+                                    <el-button @click="setOutputModel">{{childItem.name}}</el-button>
+                                </span>
+                            </el-button-group>
+                        </div>
+                    <!-- <el-button-group>
+                            <el-button type="primary" plain disabled>MybatisPlus</el-button>
+                            <el-button @click="setOutputModel">Controller</el-button>
+                            <el-button @click="setOutputModel">Mapper</el-button>
+                        </el-button-group>-->
+                    </el-form>
+  
+                </div>
+            </div>
+            
+
+            <hr>
+            <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title m-0">输出代码</h5>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="折叠">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <!-- <button type="button" class="btn btn-tool" data-card-widget="remove" title="移除">
+                      <i class="fas fa-times"></i>
+                    </button> -->
+                  </div>
+                </div>
+                <div class="card-body">
+                  <textarea id="outputArea" placeholder="请输入表结构信息..." style="height: 250px;" v-model="outputStr"></textarea>
+  
+                </div>
+            </div>
+        </el-form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/main.js"></script>
+<script>
+    //console.log(vm);
+    vm.formData.options.authorName="${(value.author)!!}";
+    vm.formData.options.packageName="${(value.packageName)!!}";
+    vm.formData.options.returnUtilSuccess="${(value.returnUtilSuccess)!!}";
+    vm.formData.options.returnUtilFailure="${(value.returnUtilFailure)!!}";
+    vm.outputStr="${(value.outputStr)!!}";
+    loadAllCookie()
+</script>
+</body>
+</html>

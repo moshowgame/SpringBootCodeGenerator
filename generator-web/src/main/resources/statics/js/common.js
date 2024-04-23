@@ -23,11 +23,13 @@ $.ajaxSetup({
 //重写alert
 window.alert = function(msg, callback){
 	//重写为msg而不是alert
-	parent.layer.msg(msg, {icon: 6});
+	// parent.layer.msg(msg, {icon: 6});
+	toastr.success(msg)
 }
 window.error = function(msg, callback){
 	//重写为msg而不是alert
-	parent.layer.msg(msg, {icon: 5});
+	// parent.layer.msg(msg, {icon: 5});
+	toastr.error(msg)
 }
 //重写confirm式样框
 window.confirm = function(msg, callback){

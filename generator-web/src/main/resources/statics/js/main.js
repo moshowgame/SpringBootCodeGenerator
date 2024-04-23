@@ -121,7 +121,7 @@ const vm = new Vue({
 		generate : function(){
 			//get value from codemirror
 			vm.formData.tableSql=$.inputArea.getValue();
-			axios.post("code/generate",vm.formData).then(function(res){
+			axios.post(basePath+"/code/generate",vm.formData).then(function(res){
 				if(res.code===500){
 					error("生成失败");
 					return;
@@ -146,7 +146,7 @@ const vm = new Vue({
 	},
 	created: function () {
 		//load all templates for selections 加载所有模板供选择
-		axios.post("template/all",{
+		axios.post(basePath+"/template/all",{
 			id:1234
 		}).then(function(res){
 			//console.log(res.templates);

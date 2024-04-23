@@ -1,70 +1,124 @@
 <!DOCTYPE html>
-<html>
+<!--
+by https://zhengkai.blog.csdn.net
+-->
+<html lang="en">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JAVA代码生成平台</title>
   <#include "/header.html">
-    <style>
-        .content-wrapper, .right-side, .main-footer{
-            margin-left: 0px;
-        }
-    </style>
 </head>
-<!-- ADD THE CLASS layout-boxed TO GET A BOXED LAYOUT -->
-<body class="hold-transition skin-blue sidebar-mini">
-<!-- Site wrapper -->
-<div class="wrapper" id="rrapp" v-cloak>
-  <header class="main-header">
-    <a href="javascript:void(0);" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>${(value.title)!!}</b></span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>${(value.title)!!}</b></span>
-    </a>
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top" role="navigation">
-      <!-- Sidebar toggle button-->
-      <!--<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>-->
-	  <div style="float:left;color:#fff;padding:15px 10px;">${(value.slogan)!!}</div>
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
-          <li><a target="_blank" href="https://github.com/moshowgame/SpringBootCodeGenerator/blob/master/README.md"><i class="el-icon-share"></i> &nbsp;说明手册</a></li>
-          <li><a target="_blank" href="https://github.com/moshowgame/SpringBootCodeGenerator"><i class="el-icon-star-on"></i>  github</a></li>
-		</ul>
+<body class="hold-transition layout-top-nav">
+<div class="wrapper">
+
+  <!-- 导航栏 -->
+  <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
+    <div class="container">
+      <a href="#" class="navbar-brand">
+        <img src="${request.contextPath}/statics/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">JAVA代码生成平台</span>
+      </a>
+
+      <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+        <i class="fa fa-fw fa-space-shuttle"></i><a>For reducing the repetitive CRUD work</a>
       </div>
-    </nav>
-  </header>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div> <!--class="content-wrapper"-->
-    <!-- Content Header (Page header) -->
-    <!--<section class="content-header">
+      <!-- 右侧导航栏链接 -->
+      <ul class="order-1 order-md-4 navbar-nav navbar-no-expand ml-auto">
+        <li class="nav-item">
+          <a href="https://github.com/moshowgame/SpringBootCodeGenerator/issues" target="_blank"><i class="fa fa-fw fa-share-square"></i>Raise Issue</a>
+          <a href="https://github.com/moshowgame/SpringBootCodeGenerator" target="_blank"><i class="fa fa-fw fa-star"></i>Github </a>
 
-    </section>-->
+          
+          
+          
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- /.navbar -->
 
-    <!-- Main content -->
-    <section class="content" style="background:#fff;">
-      <iframe scrolling="yes" frameborder="0" style="width:100%;height:100%;overflow:visible;background:#fff;" :src="main"></iframe>
-    </section>
+  <!-- Content Wrapper. 包含页面内容 -->
+  <div class="content-wrapper">
+
+
+    <!-- 主体内容 -->
+    <div class="content">
+      <div class="container">
+        <div class="row">
+
+          <!-- /.col-md-6 -->
+          <div class="col-lg-12">
+
+            <blockquote class="quote-secondary">
+              ${(value.description)!!}
+            </blockquote>
+
+            <!-- <div class="card">
+              <div class="card-header">
+                <h5 class="card-title m-0">输入SQL</h5>
+              </div>
+              <div class="card-body">
+                <textarea id="inputArea" placeholder="请输入表结构信息..." style="height: 250px;line-height : 10px;" v-model="formData.tableSql"></textarea>
+
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title m-0">生成设置</h5>
+              </div>
+              <div class="card-body">
+                <h6 class="card-title">特殊标题处理</h6>
+
+                <p class="card-text">支持引入其他额外内容。</p>
+
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title m-0">输出代码</h5>
+              </div>
+              <div class="card-body">
+                <textarea id="outputArea" placeholder="请输入表结构信息..." style="height: 250px;" v-model="outputStr"></textarea>
+
+              </div>
+            </div> -->
+            <#include "/main-v2.html">
+          </div>
+          <!-- /.col-md-6 -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
 
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- 控制侧边栏内容在这里 -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
   <footer class="main-footer">
-    <div class="pull-right hidden-xs">
+    <!-- To the right -->
+    <div class="float-right d-none d-sm-inline">
       Version ${(value.version)!!}
     </div>
-    ${(value.copyright)!!} <a href="https://zhengkai.blog.csdn.net" target="_blank"><i class="el-icon-location"></i>zhengkai.blog.csdn.net</a> <a href="https://github.com/moshowgame/SpringBootCodeGenerator/blob/master/donate.png?raw=true" target="_blank"><i class="el-icon-money"></i>打赏</a>
+    <!-- Default to the left -->
+    <strong>${(value.copyright)!!} <a href="https://zhengkai.blog.csdn.net" target="_blank"><i class="fa fa-fw fa-thumbs-up"></i>zhengkai.blog.csdn.net</a> <a href="https://github.com/moshowgame/SpringBootCodeGenerator/blob/master/donate.png?raw=true" target="_blank"><i class="fa fa-fw fa-credit-card"></i>打赏</a>
   </footer>
-
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
-  
-
 </div>
 <!-- ./wrapper -->
 
-<script src="${request.contextPath}/statics/js/index.js"></script>
+
 </body>
 </html>
