@@ -282,7 +282,7 @@ public class TableParseUtil {
                 !columnLine.containsAny(
                         "key ",
                         "constraint",
-                        "using",
+                        " using ",
                         "unique ",
                         "fulltext ",
                         "index ",
