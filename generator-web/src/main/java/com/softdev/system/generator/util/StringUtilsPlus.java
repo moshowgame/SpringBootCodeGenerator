@@ -5,7 +5,7 @@ package com.softdev.system.generator.util;
  *
  * @author xuxueli 2018-05-02 20:43:25
  */
-public class StringUtils {
+public class StringUtilsPlus {
 
     /**
      * 首字母大写

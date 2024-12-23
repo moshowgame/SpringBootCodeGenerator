@@ -10,30 +10,31 @@
 >powered by `Moshow郑锴(大狼狗)` , [https://zhengkai.blog.csdn.net](https://zhengkai.blog.csdn.net)
 
 # Description
->Based on SpringBoot2+Freemarker<br>
->          #基于`SpringBoot2`和`Freemarker`的代码生成平台
+>The `Spring Boot Code Generator` , Based on SpringBoot3 and Freemarker<br>
+>          #基于`SpringBoot3`和`Freemarker`的代码生成平台
 > 
->For reducing the repetitive CRUD work<br>
->          #以解放双手为目的，减少大量的`重复CRUD工作`
+>Release your hands from tedious and repetitive CRUD tasks.<br>
+>          #从繁琐重复的`CRUD工作`中释放你的双手
 >
->Support mysql, oracle and pgsql<br>
+>Support mysql+oracle+pgsql , the most popular databases standard SQL<br>
 >          #支持`MySQL`、Oracle、PgSQL三大主流数据库
 >
->Generate to many predefined popular templates by DDL-SQL/Insert-SQL/Simple JSON<br>
->   可通过`建表SQL语句`或`INSERT语句`或者`简单JSON`生成预设的`JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL/CommonMapper`相关模板代码.
+>Generate various templates through table creation DDL statements, Insert SQL statements, Select SQL statements(*New), and simple JSON.<br>
+>   通过建表DDL语句、插入SQL语句、选择SQL语句（*新）以及简单JSON生成各种模板`JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL/CommonMapper`.
 >
->Thanks for your using and feedback,I'm inspired by the 1500+PV (AVG) every day and github more than 1.9K stars <br>
->   感谢大家的使用和反馈，每天1500的PV和获得超过九百多的星星是我前进和继续做下去的动力。
+>Thank you all for your use and feedback. The daily PV visits of 1.5k in BeJSON and 2K Stars on GitHub are the greatest encouragement and motivation. <br>
+>   感谢大家的使用与反馈，BeJSON上每天1.5K的PV访问量👀和 Github上2K的✨Stars是最大的鼓励与动力。
 > 
->Hope everyone can keep good balance on work and life , stay health and safety . I wish you success in your new position and get promoted step by step.  <br>
+>May everyone maintain a work-life balance, stay healthy and safe. Wishing you all success in your work and continuous advancements!.  <br>
 >   愿大家可以维持生活和工作平衡，保持健康和安全，祝大家工作顺利，步步高升！
->Please submit your issue and template , or pull your good idea into the PR <br>
->   提交你的问题和生成模板，或者提交你的好主意到PR。
+> 
+>Welcome to submit your issue and useful templates , or put your good idea into PR <br>
+>   欢迎提交你的问题和常用有用模板，或者提交你的好主意到PR。
 
 
 # URL
 
-- 感谢`卡卡`将他部署在[BEJSON](https://java.bejson.com/generator)上，目前是besjon专供的`金牌工具`(线上版本不一定是最新的，会有延迟，请谅解，谢谢).<br>
+- 感谢`卡卡`将他部署在[BEJSON](https://java.bejson.com/generator)上，目前是BeJSON专供的`金牌工具`(线上版本不一定是最新的，会有延迟，请谅解，谢谢).<br>
 - 感谢`jully.top`部署的副本 [https://jully.top/generator/](https://jully.top/generator/)。<br>
 - 感谢`BootCDN`提供稳定、快速、免费的前端开源项目 CDN 加速服务
 - Thanks for `JetBrains` providing us the `Licenses for Open Source Development` ，[Get free access to all JetBrains tools for developing your open source project!](https://www.jetbrains.com/community/opensource/#support) .<br>
@@ -49,7 +50,7 @@
 | GITHUB仓库               | https://github.com/moshowgame/SpringBootCodeGenerator         |
 
 # Tips or Features
-- 支持`DDL SQL`/`INSERT SQL`/`SIMPLE JSON`三种生成模式
+- 支持`DDL SQL`/`INSERT SQL`/`SIMPLE JSON`/`SELECT SQL`(*New)四种生成模式
 - `自动记忆`最近生成的内容，最多保留9个
 - 提供众多`通用模板`，易于使用，复制粘贴加简单修改即可完成CRUD操作
 - 支持`特殊字符`模板(`#`请用`井`代替;`$`请用`￥`代替)
@@ -72,11 +73,12 @@
 # Update Logs
 | 更新日期       | 更新内容                                                                                                                                                                                                                                                              |
 |:-----------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 2024.04.23 | 切换为更快更稳定的BootCDN进行加速。<br>前端NEWUI改版（基于AdminLTE+Bootstrap+Vue+ElementUI混合模式）。|
-| 2024.04.22 | [Java CI with Maven](https://github.com/moshowgame/SpringBootCodeGenerator/actions/workflows/maven.yml) 更新<br>SpringBoot升级到3.2.5<br>FastJSON升级到FastJSON2.0.49|
-| 2024.04.21 | 推出JDK11分支，支持JDK8/JDK11/JDK17等版本，兼容性较好但维护速度较慢，为了更好兼容旧机器和旧环境|
-| 2024.04.20 | 修复CDN版本cdn.staticfile.org域名备份失败问题，已同步更新到cdn.staticfile.net（本地版本则不受影响）|
-| 2024.01.26 | 修复大写下滑线列名转驼峰问题（感谢@Nisus-Liu的PR）|
+| 2024.12.23 | 新增InsertSQL模式，采用JSQLParser引擎进行封装<br>优化代码封装<br>CDN恢复为staticfile.org加速(如果本地卡的话，建议切换local模式)。<br>                                                                                                                                                                    |
+| 2024.04.23 | 切换为更快更稳定的BootCDN进行加速。<br>前端NEWUI改版（基于AdminLTE+Bootstrap+Vue+ElementUI混合模式）。                                                                                                                                                                                       |
+| 2024.04.22 | [Java CI with Maven](https://github.com/moshowgame/SpringBootCodeGenerator/actions/workflows/maven.yml) 更新<br>SpringBoot升级到3.2.5<br>FastJSON升级到FastJSON2.0.49                                                                                                     |
+| 2024.04.21 | 推出JDK11分支，支持JDK8/JDK11/JDK17等版本，兼容性较好但维护速度较慢，为了更好兼容旧机器和旧环境                                                                                                                                                                                                        |
+| 2024.04.20 | 修复CDN版本cdn.staticfile.org域名备份失败问题，已同步更新到cdn.staticfile.net（本地版本则不受影响）                                                                                                                                                                                             |
+| 2024.01.26 | 修复大写下滑线列名转驼峰问题（感谢@Nisus-Liu的PR）                                                                                                                                                                                                                                   |
 | 2023.10.22 | 工具站CDN更新。                                                                                                                                                                                                                                                         |
 | 2023.08.31 | （感谢@Nisus-Liu的PR）<br>fix 驼峰列名转命名风格错误问题<br>增强转下划线命名风格, 对原始风格不敏感. 支持各种命名风格的列名 to 下划线<br>增加 NonCaseString 大小写不敏感字符串包装类, 简化编码<br>几点代码小优化。                                                                                                                             |
 | 2023.07.11 | 安全更新，正式支持SpringBoot3，javax升级到jakarta。                                                                                                                                                                                                                             |
@@ -180,6 +182,8 @@
 
 - 当项目从2.7.x的springboot升级到3.0.x的时候，遇到一个问题“java: 程序包javax.servlet.http不存在” 问题：
  [java: 程序包javax.servlet.http不存在](https://zhengkai.blog.csdn.net/article/details/131362304)
+
+- [CSDN【SpringBoot2启示录】专栏](https://blog.csdn.net/moshowgame/category_9274885.html)
 
 2024 NEWUI版本
 <img src="./newui_version.png">

@@ -17,9 +17,9 @@ public class ParamInfo {
 
     @Data
     public static class NAME_CASE_TYPE {
-        public static String CAMEL_CASE = "CamelCase";
-        public static String UNDER_SCORE_CASE = "UnderScoreCase";
-        public static String UPPER_UNDER_SCORE_CASE = "UpperUnderScoreCase";
+        public static final String CAMEL_CASE = "CamelCase";
+        public static final String UNDER_SCORE_CASE = "UnderScoreCase";
+        public static final String UPPER_UNDER_SCORE_CASE = "UpperUnderScoreCase";
     }
 
 }

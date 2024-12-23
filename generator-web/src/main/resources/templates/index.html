@@ -6,8 +6,8 @@ by https://zhengkai.blog.csdn.net
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JAVA代码生成平台</title>
   <#include "/header.html">
+  <title>${(value.title)!!}</title>
 </head>
 <body class="hold-transition layout-top-nav">
 <div class="wrapper">
@@ -17,7 +17,7 @@ by https://zhengkai.blog.csdn.net
     <div class="container">
       <a href="#" class="navbar-brand">
         <img src="${request.contextPath}/statics/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">JAVA代码生成平台</span>
+        <span class="brand-text font-weight-light">${(value.title)!!}</span>
       </a>
 
       <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,7 @@ by https://zhengkai.blog.csdn.net
       </button>
 
       <div class="collapse navbar-collapse order-3" id="navbarCollapse">
-        <i class="fa fa-fw fa-space-shuttle"></i><a>For reducing the repetitive CRUD work</a>
+        <i class="fa fa-fw fa-space-shuttle"></i><a>${(value.slogan)!!}</a>
       </div>
 
       <!-- 右侧导航栏链接 -->

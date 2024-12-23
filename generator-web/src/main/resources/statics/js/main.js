@@ -123,7 +123,7 @@ const vm = new Vue({
 			vm.formData.tableSql=$.inputArea.getValue();
 			axios.post(basePath+"/code/generate",vm.formData).then(function(res){
 				if(res.code===500){
-					error("生成失败");
+					error("生成失败，请检查SQL语句!!!");
 					return;
 				}
 				setAllCookie();

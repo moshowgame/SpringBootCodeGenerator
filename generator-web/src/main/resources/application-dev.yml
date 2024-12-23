@@ -47,12 +47,12 @@ spring:
     #mvc:
     #  static-path-pattern: /statics/**
 OEM:
-  version: 2024.4
+  version: 2024.12
   header: SQL转Java JPA、MYBATIS实现类代码生成平台
   keywords: sql转实体类,sql转DAO,SQL转service,SQL转JPA实现,SQL转MYBATIS实现
   title: JAVA代码生成平台
-  slogan: For reducing the repetitive CRUD work
-  description: <p>SpringBootCodeGenerator(JAVA代码生成平台)，<br>又名`大狼狗代码生成器`、`SQL转JAVA`、`SQL转JPA`、`SQL转Mybatis`、`Mybatis在线生成器`、`SQL转Java JPA、MYBATIS实现类代码生成平台`。</p><p>——以解放双手为目的，减少大量的重复CRUD工作，可通过建表SQL语句生成JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL/CommonMapper等相关模板代码。</p>
+  slogan: Release your hands from tedious and repetitive CRUD tasks.
+  description: <p>SpringBootCodeGenerator(JAVA代码生成平台)，<br>又名`大狼狗代码生成器`、`SQL转JAVA`、`SQL转JPA`、`SQL转Mybatis`、`Mybatis在线生成器`、`SQL转Java JPA、MYBATIS实现类代码生成平台`。</p><p>——从繁琐重复的`CRUD工作`中释放你的双手，可通过DDL SQL语句或Select SQL语句或简单Json->生成JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL/CommonMapper等相关模板代码。</p>
   author: Zhengkai.blog.csdn.net
   packageName: com.software.system
   copyright: Powered by Moshow郑锴 , Might the holy light be with you ! 
