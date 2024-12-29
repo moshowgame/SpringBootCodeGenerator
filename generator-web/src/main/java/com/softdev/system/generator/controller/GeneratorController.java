@@ -1,5 +1,6 @@
 package com.softdev.system.generator.controller;
 
+import com.alibaba.fastjson2.JSONArray;
 import com.softdev.system.generator.entity.ClassInfo;
 import com.softdev.system.generator.entity.ParamInfo;
 import com.softdev.system.generator.entity.ReturnT;
@@ -49,7 +50,7 @@ public class GeneratorController {
     @ResponseBody
     public ReturnT getAllTemplates() throws Exception {
         String templates = generatorService.getTemplateConfig();
-        return ReturnT.ok().put("templates",templates);
+        return ReturnT.ok().put("templates", JSONArray.parseArray(templates));
     }
     @PostMapping("/code/generate")
     @ResponseBody

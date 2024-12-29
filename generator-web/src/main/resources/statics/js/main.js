@@ -17,6 +17,7 @@ $(function(){
 
 	// init output code area
 	$.outputArea = CodeMirror.fromTextArea(document.getElementById("outputArea"), {
+		mode: "text/x-java", // JAV
 		theme: "idea",   // IDEA主题
 		lineNumbers: true,   //显示行号
 		smartIndent: true, // 自动缩进
@@ -128,7 +129,13 @@ const vm = new Vue({
 				}
 				setAllCookie();
 				//console.log(res.outputJson);
-				vm.outputJson=res.outputJson;
+				//兼容后端返回数据格式
+				if(res.data){
+					vm.outputJson = res.data.outputJson;
+				}else {
+					vm.outputJson = res.outputJson;
+				}
+
 				// console.log(vm.outputJson["bootstrap-ui"]);
 				vm.outputStr=vm.outputJson[vm.currentSelect].trim();
 				//console.log(vm.outputJson["bootstrap-ui"]);
@@ -136,7 +143,7 @@ const vm = new Vue({
 				$.outputArea.setValue(vm.outputStr);
 				$.outputArea.setSize('auto', 'auto');
 				//add to historicalData
-				vm.setHistoricalData(res.outputJson.tableName);
+				vm.setHistoricalData(vm.outputJson.tableName);
 				alert("生成成功");
 			});
 		},
@@ -150,8 +157,14 @@ const vm = new Vue({
 			id:1234
 		}).then(function(res){
 			//console.log(res.templates);
-			vm.templates = JSON.parse(res.templates);
-			// console.log(vm.templates);
+			// vm.templates = JSON.parse(res.templates);
+			// console.log(res);
+			//兼容后端返回数据格式
+			if(res.data){
+				vm.templates = res.data.templates;
+			}else {
+				vm.templates = res.templates;
+			}
 		});
 	},
 	updated: function () {
