@@ -10,7 +10,7 @@ import java.util.List;
  * @date ${.now?string('yyyy-MM-dd')}
  */
 @Data<#if isSwagger?exists && isSwagger==true>
-@ApiModel("${classInfo.classComment}")</#if>
+@Schema"${classInfo.classComment}")</#if>
 public class ${classInfo.className} implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -20,7 +20,7 @@ public class ${classInfo.className} implements Serializable {
     <#if isComment?exists && isComment==true>/**
     * ${fieldItem.fieldComment}
     */</#if><#if isSwagger?exists && isSwagger==true>
-    @ApiModelProperty("${fieldItem.fieldComment}")</#if>
+    @Schema(description = "${fieldItem.fieldComment}")</#if>
     private ${fieldItem.fieldClass} ${fieldItem.fieldName};
 
 </#list>

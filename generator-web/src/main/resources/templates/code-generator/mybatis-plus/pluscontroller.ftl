@@ -12,7 +12,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.servlet.ModelAndView;
-
+<#if isSwagger?exists && isSwagger==true>import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;</#if>
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/${classInfo.className?uncap_first}")
+<#if isSwagger?exists && isSwagger==true>@Tag(name = "${classInfo.className}",description = "${classInfo.classComment}控制器")</#if>
 public class ${classInfo.className}Controller {
 
     @Autowired

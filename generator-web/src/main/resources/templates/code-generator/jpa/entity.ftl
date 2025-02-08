@@ -11,8 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 <#if isSwagger?exists && isSwagger==true>
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;</#if>
+import io.swagger.v3.oas.annotations.media.Schema;</#if>
 </#if>
 /**
  * @description ${classInfo.classComment}
@@ -22,7 +21,7 @@ import io.swagger.annotations.ApiModelProperty;</#if>
 @Entity
 <#if isLombok?exists && isLombok==true>@Data</#if>
 <#if isComment?exists && isComment==true>@Table(name="${classInfo.originTableName}")</#if><#if isSwagger?exists && isSwagger==true>
-@ApiModel("${classInfo.classComment}")</#if>
+@Schema"${classInfo.classComment}")</#if>
 public class ${classInfo.className} implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,7 +33,7 @@ public class ${classInfo.className} implements Serializable {
     <#if isComment?exists && isComment==true>/**
     * ${fieldItem.fieldComment}
     */</#if><#if isSwagger?exists && isSwagger==true>
-    @ApiModelProperty("${fieldItem.fieldComment}")</#if>
+    @Schema(description = "${fieldItem.fieldComment}")</#if>
     <#if isComment?exists && isComment==true>@Column(name="${fieldItem.columnName}")</#if>
     private ${fieldItem.fieldClass} ${fieldItem.fieldName};
 
