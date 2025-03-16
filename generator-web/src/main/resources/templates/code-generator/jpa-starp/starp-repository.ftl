@@ -8,6 +8,7 @@
         </#if>
     </#list>
 </#if>
+<#if importDdate?exists && importDdate==true>import java.util.Date;</#if>
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

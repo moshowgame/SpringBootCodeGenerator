@@ -61,6 +61,7 @@
 - 可在`applicaltion.yml`中的`OEM.mode`设置`js/css引入模式`为`local`(本地模式，默认)/`CDN`(云CDN模式，在线网站推荐，省流量)
 - OEM信息可以在`applicaltion.yml`中的`OEM`中更改
 - *支持公共js/css的Local/CDN模式切换，方便`本地`或者`工具站`进行部署，可以在`application.yml`的`OEM.Mode=`进行设置，之后请在`header-CDN-v2.html`/`header-local-v2.html`中检查对应js/css配置是否正确。默认为`CDN`模式。对于没有网络的环境请使用`local`模式。
+- 如何判断是否包含Date日期类并引入，搜索`<#assign importDdate = true />`即可找到对应的方法判断和引入
 
 # Branch Detail 分支介绍
 - Master：主力分支，基于SpringBoot3+，需要JDK17+
@@ -68,11 +69,13 @@
 - NewUI：新UI界面改版尝鲜
 
 # 更新预告
-1.计划引入DJANGO等其他语言的ORM模板，欢迎大家submit相关代码供参考
+1.计划优化一下前端界面，改善由于静态资源加载问题导致的访问缓慢问题，目前正在开发中
+2.根据大家Raised的Issue优化一下模板
 
 # Update Logs
 | 更新日期       | 更新内容                                                                                                                                                                                                                                                              |
 |:-----------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 2025.03.16 | 修复由于SQL类型大写导致无法转换的问题。（感谢@zzy-design的反馈）<br> JPA模板：修复不开启Lombok情况下Set/Get方法生成问题;修复importDdate判断为true后没有引入日期类的问题（感谢@PenroseYang的反馈）                                                                                                                                  |
 | 2024.12.29 | 优化前端加载速度，优化输出代码着色，CDN改字节跳动静态资源公共库。<br>                                                                                                                                                                                                                            |
 | 2024.12.23 | 新增InsertSQL模式，采用JSQLParser引擎进行封装<br>优化代码封装<br>CDN恢复为staticfile.org加速(如果本地卡的话，建议切换local模式)。<br>                                                                                                                                                                    |
 | 2024.04.23 | 切换为更快更稳定的BootCDN进行加速。<br>前端NEWUI改版（基于AdminLTE+Bootstrap+Vue+ElementUI混合模式）。                                                                                                                                                                                       |

@@ -308,7 +308,8 @@ public class GeneratorServiceImpl implements GeneratorService {
                         fieldName = columnName;
                     }
                     columnLine = columnLine.substring(columnLine.indexOf("`") + 1).trim();
-                    String mysqlType = columnLine.split("\\s+")[1];
+                    //2025-03-16 修复由于类型大写导致无法转换的问题
+                    String mysqlType = columnLine.split("\\s+")[1].toLowerCase(Locale.ROOT);
                     if(mysqlType.contains("(")){
                         mysqlType = mysqlType.substring(0, mysqlType.indexOf("("));
                     }

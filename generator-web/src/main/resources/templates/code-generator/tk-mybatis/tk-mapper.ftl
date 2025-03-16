@@ -8,6 +8,7 @@
         </#if>
     </#list>
 </#if>
+<#if importDdate?exists && importDdate==true>import java.util.Date;</#if>
 import java.util.List;
 import io.mybatis.mapper.Mapper;
 </#if>

@@ -40,8 +40,10 @@ public class ${classInfo.className} implements Serializable {
 </#list>
     public ${classInfo.className}() {
     }
-</#if>
 
+
+<#if classInfo.fieldList?exists && classInfo.fieldList?size gt 0>
+<#list classInfo.fieldList as fieldItem >
 <#if isLombok?exists && isLombok==false>
     public ${fieldItem.fieldClass} get${fieldItem.fieldName?cap_first}() {
         return ${fieldItem.fieldName};
@@ -51,4 +53,6 @@ public class ${classInfo.className} implements Serializable {
         this.${fieldItem.fieldName} = ${fieldItem.fieldName};
     }
 </#if>
+</#list>
 }
+</#if></#if>
