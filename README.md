@@ -75,7 +75,7 @@
 # Update Logs
 | 更新日期       | 更新内容                                                                                                                                                                                                                                                              |
 |:-----------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 2025.03.16 | 修复由于SQL类型大写导致无法转换的问题。（感谢@zzy-design的反馈）<br> JPA模板：修复不开启Lombok情况下Set/Get方法生成问题;修复importDdate判断为true后没有引入日期类的问题（感谢@PenroseYang的反馈）                                                                                                                                  |
+| 2025.03.16 | NewUI V2前端优化：<br>移除不必要内容，优化Local和CDN静态文件引入。<br><br>修复由于SQL类型大写导致无法转换的问题。（感谢@zzy-design的反馈）<br><br>JPA模板优化（感谢@PenroseYang的反馈）：<br>修复不开启Lombok情况下Set/Get方法生成问题;<br>修复importDdate判断为true后没有引入日期类的问题<br>                                                              |
 | 2024.12.29 | 优化前端加载速度，优化输出代码着色，CDN改字节跳动静态资源公共库。<br>                                                                                                                                                                                                                            |
 | 2024.12.23 | 新增InsertSQL模式，采用JSQLParser引擎进行封装<br>优化代码封装<br>CDN恢复为staticfile.org加速(如果本地卡的话，建议切换local模式)。<br>                                                                                                                                                                    |
 | 2024.04.23 | 切换为更快更稳定的BootCDN进行加速。<br>前端NEWUI改版（基于AdminLTE+Bootstrap+Vue+ElementUI混合模式）。                                                                                                                                                                                       |
@@ -189,18 +189,12 @@
 
 - [CSDN【SpringBoot2启示录】专栏](https://blog.csdn.net/moshowgame/category_9274885.html)
 
-2024 NEWUI版本
-<img src="./newui_version.png">
-2021 半Vue半JS版本
-<img src="./codegenerator1.png">
-2019 初代版本
-<img src="./old_version.png">
+2025 NewUI V2版本
+<img src="./newui_version_2.png">
 配置模板
 <img src="./codegenerator2.png">
 网站流量分析-2024
 <img src="./site_analysis-2024.png">
-网站流量分析-2022
-<img src="./site_analysis.png">
 代码与你，越变越美
 <img src="./donate.png">
 

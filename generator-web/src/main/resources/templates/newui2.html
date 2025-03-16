@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <#include "/newui-header.html">
+  <title>代码生成器</title>
+  <style>
+    .el-button--primary.is-plain.is-disabled, .el-button--primary.is-plain.is-disabled:active, .el-button--primary.is-plain.is-disabled:focus, .el-button--primary.is-plain.is-disabled:hover {
+      color: #f9faff;
+      background-color: #91979d;
+      border-color: #d9ecff;
+      font-weight: bold;
+    }
+    .header-bar {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      padding: 10px;
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #e9ecef;
+    }
+    .header-bar .logo {
+      font-size: 24px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .header-bar .logo i {
+      margin-right: 10px;
+    }
+    .header-bar .links a {
+      margin-left: 10px;
+      text-decoration: none;
+      color: #007bff;
+    }
+    .container {
+      margin-top: 20px; /* 增加输入SQL区域与顶部的距离 */
+    }
+    .footer-bar {
+      text-align: center;
+      padding: 10px;
+      background-color: #f8f9fa;
+      border-top: 1px solid #e9ecef;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      z-index: 1000;
+    }
+    .last-card {
+      margin-bottom: 70px; /* 增加输出代码区域与底部的距离 */
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="header-bar">
+    <div class="logo">
+      <i class="bi bi-code"></i>
+      ${(value.title)!!}
+    </div>
+    <small>${(value.slogan)!!}</small>
+    <div class="links">
+      View in <a href="https://github.com/moshowgame/SpringBootCodeGenerator/" target="_blank">GitHub</a> <a href="https://gitee.com/moshowgame/SpringBootCodeGenerator/" target="_blank">Gitee</a>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <blockquote class="quote-secondary">
+        ${(value.description)!!}
+      </blockquote>
+      <div class="col-lg-12">
+        <div id="rrapp" v-cloak>
+          <div>
+            <el-form ref="form" :inline="true" :model="formData" label-width="100px">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title m-0">输入SQL</h5>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="折叠">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <textarea id="inputArea" placeholder="请输入表结构信息..." style="height: 250px;" v-model="formData.tableSql"></textarea>
+                </div>
+              </div>
+              
+              <hr>
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title m-0">生成设置</h5>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="折叠">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="card-body">
+                  <el-form-item label="作者">
+                    <el-input v-model="formData.options.authorName"></el-input>
+                  </el-form-item>
+                  <el-form-item label="包名">
+                    <el-input v-model="formData.options.packageName"></el-input>
+                  </el-form-item>
+                  <el-form-item label="返回(成功)">
+                    <el-input v-model="formData.options.returnUtilSuccess"></el-input>
+                  </el-form-item>
+                  <el-form-item label="返回(失败)">
+                    <el-input v-model="formData.options.returnUtilFailure"></el-input>
+                  </el-form-item>
+                  <el-form-item label="忽略前缀">
+                    <el-input v-model="formData.options.ignorePrefix"></el-input>
+                  </el-form-item>
+                  <el-form-item label="输入类型">
+                    <el-select v-model="formData.options.dataType">
+                      <el-option label="DDL SQL" value="sql"></el-option>
+                      <el-option label="JSON" value="json"></el-option>
+                      <el-option label="INSERT SQL" value="insert-sql"></el-option>
+                      <el-option label="SELECT SQL by SQL Parser" value="select-sql"></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="TinyInt转换">
+                    <el-select v-model="formData.options.tinyintTransType">
+                      <el-option value="boolean" label="boolean"></el-option>
+                      <el-option value="Boolean" label="Boolean"></el-option>
+                      <el-option value="Integer" label="Integer"></el-option>
+                      <el-option value="int" label="int"></el-option>
+                      <el-option value="String" label="String"></el-option>
+                      <el-option value="Short" label="Short"></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="时间类型">
+                    <el-select v-model="formData.options.timeTransType">
+                      <el-option value="Date" label="Date"></el-option>
+                      <el-option value="DateTime" label="DateTime"></el-option>
+                      <el-option value="Time" label="Time"></el-option>
+                      <el-option value="Timestamp" label="Timestamp"></el-option>
+                      <el-option value="Calendar" label="Calendar"></el-option>
+                      <el-option value="LocalDate" label="LocalDate"></el-option>
+                      <el-option value="LocalDateTime" label="LocalDateTime"></el-option>
+                      <el-option value="LocalTime" label="LocalTime"></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="命名类型">
+                    <el-select v-model="formData.options.nameCaseType">
+                      <el-option label="驼峰" value="CamelCase"></el-option>
+                      <el-option label="下划线" value="UnderScoreCase"></el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="包装类型">
+                    <el-switch v-model="formData.options.isPackageType"></el-switch>
+                  </el-form-item>
+                  <el-form-item label="swaggerUI">
+                    <el-switch v-model="formData.options.isSwagger"></el-switch>
+                  </el-form-item>
+                  <el-form-item label="字段注释">
+                    <el-switch v-model="formData.options.isComment"></el-switch>
+                  </el-form-item>
+                  <el-form-item label="自动引包">
+                    <el-switch v-model="formData.options.isAutoImport"></el-switch>
+                  </el-form-item>
+                  <el-form-item label="带包路径">
+                    <el-switch v-model="formData.options.isWithPackage"></el-switch>
+                  </el-form-item>
+                  <el-form-item label="Lombok">
+                    <el-switch v-model="formData.options.isLombok"></el-switch>
+                  </el-form-item>
+                </div>
+              </div>
+              
+              <hr>
+              <div class="card">
+                <div class="card-header">
+                  <el-button type="primary" icon="el-icon-caret-right" @click="generate">生成</el-button>
+                  <el-button type="primary" icon="el-icon-document-copy" @click="copy" plain>复制</el-button>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="折叠">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <span v-if="historicalData.length > 0">
+                    <el-button-group>
+                      <el-button type="primary" plain disabled round>历史记录</el-button>
+                      <span v-for="(item, index) in historicalData" :key="index">
+                        <el-button @click="switchHistoricalData">{{ item }}</el-button>
+                      </span>
+                    </el-button-group>
+                  </span>
+                </div>
+              </div>
+              <hr>
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title m-0">模板选择</h5>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="折叠">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <el-form ref="form" :inline="true" :model="formData" label-width="100px" size="mini">
+                    <div v-for="(item, index) in templates" :key="index">
+                      <el-button-group>
+                        <el-button type="primary" plain disabled>{{ item.group }}</el-button>
+                        <span v-for="(childItem, index) in item.templates" :key="index">
+                          <el-button @click="setOutputModel">{{ childItem.name }}</el-button>
+                        </span>
+                      </el-button-group>
+                    </div>
+                  </el-form>
+                </div>
+              </div>
+              
+
+              <hr>
+              <div class="card last-card">
+                <div class="card-header">
+                  <h5 class="card-title m-0">输出代码</h5>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="折叠">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <textarea id="outputArea" placeholder="请输入表结构信息..." style="height: 250px;" v-model="outputStr"></textarea>
+                </div>
+              </div>
+            </el-form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bar">
+
+    <p>${(value.copyright)!!} </p>
+  </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/main.js"></script>
+<script>
+  //console.log(vm);
+  vm.formData.options.authorName="${(value.author)!!}";
+  vm.formData.options.packageName="${(value.packageName)!!}";
+  vm.formData.options.returnUtilSuccess="${(value.returnUtilSuccess)!!}";
+  vm.formData.options.returnUtilFailure="${(value.returnUtilFailure)!!}";
+  vm.outputStr="${(value.outputStr)!!}";
+  loadAllCookie()
+</script>
+</body>
+</html>

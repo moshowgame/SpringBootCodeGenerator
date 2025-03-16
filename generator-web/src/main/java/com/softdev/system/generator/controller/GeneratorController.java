@@ -35,11 +35,15 @@ public class GeneratorController {
 
     @GetMapping("/")
     public ModelAndView defaultPage() {
-        return new ModelAndView("index").addObject("value",valueUtil);
+        return new ModelAndView("newui2").addObject("value",valueUtil);
     }
     @GetMapping("/index")
     public ModelAndView indexPage() {
-        return new ModelAndView("index").addObject("value",valueUtil);
+        return new ModelAndView("newui2").addObject("value",valueUtil);
+    }
+    @GetMapping("/newui2")
+    public ModelAndView newui2() {
+        return new ModelAndView("newui2").addObject("value",valueUtil);
     }
     @GetMapping("/main")
     public ModelAndView mainPage() {
