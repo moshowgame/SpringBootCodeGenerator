@@ -1,5 +1,5 @@
 server:
-  port: 1234
+  port: 1235
   http2:
     enabled: true
   servlet:
@@ -55,10 +55,10 @@ OEM:
   title: JAVA在线代码生成
   slogan: Release your hands from tedious and repetitive CRUD tasks.
   description: <p>SpringBootCodeGenerator，又名`大狼狗代码生成器`、`SQL转JAVA`、`SQL转JPA`、`SQL转Mybatis`、`Mybatis在线生成器`、`SQL转Java JPA、MYBATIS实现类代码生成平台`。</p><p>——从繁琐重复的`CRUD工作`中释放你的双手，可通过DDL SQL语句或Select SQL语句或简单Json -> 生成JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL/CommonMapper等相关模板代码。</p>
-  author: BEJSON.com
-  packageName: www.bejson.com
-  copyright: Powered by <a href="https://zhengkai.blog.csdn.net" target="_blank">Moshow</a> + <a href="https://www.bejson.com/">BeJSON</a> , Might the holy light be with you !
+  author: https://www.json.cn/
+  packageName: www.json.cn
+  copyright: Powered by <a href="https://zhengkai.blog.csdn.net" target="_blank">Moshow</a> + <a href="https://www.json.cn/">JSON</a> , Might the holy light be with you !
   returnUtilSuccess: ResponseUtil.success
   returnUtilFailure: ResponseUtil.error
-  outputStr: www.bejson.com
-  mode: CDN
+  outputStr: www.json.cn
+  mode: local
