@@ -13,8 +13,8 @@
 >The `Spring Boot Code Generator` , Based on SpringBoot3 and Freemarker<br>
 >          #基于`SpringBoot3`和`Freemarker`的代码生成平台
 > 
->Release your hands from tedious and repetitive CRUD tasks.<br>
->          #从繁琐重复的`CRUD工作`中释放你的双手
+>Free your hands from tedious and repetitive CRUD work.<br>
+>          #解放你的双手，摆脱繁琐重复的CRUD工作。
 >
 >Support mysql+oracle+pgsql , the most popular databases standard SQL<br>
 >          #支持`MySQL`、Oracle、PgSQL三大主流数据库
@@ -31,20 +31,21 @@
 >Welcome to submit your issue and useful templates , or put your good idea into PR <br>
 >   欢迎提交你的问题和常用有用模板，或者提交你的好主意到PR。
 
+> 特别感谢BeJSON前站长`三叔`的慧眼和支持，让该项目得以脱颖而出，谢谢!
 
 # URL
 
-- 感谢`卡卡`将他部署在[BEJSON](https://java.bejson.com/generator)上，目前是BeJSON专供的`金牌工具`(线上版本不一定是最新的，会有延迟，请谅解，谢谢).<br>
+- 感谢`卡卡`部署在[BEJSON](https://java.bejson.com/generator)上，目前是BeJSON专供的`金牌工具`<br>
 - 感谢`jully.top`部署的副本 [https://jully.top/generator/](https://jully.top/generator/)。<br>
-- 感谢`BootCDN`提供稳定、快速、免费的前端开源项目 CDN 加速服务
-- Thanks for `JetBrains` providing us the `Licenses for Open Source Development` ，[Get free access to all JetBrains tools for developing your open source project!](https://www.jetbrains.com/community/opensource/#support) .<br>
+- 感谢`bytecdntp`字节跳动CDN提供稳定、快速、免费的静态文件CDN加速服务(在线版本)
+- Thanks `JetBrains` for providing us the `Licenses for Open Source Development` ，[Get free access to all JetBrains tools for developing your open source project!](https://www.jetbrains.com/community/opensource/#support) .<br>
 
 | 访问地址                   | http://localhost:1234/generator                               |
 |:-----------------------|:--------------------------------------------------------------|
-| BEJSON 金牌工具 在线地址           | https://java.bejson.com/generator/                            |
-| JSON.CN 金牌工具 在线地址         | https://java.json.cn/generator/                            |
+| BEJSON 金牌工具 在线地址       | https://java.bejson.com/generator/                            |
+| JSON.CN 金牌工具 在线地址      | https://java.json.cn/generator/                            |
 | Jully 在线地址             | https://jully.top/generator/                                  |
-| DEVTOOLS 在线地址（Demised） | https://java.devtools.cn                                      |
+| NeverWaive 在线地址        | https://codegenerator.neverwaive.cn/                                  |
 | CSDN BLOG              | https://zhengkai.blog.csdn.net                                |
 | GITEE仓库                | https://gitee.com/moshowgame/SpringBootCodeGenerator/releases |
 | GITHUB仓库               | https://github.com/moshowgame/SpringBootCodeGenerator         |
@@ -65,16 +66,18 @@
 
 # Branch Detail 分支介绍
 - Master：主力分支，基于SpringBoot3+，需要JDK17+
-- JDK11：兼容分支，基于SpringBoot2+，支持JDK8/JDK11/JDK17等版本，请自行(切换jdk11分支)[https://github.com/moshowgame/SpringBootCodeGenerator/tree/jdk11]
-- NewUI：新UI界面改版尝鲜
+- JDK11：兼容分支，版本落后，基于SpringBoot2+，但支持JDK8/JDK11等旧JDK版本[https://github.com/moshowgame/SpringBootCodeGenerator/tree/jdk11]
+
 
 # 更新预告
-1.计划优化一下前端界面，改善由于静态资源加载问题导致的访问缓慢问题，目前正在开发中
-2.根据大家Raised的Issue优化一下模板
+1.计划加入AI来帮忙生成更多样式的模板
+2.计划使用AI来改善现有模板
+3.深度支持Select SQL模式，以及探索JSON模式更多可能
 
 # Update Logs
 | 更新日期       | 更新内容                                                                                                                                                                                                                                                              |
 |:-----------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 2025.03.31 | 优化说明                                                                                                                                                                                                                                                              |
 | 2025.03.16 | NewUI V2前端优化：<br>移除不必要内容，优化Local和CDN静态文件引入。<br><br>修复由于SQL类型大写导致无法转换的问题。（感谢@zzy-design的反馈）<br><br>JPA模板优化（感谢@PenroseYang的反馈）：<br>修复不开启Lombok情况下Set/Get方法生成问题;<br>修复importDdate判断为true后没有引入日期类的问题<br>                                                              |
 | 2024.12.29 | 优化前端加载速度，优化输出代码着色，CDN改字节跳动静态资源公共库。<br>                                                                                                                                                                                                                            |
 | 2024.12.23 | 新增InsertSQL模式，采用JSQLParser引擎进行封装<br>优化代码封装<br>CDN恢复为staticfile.org加速(如果本地卡的话，建议切换local模式)。<br>                                                                                                                                                                    |
@@ -188,6 +191,9 @@
  [java: 程序包javax.servlet.http不存在](https://zhengkai.blog.csdn.net/article/details/131362304)
 
 - [CSDN【SpringBoot2启示录】专栏](https://blog.csdn.net/moshowgame/category_9274885.html)
+
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/moshowgame/SpringBootCodeGenerator.svg?variant=adaptive)](https://starchart.cc/moshowgame/SpringBootCodeGenerator)
 
 2025 NewUI V2版本
 <img src="./newui_version_2.png">
