@@ -96,6 +96,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         if (!CollectionUtils.isEmpty(tableNameList)) {
             String tableName = tableNameList.get(0).trim();
             classInfo.setTableName(tableName);
+            classInfo.setOriginTableName(tableName);
             String className = StringUtilsPlus.upperCaseFirst(StringUtilsPlus.underlineToCamelCase(tableName));
             if (className.contains("_")) {
                 className = className.replaceAll("_", "");
@@ -121,21 +122,15 @@ public class GeneratorServiceImpl implements GeneratorService {
             fieldName=fieldName.contains(".")?fieldName.substring(fieldName.indexOf(".")+1):fieldName;
             //转换前
             fieldInfo.setColumnName(fieldName);
-            switch ((String) paramInfo.getOptions().get("nameCaseType")) {
-                case ParamInfo.NAME_CASE_TYPE.CAMEL_CASE:
+            fieldName = switch ((String) paramInfo.getOptions().get("nameCaseType")) {
+                case ParamInfo.NAME_CASE_TYPE.CAMEL_CASE ->
                     // 2024-1-27 L&J 适配任意(maybe)原始风格转小写驼峰
-                    fieldName = StringUtilsPlus.toLowerCamel(aliasName);
-                    break;
-                case ParamInfo.NAME_CASE_TYPE.UNDER_SCORE_CASE:
-                    fieldName = StringUtilsPlus.toUnderline(aliasName, false);
-                    break;
-                case ParamInfo.NAME_CASE_TYPE.UPPER_UNDER_SCORE_CASE:
-                    fieldName = StringUtilsPlus.toUnderline(aliasName.toUpperCase(), true);
-                    break;
-                default:
-                    fieldName = aliasName;
-                    break;
-            }
+                        StringUtilsPlus.toLowerCamel(aliasName);
+                case ParamInfo.NAME_CASE_TYPE.UNDER_SCORE_CASE -> StringUtilsPlus.toUnderline(aliasName, false);
+                case ParamInfo.NAME_CASE_TYPE.UPPER_UNDER_SCORE_CASE ->
+                        StringUtilsPlus.toUnderline(aliasName.toUpperCase(), true);
+                default -> aliasName;
+            };
             //转换后
             fieldInfo.setFieldName(fieldName);
 
@@ -157,62 +152,57 @@ public class GeneratorServiceImpl implements GeneratorService {
     @Override
     public ClassInfo generateCreateSqlBySQLPraser(ParamInfo paramInfo) throws Exception {
         ClassInfo classInfo = new ClassInfo();
-        Statement statement = CCJSqlParserUtil.parse(paramInfo.getTableSql());
-        CCJSqlParserManager parserManager = new CCJSqlParserManager();
-        statement = parserManager.parse(new StringReader(paramInfo.getTableSql()));
-        TablesNamesFinder tablesNamesFinder = new TablesNamesFinder(); // 创建表名发现者对象
-        List<String> tableNameList = tablesNamesFinder.getTableList(statement); // 获取到表名列表
-        //一般这里应该只解析到一个表名，除非多个表名，取第一个
-        if (!CollectionUtils.isEmpty(tableNameList)) {
-            String tableName = tableNameList.get(0).trim();
-            classInfo.setTableName(tableName);
-            String className = StringUtilsPlus.upperCaseFirst(StringUtilsPlus.underlineToCamelCase(tableName));
-            if (className.contains("_")) {
-                className = className.replaceAll("_", "");
-            }
-            classInfo.setClassName(className);
-            classInfo.setClassComment(paramInfo.getTableSql());
+        Statement statement = null;
+        try {
+            statement = CCJSqlParserUtil.parse(paramInfo.getTableSql().trim());
+        }catch (Exception e) {
+            e.printStackTrace();
+            throw new SqlException("SQL语法错误:"+e.getMessage());
         }
-        //解析查询元素
-        Select select = null;
-        select = (Select) CCJSqlParserUtil.parse(paramInfo.getTableSql());
-        PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
-        List<SelectItem<?>> selectItems = plainSelect.getSelectItems();
 
-        // field List
+        // 确保是CREATE TABLE语句
+        if (!(statement instanceof CreateTable createTable)) {
+            throw new SqlException("检测到SQL语句不是DLL CREATE TABLE语句");
+        }
+
+        // 提取表名
+        String tableName = createTable.getTable().getName();
+        classInfo.setTableName(tableName);
+        String className = StringUtilsPlus.upperCaseFirst(StringUtilsPlus.underlineToCamelCase(tableName));
+        if (className.contains("_")) {
+            className = className.replaceAll("_", "");
+        }
+        classInfo.setClassName(className);
+        classInfo.setOriginTableName(tableName);
+        classInfo.setClassComment(paramInfo.getTableSql());
+        
+        // 提取字段信息
         List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
-        selectItems.forEach(t->{
-            FieldInfo fieldInfo = new FieldInfo();
-            String fieldName = ((Column)t.getExpression()).getColumnName();
-            String aliasName = t.getAlias() != null ? t.getAlias().getName() : ((Column)t.getExpression()).getColumnName();
-            //存储原始字段名
-            fieldInfo.setFieldComment(aliasName);fieldInfo.setColumnName(aliasName);
-            //处理字段名是t.xxx的情况
-            fieldName=fieldName.contains(".")?fieldName.substring(fieldName.indexOf(".")+1):fieldName;
-            //转换前
-            fieldInfo.setColumnName(fieldName);
-            switch ((String) paramInfo.getOptions().get("nameCaseType")) {
-                case ParamInfo.NAME_CASE_TYPE.CAMEL_CASE:
-                    // 2024-1-27 L&J 适配任意(maybe)原始风格转小写驼峰
-                    fieldName = StringUtilsPlus.toLowerCamel(aliasName);
-                    break;
-                case ParamInfo.NAME_CASE_TYPE.UNDER_SCORE_CASE:
-                    fieldName = StringUtilsPlus.toUnderline(aliasName, false);
-                    break;
-                case ParamInfo.NAME_CASE_TYPE.UPPER_UNDER_SCORE_CASE:
-                    fieldName = StringUtilsPlus.toUnderline(aliasName.toUpperCase(), true);
-                    break;
-                default:
-                    fieldName = aliasName;
-                    break;
+        List<ColumnDefinition> columnDefinitions = createTable.getColumnDefinitions();
+        
+        if (columnDefinitions != null) {
+            for (ColumnDefinition columnDefinition : columnDefinitions) {
+                FieldInfo fieldInfo = new FieldInfo();
+                String columnName = columnDefinition.getColumnName();
+                fieldInfo.setColumnName(columnName);
+                fieldInfo.setFieldComment(columnDefinition.toString());
+                
+                // 根据命名规则转换字段名
+                String fieldName = switch ((String) paramInfo.getOptions().get("nameCaseType")) {
+                    case ParamInfo.NAME_CASE_TYPE.CAMEL_CASE -> StringUtilsPlus.toLowerCamel(columnName);
+                    case ParamInfo.NAME_CASE_TYPE.UNDER_SCORE_CASE -> StringUtilsPlus.toUnderline(columnName, false);
+                    case ParamInfo.NAME_CASE_TYPE.UPPER_UNDER_SCORE_CASE ->
+                            StringUtilsPlus.toUnderline(columnName.toUpperCase(), true);
+                    default -> columnName;
+                };
+                fieldInfo.setFieldName(fieldName);
+                
+                // 设置字段类型为String（因为无法准确推测类型）
+                fieldInfo.setFieldClass("String");
+                fieldList.add(fieldInfo);
             }
-            //转换后
-            fieldInfo.setFieldName(fieldName);
-
-            //无法推测类型，所有都set为String
-            fieldInfo.setFieldClass("String");
-            fieldList.add(fieldInfo);
-        });
+        }
+        
         classInfo.setFieldList(fieldList);
         log.info("classInfo:{}", JSON.toJSONString(classInfo));
         return classInfo;

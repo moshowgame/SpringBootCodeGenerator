@@ -88,7 +88,7 @@ public class GeneratorController {
                 classInfo = generatorService.generateSelectSqlBySQLPraser(paramInfo);
                 break;
             case "create-sql":
-                //SelectSqlBySQLPraser模式:parse select sql by JSqlParser
+                //CreateSqlBySQLPraser模式:parse create sql by JSqlParser
                 classInfo = generatorService.generateCreateSqlBySQLPraser(paramInfo);
                 break;
             default:

@@ -123,8 +123,9 @@ const vm = new Vue({
 			//get value from codemirror
 			vm.formData.tableSql=$.inputArea.getValue();
 			axios.post(basePath+"/code/generate",vm.formData).then(function(res){
-				if(res.code===500){
-					error("生成失败，请检查SQL语句!!!");
+				if(res.status===500||res.data.code===500){
+					console.log(res);
+					error("生成失败，请检查SQL语句!!!"+res.data.msg);
 					return;
 				}
 				setAllCookie();

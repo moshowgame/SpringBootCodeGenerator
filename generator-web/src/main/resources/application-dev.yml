@@ -59,4 +59,4 @@ OEM:
   returnUtilSuccess: ResponseUtil.success
   returnUtilFailure: ResponseUtil.error
   outputStr: http://zhengkai.blog.csdn.net
-  mode: CDN
+  mode: local
