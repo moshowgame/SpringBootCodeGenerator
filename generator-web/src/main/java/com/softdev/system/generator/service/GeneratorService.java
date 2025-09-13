@@ -25,6 +25,7 @@ public interface GeneratorService {
      * @return
      */
     ClassInfo generateSelectSqlBySQLPraser(ParamInfo paramInfo) throws Exception;
+    ClassInfo generateCreateSqlBySQLPraser(ParamInfo paramInfo) throws Exception;
     /**
      * 解析DDL-SQL生成类信息
      * @auther: zhengkai.blog.csdn.net

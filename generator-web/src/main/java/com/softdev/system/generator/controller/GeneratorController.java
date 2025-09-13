@@ -87,6 +87,10 @@ public class GeneratorController {
                 //SelectSqlBySQLPraser模式:parse select sql by JSqlParser
                 classInfo = generatorService.generateSelectSqlBySQLPraser(paramInfo);
                 break;
+            case "create-sql":
+                //SelectSqlBySQLPraser模式:parse select sql by JSqlParser
+                classInfo = generatorService.generateCreateSqlBySQLPraser(paramInfo);
+                break;
             default:
                 //默认模式：parse DDL table structure from sql
                 classInfo = generatorService.processTableIntoClassInfo(paramInfo);

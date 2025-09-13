@@ -37,8 +37,7 @@
 
 - 感谢`卡卡`部署在[BEJSON](https://java.bejson.com/generator)上，目前是BeJSON专供的`金牌工具`<br>
 - 感谢`jully.top`部署的副本 [https://jully.top/generator/](https://jully.top/generator/)。<br>
-- 感谢`bytecdntp`字节跳动CDN提供稳定、快速、免费的静态文件CDN加速服务(在线版本)
-- Thanks `JetBrains` for providing us the `Licenses for Open Source Development` ，[Get free access to all JetBrains tools for developing your open source project!](https://www.jetbrains.com/community/opensource/#support) .<br>
+- 感谢`staticfile`CDN提供稳定、快速、免费的静态文件CDN加速服务(在线版本)
 
 | 访问地址                   | http://localhost:1234/generator                               |
 |:-----------------------|:--------------------------------------------------------------|
@@ -77,7 +76,7 @@
 # Update Logs
 | 更新日期       | 更新内容                                                                                                                                                                                                                                                              |
 |:-----------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 2025.09.13 | 修复CDN问题，切换为staticfile.org                                                                                                                                                                                                                                                       |
+| 2025.09.13 | Create SQL by JSqlParser Engine升级<br>更新SpringBoot等类库版本，修复漏洞<br>修复CDN问题，切换为staticfile.org                                                                                                                                                                          |
 | 2025.03.31 | 优化说明                                                                                                                                                                                                                                                              |
 | 2025.03.16 | NewUI V2前端优化：<br>移除不必要内容，优化Local和CDN静态文件引入。<br><br>修复由于SQL类型大写导致无法转换的问题。（感谢@zzy-design的反馈）<br><br>JPA模板优化（感谢@PenroseYang的反馈）：<br>修复不开启Lombok情况下Set/Get方法生成问题;<br>修复importDdate判断为true后没有引入日期类的问题<br>                                                              |
 | 2024.12.29 | 优化前端加载速度，优化输出代码着色，CDN改字节跳动静态资源公共库。<br>                                                                                                                                                                                                                            |

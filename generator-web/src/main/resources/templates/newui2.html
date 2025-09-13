@@ -100,6 +100,15 @@
                 </div>
                 
                 <div class="card-body">
+                  <el-form-item label="生成引擎">
+                    <el-select v-model="formData.options.dataType">
+                      <el-option label="DDL SQL@自研SQL解析引擎" value="sql"></el-option>
+                      <el-option label="SELECT SQL@JSqlParser引擎" value="select-sql"></el-option>
+                      <el-option label="CREATE SQL@JSqlParser引擎" value="create-sql"></el-option>
+                      <el-option label="JSON(Beta)" value="json"></el-option>
+                      <el-option label="INSERT SQL" value="insert-sql"></el-option>
+                    </el-select>
+                  </el-form-item>
                   <el-form-item label="作者">
                     <el-input v-model="formData.options.authorName"></el-input>
                   </el-form-item>
@@ -114,14 +123,6 @@
                   </el-form-item>
                   <el-form-item label="忽略前缀">
                     <el-input v-model="formData.options.ignorePrefix"></el-input>
-                  </el-form-item>
-                  <el-form-item label="输入类型">
-                    <el-select v-model="formData.options.dataType">
-                      <el-option label="DDL SQL" value="sql"></el-option>
-                      <el-option label="JSON" value="json"></el-option>
-                      <el-option label="INSERT SQL" value="insert-sql"></el-option>
-                      <el-option label="SELECT SQL by SQL Parser" value="select-sql"></el-option>
-                    </el-select>
                   </el-form-item>
                   <el-form-item label="TinyInt转换">
                     <el-select v-model="formData.options.tinyintTransType">

@@ -7,22 +7,28 @@ import com.softdev.system.generator.entity.*;
 import com.softdev.system.generator.util.*;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.parser.CCJSqlParserManager;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.schema.Column;
+import net.sf.jsqlparser.statement.Statement;
+import net.sf.jsqlparser.statement.create.table.ColumnDefinition;
+import net.sf.jsqlparser.statement.create.table.CreateTable;
 import net.sf.jsqlparser.statement.select.PlainSelect;
+import net.sf.jsqlparser.statement.select.Select;
 import net.sf.jsqlparser.statement.select.SelectItem;
+import net.sf.jsqlparser.util.TablesNamesFinder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import static net.sf.jsqlparser.parser.feature.Feature.createTable;
 
 /**
  * GeneratorService
@@ -81,12 +87,31 @@ public class GeneratorServiceImpl implements GeneratorService {
     @Override
     public ClassInfo generateSelectSqlBySQLPraser(ParamInfo paramInfo) throws Exception {
         ClassInfo classInfo = new ClassInfo();
-        PlainSelect select = (PlainSelect) CCJSqlParserUtil.parse(paramInfo.getTableSql());
-        List<SelectItem<?>> columnNameList = select.getSelectItems();
-        log.info("tableName:{}", select.getFromItem().toString());
+        Statement statement = CCJSqlParserUtil.parse(paramInfo.getTableSql());
+        CCJSqlParserManager parserManager = new CCJSqlParserManager();
+        statement = parserManager.parse(new StringReader(paramInfo.getTableSql()));
+        TablesNamesFinder tablesNamesFinder = new TablesNamesFinder(); // 创建表名发现者对象
+        List<String> tableNameList = tablesNamesFinder.getTableList(statement); // 获取到表名列表
+        //一般这里应该只解析到一个表名，除非多个表名，取第一个
+        if (!CollectionUtils.isEmpty(tableNameList)) {
+            String tableName = tableNameList.get(0).trim();
+            classInfo.setTableName(tableName);
+            String className = StringUtilsPlus.upperCaseFirst(StringUtilsPlus.underlineToCamelCase(tableName));
+            if (className.contains("_")) {
+                className = className.replaceAll("_", "");
+            }
+            classInfo.setClassName(className);
+            classInfo.setClassComment(paramInfo.getTableSql());
+        }
+        //解析查询元素
+        Select select = null;
+        select = (Select) CCJSqlParserUtil.parse(paramInfo.getTableSql());
+        PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
+        List<SelectItem<?>> selectItems = plainSelect.getSelectItems();
+
         // field List
         List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
-        columnNameList.forEach(t->{
+        selectItems.forEach(t->{
             FieldInfo fieldInfo = new FieldInfo();
             String fieldName = ((Column)t.getExpression()).getColumnName();
             String aliasName = t.getAlias() != null ? t.getAlias().getName() : ((Column)t.getExpression()).getColumnName();
@@ -119,18 +144,79 @@ public class GeneratorServiceImpl implements GeneratorService {
             fieldList.add(fieldInfo);
         });
         classInfo.setFieldList(fieldList);
-        String tableName = select.getFromItem().toString();
-        classInfo.setTableName(tableName);
-        //如果表名有空格，取空格前的第一个单词作为类名
-        if(tableName.indexOf(" ")>0){
-            classInfo.setClassName(StringUtilsPlus.upperCaseFirst(StringUtilsPlus.underlineToCamelCase(tableName.substring(0,tableName.indexOf(" ")))));
-        }else{
-            classInfo.setClassName(StringUtilsPlus.upperCaseFirst(StringUtilsPlus.underlineToCamelCase(tableName)));
-        }
         log.info("classInfo:{}", JSON.toJSONString(classInfo));
         return classInfo;
     }
+    /**
+     * 根据SQL解析器解析表结构
+     * @author zhengkai.blog.csdn.net
+     * @param paramInfo
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public ClassInfo generateCreateSqlBySQLPraser(ParamInfo paramInfo) throws Exception {
+        ClassInfo classInfo = new ClassInfo();
+        Statement statement = CCJSqlParserUtil.parse(paramInfo.getTableSql());
+        CCJSqlParserManager parserManager = new CCJSqlParserManager();
+        statement = parserManager.parse(new StringReader(paramInfo.getTableSql()));
+        TablesNamesFinder tablesNamesFinder = new TablesNamesFinder(); // 创建表名发现者对象
+        List<String> tableNameList = tablesNamesFinder.getTableList(statement); // 获取到表名列表
+        //一般这里应该只解析到一个表名，除非多个表名，取第一个
+        if (!CollectionUtils.isEmpty(tableNameList)) {
+            String tableName = tableNameList.get(0).trim();
+            classInfo.setTableName(tableName);
+            String className = StringUtilsPlus.upperCaseFirst(StringUtilsPlus.underlineToCamelCase(tableName));
+            if (className.contains("_")) {
+                className = className.replaceAll("_", "");
+            }
+            classInfo.setClassName(className);
+            classInfo.setClassComment(paramInfo.getTableSql());
+        }
+        //解析查询元素
+        Select select = null;
+        select = (Select) CCJSqlParserUtil.parse(paramInfo.getTableSql());
+        PlainSelect plainSelect = (PlainSelect) select.getSelectBody();
+        List<SelectItem<?>> selectItems = plainSelect.getSelectItems();
 
+        // field List
+        List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
+        selectItems.forEach(t->{
+            FieldInfo fieldInfo = new FieldInfo();
+            String fieldName = ((Column)t.getExpression()).getColumnName();
+            String aliasName = t.getAlias() != null ? t.getAlias().getName() : ((Column)t.getExpression()).getColumnName();
+            //存储原始字段名
+            fieldInfo.setFieldComment(aliasName);fieldInfo.setColumnName(aliasName);
+            //处理字段名是t.xxx的情况
+            fieldName=fieldName.contains(".")?fieldName.substring(fieldName.indexOf(".")+1):fieldName;
+            //转换前
+            fieldInfo.setColumnName(fieldName);
+            switch ((String) paramInfo.getOptions().get("nameCaseType")) {
+                case ParamInfo.NAME_CASE_TYPE.CAMEL_CASE:
+                    // 2024-1-27 L&J 适配任意(maybe)原始风格转小写驼峰
+                    fieldName = StringUtilsPlus.toLowerCamel(aliasName);
+                    break;
+                case ParamInfo.NAME_CASE_TYPE.UNDER_SCORE_CASE:
+                    fieldName = StringUtilsPlus.toUnderline(aliasName, false);
+                    break;
+                case ParamInfo.NAME_CASE_TYPE.UPPER_UNDER_SCORE_CASE:
+                    fieldName = StringUtilsPlus.toUnderline(aliasName.toUpperCase(), true);
+                    break;
+                default:
+                    fieldName = aliasName;
+                    break;
+            }
+            //转换后
+            fieldInfo.setFieldName(fieldName);
+
+            //无法推测类型，所有都set为String
+            fieldInfo.setFieldClass("String");
+            fieldList.add(fieldInfo);
+        });
+        classInfo.setFieldList(fieldList);
+        log.info("classInfo:{}", JSON.toJSONString(classInfo));
+        return classInfo;
+    }
     /**
      * 解析DDL SQL生成类信息(默认模式|核心模式)
      *

@@ -32,16 +32,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/statics/**").addResourceLocations("classpath:/statics/");
     }
-    @Bean
-    public FilterRegistrationBean xssFilterRegistration() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setDispatcherTypes(DispatcherType.REQUEST);
-        registration.setFilter(new XssFilter());
-        registration.addUrlPatterns("/*");
-        registration.setName("xssFilter");
-        registration.setOrder(Integer.MAX_VALUE);
-        return registration;
-    }
+//    @Bean
+//    public FilterRegistrationBean xssFilterRegistration() {
+//        FilterRegistrationBean registration = new FilterRegistrationBean();
+//        registration.setDispatcherTypes(DispatcherType.REQUEST);
+//        registration.setFilter(new XssFilter());
+//        registration.addUrlPatterns("/*");
+//        registration.setName("xssFilter");
+//        registration.setOrder(Integer.MAX_VALUE);
+//        return registration;
+//    }
 
     // @Override
     // public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -74,8 +74,20 @@ public class WebMvcConfig implements WebMvcConfigurer {
         //自定义配置...
         FastJsonConfig config = new FastJsonConfig();
         config.setDateFormat("yyyy-MM-dd HH:mm:ss");
-        config.setReaderFeatures(JSONReader.Feature.FieldBased, JSONReader.Feature.SupportArrayToBean);
-        config.setWriterFeatures(JSONWriter.Feature.WriteMapNullValue, JSONWriter.Feature.PrettyFormat);
+
+        // 添加更多解析特性以提高容错性
+        config.setReaderFeatures(
+                JSONReader.Feature.FieldBased,
+                JSONReader.Feature.SupportArrayToBean,
+//                JSONReader.Feature.IgnoreNoneFieldGetter,
+                JSONReader.Feature.InitStringFieldAsEmpty
+        );
+
+        config.setWriterFeatures(
+                JSONWriter.Feature.WriteMapNullValue,
+                JSONWriter.Feature.PrettyFormat
+        );
+
         converter.setFastJsonConfig(config);
         converter.setDefaultCharset(StandardCharsets.UTF_8);
         converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
