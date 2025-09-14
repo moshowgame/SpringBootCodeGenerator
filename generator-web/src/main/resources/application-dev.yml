@@ -50,12 +50,12 @@ OEM:
   version: 2025 September
   header: SQL转Java JPA、MYBATIS实现类代码生成平台
   keywords: sql转实体类,sql转DAO,SQL转service,SQL转JPA实现,SQL转MYBATIS实现
-  title: JAVA代码生成平台
-  slogan: Free your hands from tedious and repetitive CRUD work
-  description: <p>SpringBootCodeGenerator，又名`大狼狗代码生成器`、`SQL转JAVA`、`SQL转JPA`、`SQL转Mybatis`、`Mybatis在线生成器`、`SQL转Java JPA、MYBATIS实现类代码生成平台`。</p><p>——从繁琐重复的`CRUD工作`中释放你的双手，可通过DDL SQL语句或Select SQL语句或简单Json -> 生成JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL/CommonMapper等相关模板代码。</p>
+  title: 大狼狗代码生成器
+  slogan: 👐 Free your hands from boring CRUD—let the code write itself! ⚡
+  description: <p>💻 SpringBootCodeGenerator，又名 `大狼狗代码生成器`🐺🐶，支持 SQL 一键转 JAVA/JPA/Mybatis/MybatisPlus 等多种模板，轻松搞定 CRUD，彻底解放双手 ✋！只需提供 DDL、SELECT SQL 或简单 JSON 👉 即可生成 生成JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL/CommonMapper 等代码模板。</p><p>🔥🔥🔥 全新 JSqlParser 引擎上线，强力支持 DDL CREATE SQL与 SELECT SQL 解析！欢迎体验 & 反馈 💬！</p><p>👨‍💻 面向开发者的高效利器，已服务数万工程师，欢迎 Star ⭐、Fork 🍴、提 Issue 💬，一起打造更强大的代码生成平台！</p>
   author: zhengkai.blog.csdn.net
   packageName: com.software.system
-  copyright: Powered by <a href="https://zhengkai.blog.csdn.net" target="_blank">Moshow郑锴</a>  , Might the holy light be with you !
+  copyright: ✨ Powered by <a href="https://zhengkai.blog.csdn.net" target="_blank">Moshow郑锴</a> — may the holy light guide your code, your coffee, and your commits! ⚡🧙‍♂️💻
   returnUtilSuccess: ResponseUtil.success
   returnUtilFailure: ResponseUtil.error
   outputStr: http://zhengkai.blog.csdn.net

@@ -10,28 +10,29 @@
 >powered by `Moshow郑锴(大狼狗)` , [https://zhengkai.blog.csdn.net](https://zhengkai.blog.csdn.net)
 
 # Description
->The `Spring Boot Code Generator` , Based on SpringBoot3 and Freemarker<br>
->          #基于`SpringBoot3`和`Freemarker`的代码生成平台
-> 
->Free your hands from tedious and repetitive CRUD work.<br>
->          #解放你的双手，摆脱繁琐重复的CRUD工作。
->
->Support mysql+oracle+pgsql , the most popular databases standard SQL<br>
->          #支持`MySQL`、Oracle、PgSQL三大主流数据库
->
->Generate various templates through table creation DDL statements, Insert SQL statements, Select SQL statements(*New), and simple JSON.<br>
->   通过建表DDL语句、插入SQL语句、选择SQL语句（*新）以及简单JSON生成各种模板`JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL/CommonMapper`.
->
->Thank you all for your use and feedback. The daily PV visits of 1.5k in BeJSON and 2K Stars on GitHub are the greatest encouragement and motivation. <br>
->   感谢大家的使用与反馈，BeJSON上每天1.5K的PV访问量👀和 Github上2K的✨Stars是最大的鼓励与动力。
-> 
->May everyone maintain a work-life balance, stay healthy and safe. Wishing you all success in your work and continuous advancements!.  <br>
->   愿大家可以维持生活和工作平衡，保持健康和安全，祝大家工作顺利，步步高升！
-> 
->Welcome to submit your issue and useful templates , or put your good idea into PR <br>
->   欢迎提交你的问题和常用有用模板，或者提交你的好主意到PR。
+> 🚀 `Spring Boot Code Generator` — a powerful code generation platform built on SpringBoot3 & Freemarker  
+> ✨ 基于 `SpringBoot3` 和 `Freemarker` 的高效代码生成平台
 
-> 特别感谢BeJSON前站长`三叔`的慧眼和支持，让该项目得以脱颖而出，谢谢!
+> 👐 Say goodbye to repetitive CRUD work — free your hands and boost productivity  
+> 💡 告别繁琐重复的 CRUD 操作，释放你的双手，让开发更高效！
+
+> 🛠️ Supports MySQL, Oracle, and PostgreSQL — the most popular SQL dialects  
+> 📦 支持主流数据库：`MySQL`、`Oracle`、`PgSQL`，标准 SQL 一网打尽
+
+> ⚙️ Generate templates from DDL, INSERT SQL, SELECT SQL, or simple JSON — covering JPA, JdbcTemplate, Mybatis, MybatisPlus, BeetlSQL, CommonMapper  
+> 🧩 通过建表 DDL、插入 SQL、选择 SQL 或简单 JSON，一键生成 `JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL/CommonMapper` 等模板代码
+
+> 🙏 Thanks for your continued support! BeJSON once peaked at 1.5K daily PV 👀, and now maintains a steady flow of around 600 visits — plus 2K+ GitHub Stars ✨. Your feedback remains our greatest motivation to keep improving!
+> ❤️ 感谢大家一直以来的支持！BeJSON 曾创下日均访问量 1.5K 👀 的高峰，目前稳定在约 600 左右，GitHub Star 数也已突破 2K ✨。你们的反馈始终是我们不断前进的最大动力！
+
+> 🌈 Wishing everyone balance, health, and success — may your code be bug-free and your coffee strong ☕  
+> 💬 祝大家工作顺利，生活平衡，身体健康，步步高升，代码无 bug，咖啡够劲！
+
+> 📬 Feel free to submit issues, share useful templates, or contribute your brilliant ideas via PR  
+> 🤝 欢迎提交问题、分享常用模板，或将你的灵感通过 PR 实现！
+
+> 🙌 Special thanks to BeJSON 前站长 `三叔` 的慧眼与支持，让项目得以脱颖而出，感恩！
+
 
 # URL
 
@@ -67,7 +68,6 @@
 - Master：主力分支，基于SpringBoot3+，需要JDK17+
 - JDK11：兼容分支，版本落后，基于SpringBoot2+，但支持JDK8/JDK11等旧JDK版本[https://github.com/moshowgame/SpringBootCodeGenerator/tree/jdk11]
 
-
 # 更新预告
 1.计划加入AI来帮忙生成更多样式的模板
 2.改进JSqlParser Engine (Select SQL and Create SQL)
@@ -75,6 +75,7 @@
 # Update Logs
 | 更新日期       | 更新内容                                                                                                                                                                                                                                                              |
 |:-----------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 2025.09.14 | 优化JSqlParser Engine(DDL Create SQL和Select SQL),适配更高级复杂的SQL                                                                                                                                                                                                        |
 | 2025.09.13 | JSqlParser Engine全新升级，目前Select SQL模式相对稳定! <br>更新SpringBoot等类库版本，修复漏洞<br>修复CDN问题，切换为staticfile.org                                                                                                                                                                 |
 | 2025.03.31 | 优化说明                                                                                                                                                                                                                                                              |
 | 2025.03.16 | NewUI V2前端优化：<br>移除不必要内容，优化Local和CDN静态文件引入。<br><br>修复由于SQL类型大写导致无法转换的问题。（感谢@zzy-design的反馈）<br><br>JPA模板优化（感谢@PenroseYang的反馈）：<br>修复不开启Lombok情况下Set/Get方法生成问题;<br>修复importDdate判断为true后没有引入日期类的问题<br>                                                              |

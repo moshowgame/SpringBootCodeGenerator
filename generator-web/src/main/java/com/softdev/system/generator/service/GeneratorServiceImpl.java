@@ -87,9 +87,14 @@ public class GeneratorServiceImpl implements GeneratorService {
     @Override
     public ClassInfo generateSelectSqlBySQLPraser(ParamInfo paramInfo) throws Exception {
         ClassInfo classInfo = new ClassInfo();
-        Statement statement = CCJSqlParserUtil.parse(paramInfo.getTableSql());
+        String processedSql = paramInfo.getTableSql().trim()
+                .replaceAll("'", "`")          // 将单引号替换为反引号
+                .replaceAll("\"", "`")         // 将双引号替换为反引号
+                .replaceAll("，", ",");        // 将中文逗号替换为英文逗号
+
+        Statement statement = null;
         CCJSqlParserManager parserManager = new CCJSqlParserManager();
-        statement = parserManager.parse(new StringReader(paramInfo.getTableSql()));
+        statement = parserManager.parse(new StringReader(processedSql));
         TablesNamesFinder tablesNamesFinder = new TablesNamesFinder(); // 创建表名发现者对象
         List<String> tableNameList = tablesNamesFinder.getTableList(statement); // 获取到表名列表
         //一般这里应该只解析到一个表名，除非多个表名，取第一个
@@ -97,7 +102,7 @@ public class GeneratorServiceImpl implements GeneratorService {
             String tableName = tableNameList.get(0).trim();
             classInfo.setTableName(tableName);
             classInfo.setOriginTableName(tableName);
-            String className = StringUtilsPlus.upperCaseFirst(StringUtilsPlus.underlineToCamelCase(tableName));
+            String className = StringUtilsPlus.upperCaseFirst(StringUtilsPlus.underlineToCamelCase(tableName)).replaceAll("`", "");
             if (className.contains("_")) {
                 className = className.replaceAll("_", "");
             }
@@ -114,7 +119,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
         selectItems.forEach(t->{
             FieldInfo fieldInfo = new FieldInfo();
-            String fieldName = ((Column)t.getExpression()).getColumnName();
+            String fieldName = ((Column)t.getExpression()).getColumnName().replaceAll("`", "");
             String aliasName = t.getAlias() != null ? t.getAlias().getName() : ((Column)t.getExpression()).getColumnName();
             //存储原始字段名
             fieldInfo.setFieldComment(aliasName);fieldInfo.setColumnName(aliasName);
@@ -153,8 +158,14 @@ public class GeneratorServiceImpl implements GeneratorService {
     public ClassInfo generateCreateSqlBySQLPraser(ParamInfo paramInfo) throws Exception {
         ClassInfo classInfo = new ClassInfo();
         Statement statement = null;
+        // 对SQL进行预处理，以提高解析成功率
+        String processedSql = paramInfo.getTableSql().trim()
+                .replaceAll("'", "`")          // 将单引号替换为反引号
+                .replaceAll("\"", "`")         // 将双引号替换为反引号
+                .replaceAll("，", ",");        // 将中文逗号替换为英文逗号
+
         try {
-            statement = CCJSqlParserUtil.parse(paramInfo.getTableSql().trim());
+            statement = CCJSqlParserUtil.parse(processedSql);
         }catch (Exception e) {
             e.printStackTrace();
             throw new SqlException("SQL语法错误:"+e.getMessage());
@@ -166,7 +177,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         }
 
         // 提取表名
-        String tableName = createTable.getTable().getName();
+        String tableName = createTable.getTable().getName().replaceAll("`", "");
         classInfo.setTableName(tableName);
         String className = StringUtilsPlus.upperCaseFirst(StringUtilsPlus.underlineToCamelCase(tableName));
         if (className.contains("_")) {
@@ -183,7 +194,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         if (columnDefinitions != null) {
             for (ColumnDefinition columnDefinition : columnDefinitions) {
                 FieldInfo fieldInfo = new FieldInfo();
-                String columnName = columnDefinition.getColumnName();
+                String columnName = columnDefinition.getColumnName().replaceAll("`", "");
                 fieldInfo.setColumnName(columnName);
                 fieldInfo.setFieldComment(columnDefinition.toString());
                 
