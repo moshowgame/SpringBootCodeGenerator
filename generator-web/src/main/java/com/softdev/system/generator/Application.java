@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author zhengkai.blog.csdn.net
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.softdev.system.generator")
 public class Application {
 
     public static void main(String[] args) {

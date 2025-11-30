@@ -130,12 +130,13 @@ const vm = new Vue({
 				}
 				setAllCookie();
 				//console.log(res.outputJson);
+				vm.outputJson = res.data.data;
 				//兼容后端返回数据格式
-				if(res.data){
-					vm.outputJson = res.data.outputJson;
-				}else {
-					vm.outputJson = res.outputJson;
-				}
+//				if(res.data){
+//					vm.outputJson = res.data.outputJson;
+//				}else {
+//					vm.outputJson = res.outputJson;
+//				}
 
 				// console.log(vm.outputJson["bootstrap-ui"]);
 				vm.outputStr=vm.outputJson[vm.currentSelect].trim();
@@ -159,13 +160,15 @@ const vm = new Vue({
 		}).then(function(res){
 			//console.log(res.templates);
 			// vm.templates = JSON.parse(res.templates);
-			// console.log(res);
+			console.log('origin res',res);
+			vm.templates = res.data.data
+			console.log('templates',vm.templates);
 			//兼容后端返回数据格式
-			if(res.data){
-				vm.templates = res.data.templates;
-			}else {
-				vm.templates = res.templates;
-			}
+//			if(res.data){
+//				vm.templates = res.data.templates;
+//			}else {
+//				vm.templates = res.templates;
+//			}
 		});
 	},
 	updated: function () {

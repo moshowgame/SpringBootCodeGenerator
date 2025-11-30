@@ -1,11 +1,14 @@
-package com.softdev.system.generator.service;
+package com.softdev.system.generator.service.impl.parser;
 
 import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONArray;
-import com.alibaba.fastjson2.JSONObject;
-import com.softdev.system.generator.entity.*;
-import com.softdev.system.generator.util.*;
-import freemarker.template.TemplateException;
+import com.softdev.system.generator.entity.dto.ClassInfo;
+import com.softdev.system.generator.entity.dto.FieldInfo;
+import com.softdev.system.generator.entity.dto.ParamInfo;
+import com.softdev.system.generator.service.parser.SqlParserService;
+import com.softdev.system.generator.util.MapUtil;
+import com.softdev.system.generator.util.StringUtilsPlus;
+import com.softdev.system.generator.util.exception.SqlParseException;
+import com.softdev.system.generator.util.mysqlJavaTypeUtil;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.parser.CCJSqlParserManager;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
@@ -21,69 +24,23 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.io.*;
-import java.util.*;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static net.sf.jsqlparser.parser.feature.Feature.createTable;
-
 /**
- * GeneratorService
+ * SQL解析服务实现类
  *
  * @author zhengkai.blog.csdn.net
  */
 @Slf4j
 @Service
-public class GeneratorServiceImpl implements GeneratorService {
+public class SqlParserServiceImpl implements SqlParserService {
 
-    String templateCpnfig = null;
-
-    /**
-     * 从项目中的JSON文件读取String
-     *
-     * @author zhengkai.blog.csdn.net
-     */
-    @Override
-    public String getTemplateConfig() throws IOException {
-        templateCpnfig = null;
-        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("template.json");
-        templateCpnfig = new BufferedReader(new InputStreamReader(inputStream))
-                .lines().collect(Collectors.joining(System.lineSeparator()));
-        inputStream.close();
-        //log.info(JSON.toJSONString(templateCpnfig));
-        return templateCpnfig;
-    }
-
-    /**
-     * 根据配置的Template模板进行遍历解析，得到生成好的String
-     *
-     * @author zhengkai.blog.csdn.net
-     */
-    @Override
-    public Map<String, String> getResultByParams(Map<String, Object> params) throws IOException, TemplateException {
-        Map<String, String> result = new HashMap<>(32);
-        result.put("tableName", MapUtil.getString(params,"tableName"));
-        JSONArray parentTemplates = JSONArray.parseArray(getTemplateConfig());
-        for (int i = 0; i <parentTemplates.size() ; i++) {
-            JSONObject parentTemplateObj = parentTemplates.getJSONObject(i);
-            for (int x = 0; x <parentTemplateObj.getJSONArray("templates").size() ; x++) {
-                JSONObject childTemplate = parentTemplateObj.getJSONArray("templates").getJSONObject(x);
-                result.put(childTemplate.getString("name"), FreemarkerUtil.processString(parentTemplateObj.getString("group") + "/" +childTemplate.getString("name")+ ".ftl", params));
-            }
-        }
-        return result;
-    }
-
-    /**
-     * 根据SQL解析器解析表结构
-     * @author zhengkai.blog.csdn.net
-     * @param paramInfo
-     * @return
-     * @throws Exception
-     */
     @Override
     public ClassInfo generateSelectSqlBySQLPraser(ParamInfo paramInfo) throws Exception {
         ClassInfo classInfo = new ClassInfo();
@@ -128,11 +85,11 @@ public class GeneratorServiceImpl implements GeneratorService {
             //转换前
             fieldInfo.setColumnName(fieldName);
             fieldName = switch ((String) paramInfo.getOptions().get("nameCaseType")) {
-                case ParamInfo.NAME_CASE_TYPE.CAMEL_CASE ->
+                case ParamInfo.NameCaseType.CAMEL_CASE ->
                     // 2024-1-27 L&J 适配任意(maybe)原始风格转小写驼峰
                         StringUtilsPlus.toLowerCamel(aliasName);
-                case ParamInfo.NAME_CASE_TYPE.UNDER_SCORE_CASE -> StringUtilsPlus.toUnderline(aliasName, false);
-                case ParamInfo.NAME_CASE_TYPE.UPPER_UNDER_SCORE_CASE ->
+                case ParamInfo.NameCaseType.UNDER_SCORE_CASE -> StringUtilsPlus.toUnderline(aliasName, false);
+                case ParamInfo.NameCaseType.UPPER_UNDER_SCORE_CASE ->
                         StringUtilsPlus.toUnderline(aliasName.toUpperCase(), true);
                 default -> aliasName;
             };
@@ -147,13 +104,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         log.info("classInfo:{}", JSON.toJSONString(classInfo));
         return classInfo;
     }
-    /**
-     * 根据SQL解析器解析表结构
-     * @author zhengkai.blog.csdn.net
-     * @param paramInfo
-     * @return
-     * @throws Exception
-     */
+
     @Override
     public ClassInfo generateCreateSqlBySQLPraser(ParamInfo paramInfo) throws Exception {
         ClassInfo classInfo = new ClassInfo();
@@ -168,12 +119,12 @@ public class GeneratorServiceImpl implements GeneratorService {
             statement = CCJSqlParserUtil.parse(processedSql);
         }catch (Exception e) {
             e.printStackTrace();
-            throw new SqlException("SQL语法错误:"+e.getMessage());
+            throw new SqlParseException("SQL语法错误:"+e.getMessage());
         }
 
         // 确保是CREATE TABLE语句
         if (!(statement instanceof CreateTable createTable)) {
-            throw new SqlException("检测到SQL语句不是DLL CREATE TABLE语句");
+            throw new SqlParseException("检测到SQL语句不是DLL CREATE TABLE语句");
         }
 
         // 提取表名
@@ -200,9 +151,9 @@ public class GeneratorServiceImpl implements GeneratorService {
                 
                 // 根据命名规则转换字段名
                 String fieldName = switch ((String) paramInfo.getOptions().get("nameCaseType")) {
-                    case ParamInfo.NAME_CASE_TYPE.CAMEL_CASE -> StringUtilsPlus.toLowerCamel(columnName);
-                    case ParamInfo.NAME_CASE_TYPE.UNDER_SCORE_CASE -> StringUtilsPlus.toUnderline(columnName, false);
-                    case ParamInfo.NAME_CASE_TYPE.UPPER_UNDER_SCORE_CASE ->
+                    case ParamInfo.NameCaseType.CAMEL_CASE -> StringUtilsPlus.toLowerCamel(columnName);
+                    case ParamInfo.NameCaseType.UNDER_SCORE_CASE -> StringUtilsPlus.toUnderline(columnName, false);
+                    case ParamInfo.NameCaseType.UPPER_UNDER_SCORE_CASE ->
                             StringUtilsPlus.toUnderline(columnName.toUpperCase(), true);
                     default -> columnName;
                 };
@@ -218,23 +169,17 @@ public class GeneratorServiceImpl implements GeneratorService {
         log.info("classInfo:{}", JSON.toJSONString(classInfo));
         return classInfo;
     }
-    /**
-     * 解析DDL SQL生成类信息(默认模式|核心模式)
-     *
-     * @param paramInfo
-     * @return
-     */
+
     @Override
-    public ClassInfo processTableIntoClassInfo(ParamInfo paramInfo)
-            throws IOException {
+    public ClassInfo processTableIntoClassInfo(ParamInfo paramInfo) throws Exception {
         //process the param
-        NonCaseString tableSql = NonCaseString.of(paramInfo.getTableSql());
+        String tableSql = paramInfo.getTableSql();
         String nameCaseType = MapUtil.getString(paramInfo.getOptions(),"nameCaseType");
-        Boolean isPackageType = MapUtil.getBoolean(paramInfo.getOptions(),"isPackageType");
+        String isPackageType = MapUtil.getString(paramInfo.getOptions(),"isPackageType");
 
         //更新空值处理
         if (StringUtils.isBlank(tableSql)) {
-            throw new CodeGenerateException("Table structure can not be empty. 表结构不能为空。");
+            throw new Exception("Table structure can not be empty. 表结构不能为空。");
         }
         //deal with special character
         tableSql = tableSql.trim()
@@ -250,9 +195,9 @@ public class GeneratorServiceImpl implements GeneratorService {
         String tableName = null;
         int tableKwIx = tableSql.indexOf("TABLE"); // 包含判断和位置一次搞定
         if (tableKwIx > -1 && tableSql.contains("(")) {
-            tableName = tableSql.substring(tableKwIx + 5, tableSql.indexOf("(")).get();
+            tableName = tableSql.substring(tableKwIx + 5, tableSql.indexOf("("));
         } else {
-            throw new CodeGenerateException("Table structure incorrect.表结构不正确。");
+            throw new Exception("Table structure incorrect.表结构不正确。");
         }
 
         //新增处理create table if not exists members情况
@@ -288,11 +233,11 @@ public class GeneratorServiceImpl implements GeneratorService {
         String classComment = null;
         //mysql是comment=,pgsql/oracle是comment on table,
         //2020-05-25 优化表备注的获取逻辑
-        if (tableSql.containsAny("comment=", "comment on table")) {
+        if (tableSql.contains("comment=") || tableSql.contains("comment on table")) {
             int ix = tableSql.lastIndexOf("comment=");
             String classCommentTmp = (ix > -1) ?
-                    tableSql.substring(ix + 8).trim().get() :
-                    tableSql.substring(tableSql.lastIndexOf("comment on table") + 17).trim().get();
+                    tableSql.substring(ix + 8).trim() :
+                    tableSql.substring(tableSql.lastIndexOf("comment on table") + 17).trim();
             if (classCommentTmp.contains("`")) {
                 classCommentTmp = classCommentTmp.substring(classCommentTmp.indexOf("`") + 1);
                 classCommentTmp = classCommentTmp.substring(0, classCommentTmp.indexOf("`"));
@@ -311,7 +256,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
 
         // 正常( ) 内的一定是字段相关的定义。
-        String fieldListTmp = tableSql.substring(tableSql.indexOf("(") + 1, tableSql.lastIndexOf(")")).get();
+        String fieldListTmp = tableSql.substring(tableSql.indexOf("(") + 1, tableSql.lastIndexOf(")"));
 
         // 匹配 comment，替换备注里的小逗号, 防止不小心被当成切割符号切割
         String commentPattenStr1 = "comment `(.*?)\\`";
@@ -352,17 +297,27 @@ public class GeneratorServiceImpl implements GeneratorService {
             int i = 0;
             //i为了解决primary key关键字出现的地方，出现在前3行，一般和id有关
             for (String columnLine0 : fieldLineList) {
-                NonCaseString columnLine = NonCaseString.of(columnLine0);
                 i++;
-                columnLine = columnLine.replaceAll("\n", "").replaceAll("\t", "").trim();
+                String columnLine = columnLine0.replaceAll("\n", "").replaceAll("\t", "").trim();
                 // `userid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
                 // 2018-9-18 zhengk 修改为contains，提升匹配率和匹配不按照规矩出牌的语句
                 // 2018-11-8 zhengkai 修复tornadoorz反馈的KEY FK_permission_id (permission_id),KEY FK_role_id (role_id)情况
                 // 2019-2-22 zhengkai 要在条件中使用复杂的表达式
                 // 2019-4-29 zhengkai 优化对普通和特殊storage关键字的判断（感谢@AhHeadFloating的反馈 ）
                 // 2020-10-20 zhengkai 优化对fulltext/index关键字的处理（感谢@WEGFan的反馈）
-                // 2023-8-27 L&J 改用工具方法判断, 且修改变量名(非特殊标识), 方法抽取
-                boolean notSpecialFlag = isNotSpecialColumnLine(columnLine, i);
+                boolean notSpecialFlag = (
+                        !columnLine.contains("key ")
+                                && !columnLine.contains("constraint")
+                                && !columnLine.contains(" using ")
+                                && !columnLine.contains("unique ")
+                                && !columnLine.contains("fulltext ")
+                                && !columnLine.contains("index ")
+                                && !columnLine.contains("pctincrease")
+                                && !columnLine.contains("buffer_pool")
+                                && !columnLine.contains("tablespace")
+                                && !(columnLine.contains("primary ") && columnLine.indexOf("storage") + 3 > columnLine.indexOf("("))
+                                && !(columnLine.contains("primary ") && i > 3)
+                );
 
                 if (notSpecialFlag) {
                     //如果是oracle的number(x,x)，可能出现最后分割残留的,x)，这里做排除处理
@@ -374,7 +329,7 @@ public class GeneratorServiceImpl implements GeneratorService {
                     columnLine = columnLine.replaceAll("`", " ").replaceAll("\"", " ").replaceAll("'", "").replaceAll("  ", " ").trim();
                     //如果遇到username varchar(65) default '' not null,这种情况，判断第一个空格是否比第一个引号前
                     try {
-                        columnName = columnLine.substring(0, columnLine.indexOf(" ")).get();
+                        columnName = columnLine.substring(0, columnLine.indexOf(" "));
                     } catch (StringIndexOutOfBoundsException e) {
                         System.out.println("err happened: " + columnLine);
                         throw e;
@@ -384,19 +339,19 @@ public class GeneratorServiceImpl implements GeneratorService {
                     // 2019-09-08 yj 添加是否下划线转换为驼峰的判断
                     // 2023-8-27 L&J 支持原始列名任意命名风格, 不依赖用户是否输入下划线
                     String fieldName = null;
-                    if (ParamInfo.NAME_CASE_TYPE.CAMEL_CASE.equals(nameCaseType)) {
+                    if (ParamInfo.NameCaseType.CAMEL_CASE.equals(nameCaseType)) {
                         // 2024-1-27 L&J 适配任意(maybe)原始风格转小写驼峰
                         fieldName = StringUtilsPlus.toLowerCamel(columnName);
-                    } else if (ParamInfo.NAME_CASE_TYPE.UNDER_SCORE_CASE.equals(nameCaseType)) {
+                    } else if (ParamInfo.NameCaseType.UNDER_SCORE_CASE.equals(nameCaseType)) {
                         fieldName = StringUtilsPlus.toUnderline(columnName, false);
-                    } else if (ParamInfo.NAME_CASE_TYPE.UPPER_UNDER_SCORE_CASE.equals(nameCaseType)) {
+                    } else if (ParamInfo.NameCaseType.UPPER_UNDER_SCORE_CASE.equals(nameCaseType)) {
                         fieldName = StringUtilsPlus.toUnderline(columnName.toUpperCase(), true);
                     } else {
                         fieldName = columnName;
                     }
                     columnLine = columnLine.substring(columnLine.indexOf("`") + 1).trim();
                     //2025-03-16 修复由于类型大写导致无法转换的问题
-                    String mysqlType = columnLine.split("\\s+")[1].toLowerCase(Locale.ROOT);
+                    String mysqlType = columnLine.split("\\s+")[1].toLowerCase();
                     if(mysqlType.contains("(")){
                         mysqlType = mysqlType.substring(0, mysqlType.indexOf("("));
                     }
@@ -428,12 +383,12 @@ public class GeneratorServiceImpl implements GeneratorService {
                         while (columnCommentMatcher.find()) {
                             String columnCommentTmp = columnCommentMatcher.group();
                             //System.out.println(columnCommentTmp);
-                            fieldComment = tableSql.substring(tableSql.indexOf(columnCommentTmp) + columnCommentTmp.length()).trim().get();
+                            fieldComment = tableSql.substring(tableSql.indexOf(columnCommentTmp) + columnCommentTmp.length()).trim();
                             fieldComment = fieldComment.substring(0, fieldComment.indexOf("`")).trim();
                         }
                     } else if (columnLine.contains(" comment")) {
                         //20200518 zhengkai 修复包含comment关键字的问题
-                        String commentTmp = columnLine.substring(columnLine.lastIndexOf("comment") + 7).trim().get();
+                        String commentTmp = columnLine.substring(columnLine.lastIndexOf("comment") + 7).trim();
                         // '用户ID',
                         if (commentTmp.contains("`") || commentTmp.indexOf("`") != commentTmp.lastIndexOf("`")) {
                             commentTmp = commentTmp.substring(commentTmp.indexOf("`") + 1, commentTmp.lastIndexOf("`"));
@@ -462,7 +417,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         }
 
         if (fieldList.size() < 1) {
-            throw new CodeGenerateException("表结构分析失败，请检查语句或者提交issue给我");
+            throw new Exception("表结构分析失败，请检查语句或者提交issue给我");
         }
 
         ClassInfo codeJavaInfo = new ClassInfo();
@@ -475,63 +430,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         return codeJavaInfo;
     }
 
-    private static boolean isNotSpecialColumnLine(NonCaseString columnLine, int lineSeq) {
-        return (
-                !columnLine.containsAny(
-                        "key ",
-                        "constraint",
-                        " using ",
-                        "unique ",
-                        "fulltext ",
-                        "index ",
-                        "pctincrease",
-                        "buffer_pool",
-                        "tablespace"
-                )
-                        && !(columnLine.contains("primary ") && columnLine.indexOf("storage") + 3 > columnLine.indexOf("("))
-                        && !(columnLine.contains("primary ") && lineSeq > 3)
-        );
-    }
-
-    /**
-     * 解析JSON生成类信息
-     *
-     * @param paramInfo
-     * @return
-     */
     @Override
-    public ClassInfo processJsonToClassInfo(ParamInfo paramInfo) {
-        ClassInfo codeJavaInfo = new ClassInfo();
-        codeJavaInfo.setTableName("JsonDto");
-        codeJavaInfo.setClassName("JsonDto");
-        codeJavaInfo.setClassComment("JsonDto");
-
-        //support children json if forget to add '{' in front of json
-        if (paramInfo.getTableSql().trim().startsWith("\"")) {
-            paramInfo.setTableSql("{" + paramInfo.getTableSql());
-        }
-        if (JSON.isValid(paramInfo.getTableSql())) {
-            if (paramInfo.getTableSql().trim().startsWith("{")) {
-                JSONObject jsonObject = JSONObject.parseObject(paramInfo.getTableSql().trim());
-                //parse FieldList by JSONObject
-                codeJavaInfo.setFieldList(processJsonObjectToFieldList(jsonObject));
-            } else if (paramInfo.getTableSql().trim().startsWith("[")) {
-                JSONArray jsonArray = JSONArray.parseArray(paramInfo.getTableSql().trim());
-                //parse FieldList by JSONObject
-                codeJavaInfo.setFieldList(processJsonObjectToFieldList(jsonArray.getJSONObject(0)));
-            }
-        }
-
-        return codeJavaInfo;
-    }
-
-    /**
-     * parse SQL by regex
-     *
-     * @param paramInfo
-     * @return
-     * @author https://github.com/ydq
-     */
     public ClassInfo processTableToClassInfoByRegex(ParamInfo paramInfo) {
         // field List
         List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
@@ -548,7 +447,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 
         Pattern COL_PATTERN = Pattern.compile(COL_PATTERN_STR, Pattern.CASE_INSENSITIVE);
 
-        Matcher matcher = DDL_PATTERN.matcher(paramInfo.getTableSql().trim());
+        Matcher matcher = Pattern.compile(DDL_PATTEN_STR).matcher(paramInfo.getTableSql().trim());
         if (matcher.find()) {
             String tableName = matcher.group("tableName");
             String tableComment = matcher.group("tableComment");
@@ -577,42 +476,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         return codeJavaInfo;
     }
 
-    public List<FieldInfo> processJsonObjectToFieldList(JSONObject jsonObject) {
-        // field List
-        List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
-        jsonObject.keySet().stream().forEach(jsonField -> {
-            FieldInfo fieldInfo = new FieldInfo();
-            fieldInfo.setFieldName(jsonField);
-            fieldInfo.setColumnName(jsonField);
-            fieldInfo.setFieldClass(String.class.getSimpleName());
-            fieldInfo.setFieldComment("father:" + jsonField);
-            fieldList.add(fieldInfo);
-            if (jsonObject.get(jsonField) instanceof JSONArray) {
-                jsonObject.getJSONArray(jsonField).stream().forEach(arrayObject -> {
-                    FieldInfo fieldInfo2 = new FieldInfo();
-                    fieldInfo2.setFieldName(arrayObject.toString());
-                    fieldInfo2.setColumnName(arrayObject.toString());
-                    fieldInfo2.setFieldClass(String.class.getSimpleName());
-                    fieldInfo2.setFieldComment("children:" + arrayObject.toString());
-                    fieldList.add(fieldInfo2);
-                });
-            } else if (jsonObject.get(jsonField) instanceof JSONObject) {
-                jsonObject.getJSONObject(jsonField).keySet().stream().forEach(arrayObject -> {
-                    FieldInfo fieldInfo2 = new FieldInfo();
-                    fieldInfo2.setFieldName(arrayObject.toString());
-                    fieldInfo2.setColumnName(arrayObject.toString());
-                    fieldInfo2.setFieldClass(String.class.getSimpleName());
-                    fieldInfo2.setFieldComment("children:" + arrayObject.toString());
-                    fieldList.add(fieldInfo2);
-                });
-            }
-        });
-        if (fieldList.size() < 1) {
-            throw new CodeGenerateException("JSON解析失败");
-        }
-        return fieldList;
-    }
-
+    @Override
     public ClassInfo processInsertSqlToClassInfo(ParamInfo paramInfo) {
         // field List
         List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
@@ -645,12 +509,14 @@ public class GeneratorServiceImpl implements GeneratorService {
 
             List<String> valueList = new ArrayList<>();
             //add values as comment
-            Arrays.stream(valueStr.split(",")).forEach(column -> {
+            String[] values = valueStr.split(",");
+            for (String column : values) {
                 valueList.add(column);
-            });
+            }
             AtomicInteger n = new AtomicInteger(0);
             //add column to fleldList
-            Arrays.stream(columnsSQL.replaceAll(" ", "").split(",")).forEach(column -> {
+            String[] columns = columnsSQL.replaceAll(" ", "").split(",");
+            for (String column : columns) {
                 FieldInfo fieldInfo2 = new FieldInfo();
                 fieldInfo2.setFieldName(column);
                 fieldInfo2.setColumnName(column);
@@ -660,14 +526,13 @@ public class GeneratorServiceImpl implements GeneratorService {
                 }
                 fieldList.add(fieldInfo2);
                 n.getAndIncrement();
-            });
+            }
 
         }
         if (fieldList.size() < 1) {
-            throw new CodeGenerateException("INSERT SQL解析失败");
+            throw new RuntimeException("INSERT SQL解析失败");
         }
         codeJavaInfo.setFieldList(fieldList);
         return codeJavaInfo;
     }
-
 }
