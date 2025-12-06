@@ -189,10 +189,10 @@ com.softdev.system.generator
 
 ```java
 // 成功响应
-ResultVo.ok(data)
+ResultVo.ok(data);
 
 // 错误响应
-ResultVo.error(message)
+ResultVo.error(message);
 ```
 
 ## 重构优势
@@ -236,7 +236,7 @@ ResultVo.error(message)
 # Update Logs
 | 更新日期       | 更新内容                                                                                                                                                                                                                                                              |
 |:-----------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 2025.12.07 | 后端重构优化！[REFACTORING_DOCUMENT.md](REFACTORING_DOCUMENT.md)                                                                                                                                                                                                         |
+| 2025.12.07 | 后端重构优化！[REFACTORING_DOCUMENT.md](REFACTORING_DOCUMENT.md) ;目录结构调整!                                                                                                                                                                                                |
 | 2025.09.14 | 优化JSqlParser Engine(DDL Create SQL和Select SQL),适配更高级复杂的SQL                                                                                                                                                                                                        |
 | 2025.09.13 | JSqlParser Engine全新升级，目前Select SQL模式相对稳定! <br>更新SpringBoot等类库版本，修复漏洞<br>修复CDN问题，切换为staticfile.org                                                                                                                                                                 |
 | 2025.09.06 | 处理建表字段包含 using 字符时无法生成对应字段的情况(感谢@wubiaoo的反馈和@willxiang的PR)                                                                                                                                                                                                        |

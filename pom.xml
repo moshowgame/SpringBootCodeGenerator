@@ -5,18 +5,14 @@
 
 	<groupId>com.softdev.system</groupId>
 	<artifactId>SpringBootCodeGenerator</artifactId>
-	<version>2023</version>
-	<packaging>pom</packaging>
+	<version>2025</version>
+	<packaging>jar</packaging>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.5.8</version>
 	</parent>
-
-	<modules>
-		<module>generator-web</module>
-	</modules>
 
 	<repositories>
 		<repository>
@@ -41,6 +37,16 @@
 			<artifactId>jsqlparser</artifactId>
 			<version>5.3</version>
 		</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
