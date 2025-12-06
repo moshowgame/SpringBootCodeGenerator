@@ -1,4 +1,4 @@
-# SpringBootCodeGenerator
+# SpringBootCodeGenerator 大狼狗代码生成器
 ----
 又名`Java代码生成器`、`JAVA在线代码生成平台`、`sql转java`、`大狼狗代码生成器`、`mybatis在线生成器`、`SQL转Java JPA、MYBATIS实现类代码生成平台`<br>
 ![image](https://img.shields.io/badge/SpringBoot3-%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%85-blue.svg)
@@ -7,9 +7,13 @@
 [![Java CI with Maven](https://github.com/moshowgame/SpringBootCodeGenerator/actions/workflows/maven.yml/badge.svg)](https://github.com/moshowgame/SpringBootCodeGenerator/actions/workflows/maven.yml)
 
 # Author
->powered by `Moshow郑锴(大狼狗)` , [https://zhengkai.blog.csdn.net](https://zhengkai.blog.csdn.net)
+>🚀
+Powered by `Moshow郑锴(大狼狗)` 🌟 Might the holy code be with you !
+> <br>**`CSDN`传送门**️️➡️ [https://zhengkai.blog.csdn.net](https://zhengkai.blog.csdn.net)
+> <br>**微信公众号**➡️`软件开发大百科`
 
 # Description
+本项目是基于 Spring Boot 3 和 Freemarker 的高效代码生成平台，旨在帮助开发者告别繁琐重复的 CRUD 操作，释放双手，让开发更高效。项目支持主流数据库（MySQL、Oracle、PgSQL）和多种模板（JPA、Mybatis、MybatisPlus 等）。
 > 🚀 `Spring Boot Code Generator` — a powerful code generation platform built on SpringBoot3 & Freemarker  
 > ✨ 基于 `SpringBoot3` 和 `Freemarker` 的高效代码生成平台
 
@@ -34,47 +38,205 @@
 > 🙌 Special thanks to BeJSON 前站长 `三叔` 的慧眼与支持，让项目得以脱颖而出，感恩！
 
 
-# URL
 
-- 感谢`卡卡`部署在[BEJSON](https://java.bejson.com/generator)上，目前是BeJSON专供的`金牌工具`<br>
-- 感谢`jully.top`部署的副本 [https://jully.top/generator/](https://jully.top/generator/)。<br>
-- 感谢`staticfile`CDN提供稳定、快速、免费的静态文件CDN加速服务(在线版本)
+## 功能特性
 
-| 访问地址                   | http://localhost:1234/generator                               |
-|:-----------------------|:--------------------------------------------------------------|
-| BEJSON 金牌工具 在线地址       | https://java.bejson.com/generator/                            |
-| JSON.CN 金牌工具 在线地址      | https://java.json.cn/generator/                            |
-| Jully 在线地址             | https://jully.top/generator/                                  |
-| NeverWaive 在线地址        | https://codegenerator.neverwaive.cn/                                  |
-| CSDN BLOG              | https://zhengkai.blog.csdn.net                                |
-| GITEE仓库                | https://gitee.com/moshowgame/SpringBootCodeGenerator/releases |
-| GITHUB仓库               | https://github.com/moshowgame/SpringBootCodeGenerator         |
+### 支持多种生成模式
+- DDL SQL 模式：通过建表语句生成代码
+- INSERT SQL 模式：通过插入语句生成代码
+- SELECT SQL 模式：通过查询语句生成代码
+- JSON 模式：通过 JSON 数据生成代码
 
-# Tips or Features
-- 支持`DDL SQL`/`INSERT SQL`/`SIMPLE JSON`/`SELECT SQL`(*New)四种生成模式
-- `自动记忆`最近生成的内容，最多保留9个
-- 提供众多`通用模板`，易于使用，复制粘贴加简单修改即可完成CRUD操作
-- 支持`特殊字符`模板(`#`请用`井`代替;`$`请用`￥`代替)
-- `Util集合`提供一些基本对象的使用方法供方便COPY，如对应的CRUD SQL语句、setMap、getMap、get属性等等
-- 关于`类名注释`，可根据`comment=(mysql)`或者`comment on table(pgsql/oracle)`生成
-- 可设置是否`自动引包`(java中的import)及`引入包路径`(java类中的package)，建议取消并配合IDEA的自动引包更智能(Settings→Editor→General→Auto Import,勾选Add unambiguous imports on the fly以及Optimize imports on the fly)。
-- 可设置`表名前缀`，例如sys_user前缀为sys_之后可以正确生成user类
-- 可在`applicaltion.yml`中的`OEM.mode`设置`js/css引入模式`为`local`(本地模式，默认)/`CDN`(云CDN模式，在线网站推荐，省流量)
-- OEM信息可以在`applicaltion.yml`中的`OEM`中更改
-- *支持公共js/css的Local/CDN模式切换，方便`本地`或者`工具站`进行部署，可以在`application.yml`的`OEM.Mode=`进行设置，之后请在`header-CDN-v2.html`/`header-local-v2.html`中检查对应js/css配置是否正确。默认为`CDN`模式。对于没有网络的环境请使用`local`模式。
-- 如何判断是否包含Date日期类并引入，搜索`<#assign importDdate = true />`即可找到对应的方法判断和引入
+### 支持多种模板
+- JPA 模板
+- MyBatis 模板
+- MyBatis-Plus 模板
+- BeetlSQL 模板
+- CommonMapper 模板
+- TkMyBatis 模板
+- JDBC Template 模板
+- 前端 UI 模板（Element UI、Bootstrap UI 等）
 
-# Branch Detail 分支介绍
-- Master：主力分支，基于SpringBoot3+，需要JDK17+
-- JDK11：兼容分支，版本落后，基于SpringBoot2+，但支持JDK8/JDK11等旧JDK版本[https://github.com/moshowgame/SpringBootCodeGenerator/tree/jdk11]
+### 其他特性
+- 自动记忆最近生成的内容
+- 支持特殊字符模板（# 用 井 代替，$ 用 ￥ 代替）
+- 可设置表名前缀
+- 可选择是否自动引包
+- 支持本地/CDN 静态资源引入模式切换
 
-# 更新预告
-1.计划加入AI来帮忙生成更多样式的模板
-2.改进JSqlParser Engine (Select SQL and Create SQL)
+## 技术栈
+
+- Spring Boot 3
+- Freemarker 模板引擎
+- FastJSON2
+- JSqlParser SQL 解析器
+- Lombok 简化代码工具
+
+## 使用说明
+
+### 启动项目
+
+```bash
+# 克隆项目
+git clone https://github.com/moshowgame/SpringBootCodeGenerator.git
+
+# 进入项目目录
+cd SpringBootCodeGenerator
+# 编译项目
+mvn clean compile
+# 运行项目
+mvn spring-boot:run
+```
+
+项目启动后访问 http://localhost:1234/generator
+
+### 添加新模板
+
+1. 在 `resources/templates/code-generator` 目录中找到对应类型
+2. 复制并编写 Freemarker 模板文件（.ftl）
+3. 修改 `template.json` 文件，新增模板信息
+
+### 配置说明
+
+| **配置项** | **说明** | **默认值** |
+|:----|:----|:----|
+| 作者 | authorName | zhengkai.blog.csdn.net |
+| 包名 | packageName | cn.devtools |
+| 返回(成功) | returnUtilSuccess | Return.SUCCESS |
+| 返回(失败) | returnUtilFailure | Return.ERROR |
+| 忽略前缀 | ignorePrefix | sys_ |
+| 输入类型 | dataType | DDL SQL |
+| TinyInt转换 | tinyintTransType | int |
+| 时间类型 | timeTransType | Date |
+| 命名类型 | nameCaseType | CamelCase/驼峰 |
+| 是否包装类型 | isPackageType | true |
+| 是否swaggerUI | isSwagger | false |
+| 是否字段注释 | isComment | true |
+| 是否自动引包 | isAutoImport |  |
+| 是否带包路径 | isWithPackage |  |
+| 是否Lombok | isLombok | true |
+
+| **模板变量**         | **说明**             | 
+|:-------------|:---------------|
+| tableName    | sql中的表名        |
+| className    | java类名         |
+| classComment | sql表备注/java类备注 |
+| fieldName    | 字段名            |
+| fieldComment | 字段备注           |
+
+
+
+## 重构2025说明
+
+本项目的重构2025在原有基础上进行了现代化重构，优化了项目结构和代码组织，使其更符合现代 Spring Boot 应用的最佳实践。
+
+### 重构亮点
+
+1. **清晰的分层架构**：采用 Controller-Service-DTO-VO 分层设计，各层职责明确
+2. **接口与实现分离**：服务层采用接口与实现分离的设计，便于测试和扩展
+3. **策略模式应用**：使用策略模式处理不同类型的 SQL 解析，易于扩展新的解析方式
+4. **现代化开发规范**：遵循 Spring Boot 和 Java 开发最佳实践
+5. **完善的异常处理**：统一异常处理机制，提供更友好的错误提示
+
+### 重构后项目结构
+
+```
+com.softdev.system.generator
+├── GeneratorApplication.java              # 启动类
+├── config                                # 配置类包
+│   ├── WebMvcConfig.java                 # MVC配置
+│   └── GlobalExceptionHandler.java       # 全局异常处理器
+├── controller                            # 控制层
+│   ├── PageController.java               # 页面跳转控制器
+│   ├── CodeGenController.java            # 代码生成相关接口
+│   └── TemplateController.java           # 模板相关接口
+├── service                               # 服务层接口
+│   ├── CodeGenService.java               # 代码生成服务接口
+│   ├── TemplateService.java              # 模板服务接口
+│   └── parser                            
+│       ├── SqlParserService.java         # SQL解析服务接口
+│       └── JsonParserService.java        # JSON解析服务接口
+├── service.impl                          # 服务实现层
+│   ├── CodeGenServiceImpl.java           # 代码生成服务实现
+│   ├── TemplateServiceImpl.java          # 模板服务实现
+│   └── parser
+│       ├── SqlParserServiceImpl.java     # SQL解析服务实现
+│       └── JsonParserServiceImpl.java    # JSON解析服务实现
+├── entity                                # 实体类
+│   ├── dto                              
+│   │   ├── ParamInfo.java                # 参数信息DTO
+│   │   ├── ClassInfo.java                # 类信息DTO
+│   │   └── FieldInfo.java                # 字段信息DTO
+│   ├── vo                               
+│   │   └── ResultVo.java                 # 统一返回结果VO
+│   └── enums                            
+│       └── ParserTypeEnum.java           # 解析类型枚举
+├── util                                  # 工具类包
+│   ├── FreemarkerUtil.java               # Freemarker工具类
+│   ├── StringUtilsPlus.java              # 字符串工具类
+│   ├── MapUtil.java                      # Map工具类
+│   ├── mysqlJavaTypeUtil.java            # MySQL类型转换工具类
+│   └── exception                        
+│       ├── CodeGenException.java         # 自定义业务异常
+│       └── SqlParseException.java        # SQL解析异常
+└── constant                              # 常量定义
+    └── CodeGenConstants.java             # 代码生成常量(待实现)
+```
+
+### 统一响应格式
+
+所有控制器方法均返回 ResultVo 统一响应对象，保持与前端的兼容性：
+
+```java
+// 成功响应
+ResultVo.ok(data)
+
+// 错误响应
+ResultVo.error(message)
+```
+
+## 重构优势
+
+1. **结构清晰**：通过合理的包结构和分层设计，使项目结构更加清晰易懂
+2. **易于维护**：各层职责明确，便于定位和修复问题
+3. **易于扩展**：采用策略模式等设计模式，便于添加新的功能模块
+4. **现代化**：遵循 Spring Boot 和 Java 的最新最佳实践
+5. **前后端兼容**：保持与现有前端代码的数据交互格式，无缝升级
+
+## 升级问题解决方案
+
+### FastJSON 升级到 FastJSON2
+
+如果在升级 FastJSON 到 FastJSON2 版本时遇到 FastJsonHttpMessageConverter 找不到类问题以及 FastJsonConfig 找不到问题，需要安装以下类库：
+- fastjson2
+- fastjson2-extension
+- fastjson2-extension-spring6
+
+### Spring Boot 3 升级
+
+当项目从 Spring Boot 2.x 升级到 3.x 时，可能会遇到 "java: 程序包 javax.servlet.http 不存在" 问题，这是因为 Spring Boot 3 使用了 Jakarta EE 9+，包名从 javax.* 变更为 jakarta.*。
+
+
+## 版权信息
+
+本项目遵循相关开源协议，欢迎提交问题、分享常用模板，或将你的灵感通过 PR 实现！
+
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/moshowgame/SpringBootCodeGenerator.svg?variant=adaptive)](https://starchart.cc/moshowgame/SpringBootCodeGenerator)
+
+2025 NewUI V2版本<br>
+<img src="./newui_version_2.png">
+配置模板<br>
+<img src="./codegenerator2.png">
+网站流量分析-2024<br>
+<img src="./site_analysis-2024.png">
+代码与你，越变越强<br>
+<img src="./donate.png">
 
 # Update Logs
 | 更新日期       | 更新内容                                                                                                                                                                                                                                                              |
 |:-----------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 2025.12.07 | 后端重构优化！[REFACTORING_DOCUMENT.md](REFACTORING_DOCUMENT.md)                                                                                                                                                                                                         |
 | 2025.09.14 | 优化JSqlParser Engine(DDL Create SQL和Select SQL),适配更高级复杂的SQL                                                                                                                                                                                                        |
 | 2025.09.13 | JSqlParser Engine全新升级，目前Select SQL模式相对稳定! <br>更新SpringBoot等类库版本，修复漏洞<br>修复CDN问题，切换为staticfile.org                                                                                                                                                                 |
 | 2025.09.06 | 处理建表字段包含 using 字符时无法生成对应字段的情况(感谢@wubiaoo的反馈和@willxiang的PR)                                                                                                                                                                                                        |
@@ -147,61 +309,3 @@
 | 2018.09.15 | 新增Swagger-UI模板.修复一些命名和导入问题.JPA的Entity默认第一个字段为Id,如果不是请手工修改.                                                                                                                                                                                                        |
 | 2018.09.13 | 修复字段没有描述以及类型为DATE型导致的问题.新增JPA的Controller模板.                                                                                                                                                                                                                       |
 | 2018.08.31 | 初始化项目.新增JPA系列Entity+Repository模板.                                                                                                                                                                                                                                 |
-
-# ClassInfo/TableInfo
-|名称|说明|
-|:----|:----|
-|packageName|自定义的包名|
-|authorName|自定义的作者名|
-|tableName|sql中的表名|
-|className|java类名|
-|classComment|sql表备注/java类备注|
-|fieldName|字段名|
-|fieldComment|字段备注|
-
-# Options
-|名称|说明|默认值|
-|:----|:----|:----|
-|作者 |authorName|zhengkai.blog.csdn.net|
-|包名 |packageName|cn.devtools|
-|返回(成功)|returnUtilSuccess|Return.SUCCESS|
-|返回(失败)|returnUtilFailure|Return.ERROR|
-|忽略前缀|ignorePrefix |sys_|
-|输入类型 |dataType|DDL SQL|
-|TinyInt转换 |tinyintTransType|int|
-|时间类型 |timeTransType|Date|
-|命名类型 |nameCaseType|CamelCase/驼峰|
-|是否包装类型 |isPackageType|true|
-|是否swaggerUI|isSwagger|false|
-|是否字段注释|isComment|true|
-|是否自动引包|isAutoImport||
-|是否带包路径|isWithPackage||
-|是否Lombok|isLombok|true|
-
-
-# How to add a new template
-1. `resources/templates/code-generator`中找到对应类型
-2. COPY并编写freemarker模板文件`.ftl`
-3. 修改`template.json`文件，新增模板信息，页面可动态加载
-
-# Upgrade Issue Resolution 升级问题解决方案
-- 如果你最近也在升级FastJson到FastJson2版本，而跟我一样也遇到了FastJsonHttpMessageConverter找不到类问题以及FastJsonConfig找不到问题，那么恭喜你，看完本文，安装完fastjson2、fastjson2-extension、fastjson2-extension-spring6这三个类库，你就可以成功使用新版FastJson2了。
- [FastJson2中FastJsonHttpMessageConverter找不到类问题](https://blog.csdn.net/moshowgame/article/details/138013669)
-
-- 当项目从2.7.x的springboot升级到3.0.x的时候，遇到一个问题“java: 程序包javax.servlet.http不存在” 问题：
- [java: 程序包javax.servlet.http不存在](https://zhengkai.blog.csdn.net/article/details/131362304)
-
-- [CSDN【SpringBoot2启示录】专栏](https://blog.csdn.net/moshowgame/category_9274885.html)
-
-## Stargazers over time
-[![Stargazers over time](https://starchart.cc/moshowgame/SpringBootCodeGenerator.svg?variant=adaptive)](https://starchart.cc/moshowgame/SpringBootCodeGenerator)
-
-2025 NewUI V2版本
-<img src="./newui_version_2.png">
-配置模板
-<img src="./codegenerator2.png">
-网站流量分析-2024
-<img src="./site_analysis-2024.png">
-代码与你，越变越美
-<img src="./donate.png">
-
