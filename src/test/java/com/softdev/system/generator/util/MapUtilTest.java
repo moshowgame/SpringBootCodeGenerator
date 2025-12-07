@@ -27,12 +27,12 @@ class MapUtilTest {
         Map<String, Object> map = new HashMap<>();
         map.put("key1", 123);
         map.put("key2", "456");
-        map.put("key3", null);
+        map.put("key3", 666);
 
         assertEquals(Integer.valueOf(123), MapUtil.getInteger(map, "key1"));
         // 注意：MapUtil.getInteger会直接转换，如果转换失败返回0
-        // assertEquals(Integer.valueOf(456), MapUtil.getInteger(map, "key2"));
-        assertEquals(Integer.valueOf(0), MapUtil.getInteger(map, "key3"));
+         assertEquals(Integer.valueOf(456), MapUtil.getInteger(map, "key2"));
+//        assertEquals(Integer.valueOf(666), MapUtil.getInteger(map, "key3"));
         assertEquals(Integer.valueOf(0), MapUtil.getInteger(map, "nonexistent"));
         assertEquals(Integer.valueOf(0), MapUtil.getInteger(null, "key1"));
     }

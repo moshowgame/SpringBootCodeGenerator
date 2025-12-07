@@ -22,7 +22,7 @@ public class MapUtil {
     public static Integer getInteger(Map map,String key){
         if(map!=null && map.containsKey(key)){
             try{
-                return (Integer) map.get(key);
+                return Integer.valueOf(map.get(key).toString());
             }catch (Exception e){
                 e.printStackTrace();
                 return 0;
@@ -34,7 +34,7 @@ public class MapUtil {
     public static Boolean getBoolean(Map map,String key){
         if(map!=null && map.containsKey(key)){
             try{
-                return (Boolean) map.get(key);
+                return Boolean.parseBoolean(map.get(key).toString()) || "true".equals(map.get(key).toString());
             }catch (Exception e){
                 e.printStackTrace();
                 return false;
