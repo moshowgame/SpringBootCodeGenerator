@@ -46,8 +46,8 @@ public class ${classInfo.className}ServiceImpl implements ${classInfo.className}
 
 
 	@Override
-	public ${classInfo.className} load(int id) {
-		return ${classInfo.className?uncap_first}Mapper.load(id);
+	public ${classInfo.className} find(int id) {
+		return ${classInfo.className?uncap_first}Mapper.find(id);
 	}
 
 
@@ -56,6 +56,20 @@ public class ${classInfo.className}ServiceImpl implements ${classInfo.className}
 
 		List<${classInfo.className}> pageList = ${classInfo.className?uncap_first}Mapper.pageList(offset, pagesize);
 		int totalCount = ${classInfo.className?uncap_first}Mapper.pageListCount(offset, pagesize);
+
+		// result
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("pageList", pageList);
+		result.put("totalCount", totalCount);
+
+		return result;
+	}
+
+	@Override
+	public Map<String,Object> pageByCondition(${classInfo.className} queryParamDTO, int offset, int pagesize) {
+		
+		List<${classInfo.className}> pageList = ${classInfo.className?uncap_first}Mapper.pageByCondition(queryParamDTO, offset, pagesize);
+		int totalCount = ${classInfo.className?uncap_first}Mapper.pageByConditionCount(queryParamDTO);
 
 		// result
 		Map<String, Object> result = new HashMap<String, Object>();

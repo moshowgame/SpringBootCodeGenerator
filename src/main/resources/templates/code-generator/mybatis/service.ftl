@@ -26,11 +26,17 @@ public interface ${classInfo.className}Service {
     /**
     * 根据主键 id 查询
     */
-    public ${classInfo.className} load(int id);
+    public ${classInfo.className} find(int id);
 
     /**
     * 分页查询
     */
     public Map<String,Object> pageList(int offset, int pagesize);
+
+    /**
+    * 动态条件分页查询 - 根据对象属性自动构建条件
+    * 如果字段有值则进行分页+指定条件查询，否则仅进行分页查询
+    */
+    public Map<String,Object> pageByCondition(${classInfo.className} queryParamDTO, int offset, int pagesize);
 
 }
