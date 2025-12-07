@@ -43,11 +43,11 @@ public class ${classInfo.className}Controller {
         if(old${classInfo.className}!=null){
             ${classInfo.className?uncap_first}Mapper.updateById(${classInfo.className?uncap_first});
         }else{
-        if(${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("${classInfo.className?uncap_first}_name",${classInfo.className?uncap_first}.get${classInfo.className}Name()))!=null){
-            return ${returnUtilFailure}("保存失败，名字重复");
-        }
-        ${classInfo.className?uncap_first}.setCreateTime(new Date());
-        ${classInfo.className?uncap_first}Mapper.insert(${classInfo.className?uncap_first});
+            if(${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("${classInfo.className?uncap_first}_name",${classInfo.className?uncap_first}.get${classInfo.className}Name()))!=null){
+                return ${returnUtilFailure}("保存失败，名字重复");
+            }
+            ${classInfo.className?uncap_first}.setCreateTime(new Date());
+            ${classInfo.className?uncap_first}Mapper.insert(${classInfo.className?uncap_first});
         }
         return ${returnUtilSuccess}("保存成功");
     }
@@ -83,43 +83,51 @@ public class ${classInfo.className}Controller {
     * 自动分页查询
     */
     @PostMapping("/list")
-    public Object list(String searchParams,
-    @RequestParam(required = false, defaultValue = "0") int page,
-    @RequestParam(required = false, defaultValue = "10") int limit) {
+    public Object list(@RequestBody ${classInfo.className} ${classInfo.className?uncap_first},@RequestParam(required = false, defaultValue = "0") int page,@RequestParam(required = false, defaultValue = "10") int limit) {
         log.info("page:"+page+"-limit:"+limit+"-json:"+ JSON.toJSONString(searchParams));
         //分页构造器
         Page<${classInfo.className}> buildPage = new Page<${classInfo.className}>(page,limit);
         //条件构造器
         QueryWrapper<${classInfo.className}> queryWrapper = new QueryWrapper<${classInfo.className}>();
-        if(StringUtils.isNotEmpty(searchParams)&&JSON.isValid(searchParams)) {
-            ${classInfo.className} ${classInfo.className?uncap_first} = JSON.parseObject(searchParams, ${classInfo.className}.class);
-            queryWrapper.eq(StringUtils.isNoneEmpty(${classInfo.className?uncap_first}.get${classInfo.className}Name()), "${classInfo.className?uncap_first}_name", ${classInfo.className?uncap_first}.get${classInfo.className}Name());
+        if(JSON.stringify(${classInfo.className?uncap_first}).length()>2) {
+            //自行删除不需要动态查询字段
+            queryWrapper.
+            <#list classInfo.fieldList as fieldItem>
+                eq(StringUtils.isNoneEmpty(${classInfo.className?uncap_first}.get${fieldItem.fieldName}()), "${fieldItem.fieldName}", ${classInfo.className?uncap_first}.get${fieldItem.fieldName}())
+            </#list>
+            ;
         }
         //执行分页
         IPage<${classInfo.className}> pageList = ${classInfo.className?uncap_first}Mapper.selectPage(buildPage, queryWrapper);
         //返回结果
         return ${returnUtil}.PAGE(pageList.getRecords(),pageList.getTotal());
     }
+
     /**
-    * 手工分页查询(按需使用)
+    * 动态条件手工分页查询
+    * 根据对象属性自动构建条件，如果字段有值则进行分页+指定条件查询，否则仅进行分页查询
     */
-    /*@PostMapping("/list2")
-    public Object list2(String searchParams,
-    @RequestParam(required = false, defaultValue = "0") int page,
-    @RequestParam(required = false, defaultValue = "10") int limit) {
-        log.info("searchParams:"+ JSON.toJSONString(searchParams));
-        //通用模式
-        ${classInfo.className} queryParamDTO = JSON.parseObject(searchParams, ${classInfo.className}.class);
-        //专用DTO模式
-        //QueryParamDTO queryParamDTO = JSON.parseObject(searchParams, QueryParamDTO.class);
-        //queryParamDTO.setPage((page - 1)* limit);
-        //queryParamDTO.setLimit(limit);
-        //(page - 1) * limit, limit
-        List<${classInfo.className}> itemList = ${classInfo.className?uncap_first}Mapper.pageAll(queryParamDTO,(page - 1)* limit,limit);
-        Integer itemCount = ${classInfo.className?uncap_first}Mapper.countAll(queryParamDTO);
+    @PostMapping("/list")
+    public Object list(String searchParams, @RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "10") int limit) {
+        log.info("page:"+page+"-limit:"+limit+"-json:"+ JSON.toJSONString(searchParams));
+        
+        // 分页参数处理
+        int offset = (page - 1) * limit;
+        
+        // 查询参数处理
+        ${classInfo.className} queryParamDTO = new ${classInfo.className}();
+        if(StringUtils.isNotEmpty(searchParams) && JSON.isValid(searchParams)) {
+            queryParamDTO = JSON.parseObject(searchParams, ${classInfo.className}.class);
+        }
+        
+        // 使用动态条件查询
+        List<${classInfo.className}> itemList = ${classInfo.className?uncap_first}Mapper.selectPageByCondition(queryParamDTO, offset, limit);
+        int itemCount = ${classInfo.className?uncap_first}Mapper.selectPageByConditionCount(queryParamDTO);
+        
         //返回结果
-        return ${returnUtilSuccess}.PAGE(itemList,itemCount);
-    }*/
+        return ${returnUtil}.PAGE(itemList, itemCount);
+    }
+
     @GetMapping("/list")
     public ModelAndView listPage(){
         return new ModelAndView("${classInfo.className?uncap_first}-list");
@@ -132,16 +140,16 @@ public class ${classInfo.className}Controller {
     }
 
     /**
-    * 发布/暂停(如不需要请屏蔽)
+    * 激活/停用(如不需要请屏蔽)
     */
-    @PostMapping("/publish")
-    public Object publish(int id,Integer status){
+    @PostMapping("/active")
+    public Object active(int id,Integer status){
         ${classInfo.className} ${classInfo.className?uncap_first} = ${classInfo.className?uncap_first}Mapper.selectOne(new QueryWrapper<${classInfo.className}>().eq("${classInfo.className?uncap_first}_id",id));
         if(${classInfo.className?uncap_first}!=null){
             ${classInfo.className?uncap_first}.setUpdateTime(new Date());
             ${classInfo.className?uncap_first}.setStatus(status);
             ${classInfo.className?uncap_first}Mapper.updateById(${classInfo.className?uncap_first});
-            return ${returnUtilSuccess}((status==1)?"已发布":"已暂停");
+            return ${returnUtilSuccess}((status==1)?"已激活":"已停用");
         }else if(status.equals(${classInfo.className?uncap_first}.getStatus())){
             return ${returnUtilFailure}("状态不正确");
         }else{
@@ -150,13 +158,13 @@ public class ${classInfo.className}Controller {
     }
 
     /**
-    * 执行(如不需要请屏蔽)
+    * 测试(如不需要请屏蔽)
     */
-    @PostMapping("/execute")
-    public Object execute(){
+    @GetMapping("/test")
+    public Object test(){
         return ${returnUtilSuccess};
     }
-}
+
 }
 
 

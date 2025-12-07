@@ -40,7 +40,7 @@ public interface ${classInfo.className}Mapper {
     * @author ${authorName}
     * @date ${.now?string('yyyy/MM/dd')}
     **/
-    ${classInfo.className} load(int id);
+    ${classInfo.className} find(int id);
 
     /**
     * 查询 分页查询

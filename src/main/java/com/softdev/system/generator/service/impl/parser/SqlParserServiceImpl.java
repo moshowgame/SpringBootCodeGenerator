@@ -233,11 +233,11 @@ public class SqlParserServiceImpl implements SqlParserService {
         String classComment = null;
         //mysql是comment=,pgsql/oracle是comment on table,
         //2020-05-25 优化表备注的获取逻辑
-        if (tableSql.contains("comment=") || tableSql.contains("comment on table")) {
-            int ix = tableSql.lastIndexOf("comment=");
+        if (tableSql.toLowerCase().contains("comment=") || tableSql.toLowerCase().contains("comment on table")) {
+            int ix = tableSql.toLowerCase().lastIndexOf("comment=");
             String classCommentTmp = (ix > -1) ?
                     tableSql.substring(ix + 8).trim() :
-                    tableSql.substring(tableSql.lastIndexOf("comment on table") + 17).trim();
+                    tableSql.substring(tableSql.toLowerCase().lastIndexOf("comment on table") + 17).trim();
             if (classCommentTmp.contains("`")) {
                 classCommentTmp = classCommentTmp.substring(classCommentTmp.indexOf("`") + 1);
                 classCommentTmp = classCommentTmp.substring(0, classCommentTmp.indexOf("`"));
@@ -256,11 +256,11 @@ public class SqlParserServiceImpl implements SqlParserService {
         List<FieldInfo> fieldList = new ArrayList<FieldInfo>();
 
         // 正常( ) 内的一定是字段相关的定义。
-        String fieldListTmp = tableSql.substring(tableSql.indexOf("(") + 1, tableSql.lastIndexOf(")"));
+        String fieldListTmp = tableSql.substring(tableSql.indexOf("(") + 1, tableSql.lastIndexOf(")")).trim();
 
         // 匹配 comment，替换备注里的小逗号, 防止不小心被当成切割符号切割
         String commentPattenStr1 = "comment `(.*?)\\`";
-        Matcher matcher1 = Pattern.compile(commentPattenStr1).matcher(fieldListTmp);
+        Matcher matcher1 = Pattern.compile(commentPattenStr1).matcher(fieldListTmp.toLowerCase());
         while (matcher1.find()) {
 
             String commentTmp = matcher1.group();
@@ -305,18 +305,20 @@ public class SqlParserServiceImpl implements SqlParserService {
                 // 2019-2-22 zhengkai 要在条件中使用复杂的表达式
                 // 2019-4-29 zhengkai 优化对普通和特殊storage关键字的判断（感谢@AhHeadFloating的反馈 ）
                 // 2020-10-20 zhengkai 优化对fulltext/index关键字的处理（感谢@WEGFan的反馈）
+                // 2025-12-07 zhengkai 修复对primary key的处理
                 boolean notSpecialFlag = (
                         !columnLine.contains("key ")
-                                && !columnLine.contains("constraint")
-                                && !columnLine.contains(" using ")
-                                && !columnLine.contains("unique ")
-                                && !columnLine.contains("fulltext ")
-                                && !columnLine.contains("index ")
-                                && !columnLine.contains("pctincrease")
-                                && !columnLine.contains("buffer_pool")
-                                && !columnLine.contains("tablespace")
-                                && !(columnLine.contains("primary ") && columnLine.indexOf("storage") + 3 > columnLine.indexOf("("))
-                                && !(columnLine.contains("primary ") && i > 3)
+                                && !columnLine.toLowerCase().contains("constraint")
+                                && !columnLine.toLowerCase().contains(" using ")
+                                && !columnLine.toLowerCase().contains("unique ")
+                                && !columnLine.toLowerCase().contains("fulltext ")
+                                && !columnLine.toLowerCase().contains("index ")
+                                && !columnLine.toLowerCase().contains("pctincrease")
+                                && !columnLine.toLowerCase().contains("buffer_pool")
+                                && !columnLine.toLowerCase().contains("tablespace")
+                                && !(columnLine.toLowerCase().contains("primary ") && columnLine.indexOf("storage") + 3 > columnLine.indexOf("("))
+                                && !(columnLine.toLowerCase().contains("primary ") && i > 3)
+                                && !columnLine.toLowerCase().contains("primary key")
                 );
 
                 if (notSpecialFlag) {
@@ -349,7 +351,10 @@ public class SqlParserServiceImpl implements SqlParserService {
                     } else {
                         fieldName = columnName;
                     }
-                    columnLine = columnLine.substring(columnLine.indexOf("`") + 1).trim();
+                    // 修复Oracle字段名不带引号的情况
+                    if (columnLine.contains("`")) {
+                        columnLine = columnLine.substring(columnLine.indexOf("`") + 1).trim();
+                    }
                     //2025-03-16 修复由于类型大写导致无法转换的问题
                     String mysqlType = columnLine.split("\\s+")[1].toLowerCase();
                     if(mysqlType.contains("(")){
@@ -372,13 +377,13 @@ public class SqlParserServiceImpl implements SqlParserService {
                     }
                     // field comment，MySQL的一般位于field行，而pgsql和oralce多位于后面。
                     String fieldComment = null;
-                    if (tableSql.contains("comment on column") && (tableSql.contains("." + columnName + " is ") || tableSql.contains(".`" + columnName + "` is"))) {
+                    if (tableSql.toLowerCase().contains("comment on column") && (tableSql.toLowerCase().contains("." + columnName + " is ") || tableSql.toLowerCase().contains(".`" + columnName + "` is"))) {
                         //新增对pgsql/oracle的字段备注支持
                         //COMMENT ON COLUMN public.check_info.check_name IS '检查者名称';
                         //2018-11-22 lshz0088 正则表达式的点号前面应该加上两个反斜杠，否则会认为是任意字符
                         //2019-4-29 zhengkai 优化对oracle注释comment on column的支持（@liukex）
-                        tableSql = tableSql.replaceAll(".`" + columnName + "` is", "." + columnName + " is");
-                        Matcher columnCommentMatcher = Pattern.compile("\\." + columnName + " is `").matcher(tableSql);
+                        tableSql = tableSql.toLowerCase().replaceAll(".`" + columnName + "` is", "." + columnName + " is");
+                        Matcher columnCommentMatcher = Pattern.compile("\\." + columnName + " is `").matcher(tableSql.toLowerCase());
                         fieldComment = columnName;
                         while (columnCommentMatcher.find()) {
                             String columnCommentTmp = columnCommentMatcher.group();
@@ -386,9 +391,9 @@ public class SqlParserServiceImpl implements SqlParserService {
                             fieldComment = tableSql.substring(tableSql.indexOf(columnCommentTmp) + columnCommentTmp.length()).trim();
                             fieldComment = fieldComment.substring(0, fieldComment.indexOf("`")).trim();
                         }
-                    } else if (columnLine.contains(" comment")) {
+                    } else if (columnLine.toLowerCase().contains(" comment")) {
                         //20200518 zhengkai 修复包含comment关键字的问题
-                        String commentTmp = columnLine.substring(columnLine.lastIndexOf("comment") + 7).trim();
+                        String commentTmp = columnLine.toLowerCase().substring(columnLine.toLowerCase().lastIndexOf("comment") + 7).trim();
                         // '用户ID',
                         if (commentTmp.contains("`") || commentTmp.indexOf("`") != commentTmp.lastIndexOf("`")) {
                             commentTmp = commentTmp.substring(commentTmp.indexOf("`") + 1, commentTmp.lastIndexOf("`"));
@@ -398,6 +403,9 @@ public class SqlParserServiceImpl implements SqlParserService {
                             commentTmp = commentTmp.substring(0, commentTmp.lastIndexOf(")") + 1);
                         }
                         fieldComment = commentTmp;
+                    } else if (columnLine.contains("--")) {
+                        // 支持Oracle风格的注释（--）
+                        fieldComment = columnLine.substring(columnLine.indexOf("--") + 2).trim();
                     } else {
                         //修复comment不存在导致报错的问题
                         fieldComment = columnName;
@@ -416,10 +424,10 @@ public class SqlParserServiceImpl implements SqlParserService {
             }
         }
 
-        if (fieldList.size() < 1) {
+        if (fieldList.isEmpty()) {
             throw new Exception("表结构分析失败，请检查语句或者提交issue给我");
         }
-
+        //build Class Info
         ClassInfo codeJavaInfo = new ClassInfo();
         codeJavaInfo.setTableName(tableName);
         codeJavaInfo.setClassName(className);
