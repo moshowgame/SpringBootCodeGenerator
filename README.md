@@ -37,7 +37,7 @@ Powered by `Moshow郑锴(大狼狗)` 🌟 Might the holy code be with you !
 
 > 🙌 Special thanks to BeJSON 前站长 `三叔` 的慧眼与支持，让项目得以脱颖而出，感恩！
 
-
+<img src="./newui_version_2.png" width="600px">
 
 ## 功能特性
 
@@ -86,9 +86,18 @@ cd SpringBootCodeGenerator
 mvn clean compile
 # 运行项目
 mvn spring-boot:run
-```
 
-项目启动后访问 http://localhost:1234/generator
+# 访问项目
+http://localhost:1234/generator
+
+# 打包项目(不验证单元测试)
+mvn clean package -DskipTests
+
+# 运行测试
+mvn test
+# 查看JaCoCo测试覆盖率
+cd /target/site/jacoco
+```
 
 ### 添加新模板
 
@@ -224,8 +233,7 @@ ResultVo.error(message);
 ## Stargazers over time
 [![Stargazers over time](https://starchart.cc/moshowgame/SpringBootCodeGenerator.svg?variant=adaptive)](https://starchart.cc/moshowgame/SpringBootCodeGenerator)
 
-2025 NewUI V2版本<br>
-<img src="./newui_version_2.png">
+
 配置模板<br>
 <img src="./codegenerator2.png">
 网站流量分析-2024<br>
@@ -236,6 +244,7 @@ ResultVo.error(message);
 # Update Logs
 | 更新日期       | 更新内容                                                                                                                                                                                                                                                              |
 |:-----------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 2025.12.08 | 引入单元测试和JaCoCo测试覆盖率，优化代码覆盖率  [UNIT_TEST_DOCUMENT.md](UNIT_TEST_DOCUMENT.md)                                                                                                                                                                                              |
 | 2025.12.07 | 后端重构优化！[REFACTORING_DOCUMENT.md](REFACTORING_DOCUMENT.md) ;目录结构调整!                                                                                                                                                                                                |
 | 2025.09.14 | 优化JSqlParser Engine(DDL Create SQL和Select SQL),适配更高级复杂的SQL                                                                                                                                                                                                        |
 | 2025.09.13 | JSqlParser Engine全新升级，目前Select SQL模式相对稳定! <br>更新SpringBoot等类库版本，修复漏洞<br>修复CDN问题，切换为staticfile.org                                                                                                                                                                 |

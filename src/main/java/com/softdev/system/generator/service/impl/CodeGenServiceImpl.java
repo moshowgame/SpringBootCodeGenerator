@@ -92,6 +92,9 @@ public class CodeGenServiceImpl implements CodeGenService {
     private ClassInfo parseTableStructure(ParamInfo paramInfo) throws Exception {
         String dataType = MapUtil.getString(paramInfo.getOptions(), "dataType");
         ParserTypeEnum parserType = ParserTypeEnum.fromValue(dataType);
+        
+        // 添加调试信息
+        log.debug("解析数据类型: {}, 解析结果: {}", dataType, parserType);
 
         switch (parserType) {
             case SQL:
