@@ -88,24 +88,10 @@ class CodeGenServiceTest {
     private void setupJsonTestData() {
         paramInfo.setTableSql("""
                 {
-                  "user_id": {
-                    "type": "number",
-                    "description": "用户编号"
-                  },
-                  "user_name": {
-                    "type": "string",
-                    "description": "用户名",
-                    "maxLength": 255
-                  },
-                  "status": {
-                    "type": "boolean",
-                    "description": "状态"
-                  },
-                  "create_time": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "创建时间"
-                  }
+                  "user_id": "int",
+                  "user_name":"用户名",
+                  "status": "状态",
+                  "create_time":"创建时间"
                 }
                 """);
         paramInfo.setOptions(new HashMap<>());
