@@ -305,6 +305,7 @@ public class SqlParserServiceImpl implements SqlParserService {
                 // 2019-2-22 zhengkai 要在条件中使用复杂的表达式
                 // 2019-4-29 zhengkai 优化对普通和特殊storage关键字的判断（感谢@AhHeadFloating的反馈 ）
                 // 2020-10-20 zhengkai 优化对fulltext/index关键字的处理（感谢@WEGFan的反馈）
+                // 2025-12-07 zhengkai 修复对primary key的处理
                 boolean notSpecialFlag = (
                         !columnLine.contains("key ")
                                 && !columnLine.contains("constraint")
@@ -316,7 +317,8 @@ public class SqlParserServiceImpl implements SqlParserService {
                                 && !columnLine.contains("buffer_pool")
                                 && !columnLine.contains("tablespace")
                                 && !(columnLine.contains("primary ") && columnLine.indexOf("storage") + 3 > columnLine.indexOf("("))
-                                && !(columnLine.contains("primary ") && i > 3)
+                                && !(columnLine.toLowerCase().contains("primary ") && i > 3)
+                                && !columnLine.toLowerCase().contains("primary key")
                 );
 
                 if (notSpecialFlag) {
@@ -416,10 +418,10 @@ public class SqlParserServiceImpl implements SqlParserService {
             }
         }
 
-        if (fieldList.size() < 1) {
+        if (fieldList.isEmpty()) {
             throw new Exception("表结构分析失败，请检查语句或者提交issue给我");
         }
-
+        //build Class Info
         ClassInfo codeJavaInfo = new ClassInfo();
         codeJavaInfo.setTableName(tableName);
         codeJavaInfo.setClassName(className);
