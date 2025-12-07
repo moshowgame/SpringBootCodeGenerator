@@ -33,7 +33,37 @@ class TemplateServiceTest {
 
     @BeforeEach
     void setUp() {
-        mockTemplateConfig = "[{\"group\":\"basic\",\"templates\":[{\"name\":\"Entity\",\"type\":\"java\"},{\"name\":\"Repository\",\"type\":\"java\"}]}]";
+        mockTemplateConfig = """
+                [{
+                  "group": "ui",
+                  "templates": [{
+                    "id": "10",
+                    "name": "swagger-ui",
+                    "description": "swagger-ui"
+                  },
+                    {
+                      "id": "11",
+                      "name": "element-ui",
+                      "description": "element-ui"
+                    },
+                    {
+                      "id": "12",
+                      "name": "bootstrap-ui",
+                      "description": "bootstrap-ui"
+                    },
+                    {
+                      "id": "13",
+                      "name": "layui-edit",
+                      "description": "layui-edit"
+                    },
+                    {
+                      "id": "14",
+                      "name": "layui-list",
+                      "description": "layui-list"
+                    }
+                  ]
+                }]
+                """;
     }
 
     @Test

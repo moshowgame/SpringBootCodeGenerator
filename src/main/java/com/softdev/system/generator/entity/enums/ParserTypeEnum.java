@@ -27,11 +27,33 @@ public enum ParserTypeEnum {
     }
 
     public static ParserTypeEnum fromValue(String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return SQL;
+        }
+        
+        String trimmedValue = value.trim();
+        
+        // 首先尝试精确匹配枚举值
         for (ParserTypeEnum type : ParserTypeEnum.values()) {
-            if (type.getValue().equals(value)) {
+            if (type.getValue().equals(trimmedValue)) {
                 return type;
             }
         }
+        
+        // 如果精确匹配失败，尝试忽略大小写匹配
+        for (ParserTypeEnum type : ParserTypeEnum.values()) {
+            if (type.getValue().equalsIgnoreCase(trimmedValue)) {
+                return type;
+            }
+        }
+        
+        // 尝试匹配枚举名称
+        for (ParserTypeEnum type : ParserTypeEnum.values()) {
+            if (type.name().equalsIgnoreCase(trimmedValue)) {
+                return type;
+            }
+        }
+        
         // 默认返回SQL类型
         return SQL;
     }

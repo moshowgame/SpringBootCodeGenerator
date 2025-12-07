@@ -48,8 +48,8 @@ class ParamInfoTest {
 
     @Test
     void testNameCaseTypeConstants() {
-        assertEquals("camelCase", ParamInfo.NAME_CASE_TYPE.CAMEL_CASE);
-        assertEquals("underScoreCase", ParamInfo.NAME_CASE_TYPE.UNDER_SCORE_CASE);
-        assertEquals("upperUnderScoreCase", ParamInfo.NAME_CASE_TYPE.UPPER_UNDER_SCORE_CASE);
+        assertEquals("CamelCase", ParamInfo.NAME_CASE_TYPE.CAMEL_CASE);
+        assertEquals("UnderScoreCase", ParamInfo.NAME_CASE_TYPE.UNDER_SCORE_CASE);
+        assertEquals("UpperUnderScoreCase", ParamInfo.NAME_CASE_TYPE.UPPER_UNDER_SCORE_CASE);
     }
 }

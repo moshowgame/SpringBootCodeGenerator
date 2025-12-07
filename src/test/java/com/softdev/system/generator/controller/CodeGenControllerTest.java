@@ -47,7 +47,15 @@ class CodeGenControllerTest {
     void setUp() {
         // 初始化测试数据
         paramInfo = new ParamInfo();
-        paramInfo.setTableSql("CREATE TABLE test (id INT PRIMARY KEY, name VARCHAR(50));");
+        paramInfo.setTableSql("""
+                CREATE TABLE 'sys_user_info' (
+                  'user_id' int(11) NOT NULL AUTO_INCREMENT COMMENT '用户编号',
+                  'user_name' varchar(255) NOT NULL COMMENT '用户名',
+                  'status' tinyint(1) NOT NULL COMMENT '状态',
+                  'create_time' datetime NOT NULL COMMENT '创建时间',
+                  PRIMARY KEY ('user_id')
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息'
+                """);
         
         Map<String, Object> options = new HashMap<>();
         options.put("dataType", "SQL");
