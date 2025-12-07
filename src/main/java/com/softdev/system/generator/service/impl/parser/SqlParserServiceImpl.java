@@ -351,7 +351,10 @@ public class SqlParserServiceImpl implements SqlParserService {
                     } else {
                         fieldName = columnName;
                     }
-                    columnLine = columnLine.substring(columnLine.indexOf("`") + 1).trim();
+                    // 修复Oracle字段名不带引号的情况
+                    if (columnLine.contains("`")) {
+                        columnLine = columnLine.substring(columnLine.indexOf("`") + 1).trim();
+                    }
                     //2025-03-16 修复由于类型大写导致无法转换的问题
                     String mysqlType = columnLine.split("\\s+")[1].toLowerCase();
                     if(mysqlType.contains("(")){
@@ -400,6 +403,9 @@ public class SqlParserServiceImpl implements SqlParserService {
                             commentTmp = commentTmp.substring(0, commentTmp.lastIndexOf(")") + 1);
                         }
                         fieldComment = commentTmp;
+                    } else if (columnLine.contains("--")) {
+                        // 支持Oracle风格的注释（--）
+                        fieldComment = columnLine.substring(columnLine.indexOf("--") + 2).trim();
                     } else {
                         //修复comment不存在导致报错的问题
                         fieldComment = columnName;

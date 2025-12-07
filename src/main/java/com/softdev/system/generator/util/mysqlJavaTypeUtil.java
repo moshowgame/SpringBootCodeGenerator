@@ -27,6 +27,7 @@ public final class mysqlJavaTypeUtil {
         //字符串
         mysqlJavaTypeMap.put("char","String");
         mysqlJavaTypeMap.put("varchar","String");
+        mysqlJavaTypeMap.put("varchar2","String"); // Oracle类型
         mysqlJavaTypeMap.put("tinytext","String");
         mysqlJavaTypeMap.put("text","String");
         mysqlJavaTypeMap.put("mediumtext","String");
@@ -35,6 +36,8 @@ public final class mysqlJavaTypeUtil {
         mysqlJavaTypeMap.put("date","Date");
         mysqlJavaTypeMap.put("datetime","Date");
         mysqlJavaTypeMap.put("timestamp","Date");
+        // 数字类型 - Oracle增强
+        mysqlJavaTypeMap.put("number","BigDecimal"); // Oracle的NUMBER类型默认映射为BigDecimal，支持精度
 
 
         mysqlSwaggerTypeMap.put("bigint","integer");
@@ -46,7 +49,10 @@ public final class mysqlJavaTypeUtil {
         mysqlSwaggerTypeMap.put("boolean","boolean");
         mysqlSwaggerTypeMap.put("float","number");
         mysqlSwaggerTypeMap.put("double","number");
-        mysqlSwaggerTypeMap.put("decimal","Double");
+        mysqlSwaggerTypeMap.put("decimal","number");
+        // Oracle类型
+        mysqlSwaggerTypeMap.put("varchar2","string");
+        mysqlSwaggerTypeMap.put("number","number");
     }
 
     public static HashMap<String, String> getMysqlJavaTypeMap() {
