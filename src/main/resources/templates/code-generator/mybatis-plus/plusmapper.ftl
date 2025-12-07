@@ -2,6 +2,7 @@
 <#if isAutoImport?exists && isAutoImport==true>
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import ${packageName}.entity.${classInfo.className};
 import java.util.List;
@@ -14,25 +15,55 @@ import java.util.List;
 @Mapper
 public interface ${classInfo.className}Mapper extends BaseMapper<${classInfo.className}> {
 
-    @Select(
-    "<script>select t0.* from ${classInfo.tableName} t0 " +
-    //add here if need left join
-    "where 1=1" +
-    <#list classInfo.fieldList as fieldItem >
-    "<when test='${fieldItem.fieldName}!=null and ${fieldItem.fieldName}!=&apos;&apos; '> and t0.${fieldItem.columnName}=井{${fieldItem.fieldName}}</when> " +
-    </#list>
-    //add here if need page limit
-    //" limit ￥{page},￥{limit} " +
-    " </script>")
-    List<${classInfo.className}> pageAll(${classInfo.className} queryParamDTO,int page,int limit);
+    /**
+     * 动态条件分页查询 - 根据对象属性自动构建条件
+     * 如果字段有值则进行分页+指定条件查询，否则仅进行分页查询
+     */
+    @Select("""
+        <script>
+        SELECT * FROM ${classInfo.tableName}
+        <where>
+        <#list classInfo.fieldList as fieldItem>
+            <#if fieldItem.fieldClass?contains("String")>
+            <if test='queryParamDTO.${fieldItem.fieldName} != null and queryParamDTO.${fieldItem.fieldName} != ""'>
+                AND ${fieldItem.columnName} = 井{queryParamDTO.${fieldItem.fieldName}}
+            </if>
+            <#else>
+            <if test='queryParamDTO.${fieldItem.fieldName} != null'>
+                AND ${fieldItem.columnName} = 井{queryParamDTO.${fieldItem.fieldName}}
+            </if>
+            </#if>
+        </#list>
+        </where>
+        ORDER BY id DESC
+        LIMIT 井{offset}, 井{limit}
+        </script>
+    """)
+    List<${classInfo.className}> selectPageByCondition(@Param("queryParamDTO") ${classInfo.className} queryParamDTO, 
+                                                     @Param("offset") int offset, 
+                                                     @Param("limit") int limit);
 
-    @Select("<script>select count(1) from ${classInfo.tableName} t0 " +
-    //add here if need left join
-    "where 1=1" +
-    <#list classInfo.fieldList as fieldItem >
-    "<when test='${fieldItem.fieldName}!=null and ${fieldItem.fieldName}!=&apos;&apos; '> and t0.${fieldItem.columnName}=井{${fieldItem.fieldName}}</when> " +
-    </#list>
-     " </script>")
-    int countAll(${classInfo.className} queryParamDTO);
+    /**
+     * 动态条件分页查询总数
+     */
+    @Select("""
+        <script>
+        SELECT COUNT(*) FROM ${classInfo.tableName}
+        <where>
+        <#list classInfo.fieldList as fieldItem>
+            <#if fieldItem.fieldClass?contains("String")>
+            <if test='queryParamDTO.${fieldItem.fieldName} != null and queryParamDTO.${fieldItem.fieldName} != ""'>
+                AND ${fieldItem.columnName} = 井{queryParamDTO.${fieldItem.fieldName}}
+            </if>
+            <#else>
+            <if test='queryParamDTO.${fieldItem.fieldName} != null'>
+                AND ${fieldItem.columnName} = 井{queryParamDTO.${fieldItem.fieldName}}
+            </if>
+            </#if>
+        </#list>
+        </where>
+        </script>
+    """)
+    int selectPageByConditionCount(@Param("queryParamDTO") ${classInfo.className} queryParamDTO);
 
 }

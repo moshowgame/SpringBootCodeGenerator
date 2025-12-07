@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.media.Schema;</#if>
  * @date ${.now?string('yyyy-MM-dd')}
  */
 <#if isLombok?exists && isLombok==true>@Data</#if><#if isSwagger?exists && isSwagger==true>
-@Schema"${classInfo.classComment}")</#if>
+@Schema(description = "${classInfo.classComment}")</#if>
 public class ${classInfo.className} implements Serializable {
 
     private static final long serialVersionUID = 1L;
