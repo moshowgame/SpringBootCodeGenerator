@@ -51,11 +51,11 @@ OEM:
   header: SQL转Java JPA、MYBATIS实现类代码生成平台
   keywords: sql转实体类,sql转DAO,SQL转service,SQL转JPA实现,SQL转MYBATIS实现
   title: 大狼狗代码生成器
-  slogan: 👐 Free your hands from boring CRUD—let the code write itself! ⚡
+  slogan: 🏺 古法编程·非遗传承 | Free your hands from boring CRUD! ⚡
   description: <p>💻 SpringBootCodeGenerator，又名 `大狼狗代码生成器`🐺🐶，支持 SQL 一键转 JAVA/JPA/Mybatis/MybatisPlus 等多种模板，轻松搞定 CRUD，彻底解放双手 ✋！只需提供 DDL、SELECT SQL 或简单 JSON 👉 即可生成 生成JPA/JdbcTemplate/Mybatis/MybatisPlus/BeetlSQL/CommonMapper 等代码模板。</p><p>🔥🔥🔥 全新 JSqlParser 引擎上线，强力支持 DDL CREATE SQL与 SELECT SQL 解析！欢迎体验 & 反馈 💬！</p><p>👨‍💻 面向开发者的高效利器，已服务数万工程师，欢迎 Star ⭐、Fork 🍴、提 Issue 💬，一起打造更强大的代码生成平台！</p>
   author: zhengkai.blog.csdn.net
   packageName: com.software.system
-  copyright: ✨ Powered by <a href="https://zhengkai.blog.csdn.net" target="_blank">Moshow郑锴</a> — may the holy light guide your code, your coffee, and your commits! ⚡🧙‍♂️💻
+  copyright: 🏺 Powered by <a href="https://zhengkai.blog.csdn.net" target="_blank">Moshow郑锴</a> — 愿你在 AI 时代，既有工具的效率，也有匠人的定力 🙏
   returnUtilSuccess: ResponseUtil.success
   returnUtilFailure: ResponseUtil.error
   outputStr: http://zhengkai.blog.csdn.net

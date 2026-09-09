@@ -3,9 +3,9 @@
   "tier": "main",
   "templates": [{
     "id": "10",
-    "name": "swagger-ui",
-    "description": "swagger-ui",
-    "fileName": "swagger-ui.json"
+      "name": "swagger-ui",
+      "description": "swagger-ui",
+      "fileName": "swagger-ui.java"
   },
     {
       "id": "11",
@@ -183,7 +183,7 @@
       "id": "70",
       "name": "beanutil",
       "description": "beanutil",
-      "fileName": "${className}BeanUtil.txt"
+      "fileName": "${className}BeanUtil.java"
     },
       {
         "id": "71",
@@ -313,7 +313,7 @@
       "id": "201",
       "name": "qliksense",
       "description": "qlik sense",
-      "fileName": "qliksense.txt"
+      "fileName": "qliksense.qvs"
     }]
   },
   {

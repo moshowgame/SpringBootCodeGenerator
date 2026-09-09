@@ -1,6 +1,7 @@
 package com.softdev.system.generator.service.impl;
 
 import com.softdev.system.generator.service.ZipService;
+import com.softdev.system.generator.util.HeritageUtil;
 import com.softdev.system.generator.util.ZipFileNameResolver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -9,8 +10,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -40,10 +43,21 @@ public class ZipServiceImpl implements ZipService {
         Set<String> usedPaths = new HashSet<>();
         try (ZipOutputStream zos = new ZipOutputStream(baos)) {
             zos.setLevel(java.util.zip.Deflater.BEST_SPEED);
+            // 🏺 非遗传承：手工代码认证书作为 ZIP 首个条目
+            if (HeritageUtil.isEnabled(context)) {
+                List<String> templateNames = generatedCode.keySet().stream()
+                        .filter(name -> !"tableName".equals(name))
+                        .collect(Collectors.toList());
+                String certificate = HeritageUtil.buildCertificate(
+                        stringOf(context, "className"), stringOf(context, "tableName"),
+                        stringOf(context, "author"), templateNames);
+                writeEntry(zos, "手工代码认证书.txt", certificate);
+            }
             for (Map.Entry<String, String> entry : generatedCode.entrySet()) {
                 String templateName = entry.getKey();
                 String content = entry.getValue();
-                if (content == null) {
+                // tableName 是返回给前端的结构化字段，不是代码文件
+                if (content == null || "tableName".equals(templateName)) {
                     continue;
                 }
                 String fileNameTpl = fileNameTemplates == null ? null : fileNameTemplates.get(templateName);
@@ -65,6 +79,14 @@ public class ZipServiceImpl implements ZipService {
         zos.putNextEntry(zipEntry);
         zos.write(content.getBytes(StandardCharsets.UTF_8));
         zos.closeEntry();
+    }
+
+    private String stringOf(Map<String, Object> context, String key) {
+        if (context == null || key == null) {
+            return "";
+        }
+        Object value = context.get(key);
+        return value == null ? "" : value.toString();
     }
 
     /**

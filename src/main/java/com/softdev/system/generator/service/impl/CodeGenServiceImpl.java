@@ -12,6 +12,7 @@ import com.softdev.system.generator.service.TemplateService;
 import com.softdev.system.generator.service.parser.JsonParserService;
 import com.softdev.system.generator.service.parser.SqlParserService;
 import com.softdev.system.generator.util.FreemarkerUtil;
+import com.softdev.system.generator.util.HeritageUtil;
 import com.softdev.system.generator.util.MapUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -70,6 +71,7 @@ public class CodeGenServiceImpl implements CodeGenService {
 
         generatedCode.put("tableName", MapUtil.getString(params, "tableName"));
 
+        boolean heritage = HeritageUtil.isEnabled(params);
         JSONArray parentTemplates = templateService.getAllTemplates();
         for (int i = 0; i < parentTemplates.size(); i++) {
             JSONObject parentTemplateObj = parentTemplates.getJSONObject(i);
@@ -81,6 +83,9 @@ public class CodeGenServiceImpl implements CodeGenService {
                     String templateName = childTemplate.getString("name");
                     String templatePath = group + "/" + templateName + ".ftl";
                     String generatedText = FreemarkerUtil.processString(templatePath, params);
+                    if (heritage) {
+                        generatedText = HeritageUtil.stamp(childTemplate.getString("fileName"), generatedText);
+                    }
                     generatedCode.put(templateName, generatedText);
                     fileNameTemplates.put(templateName, childTemplate.getString("fileName"));
                     groupByTemplate.put(templateName, group);

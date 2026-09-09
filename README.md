@@ -6,6 +6,7 @@
 ![image](https://img.shields.io/badge/SpringBoot3-%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%85-blue.svg)
 ![image](https://img.shields.io/badge/Freemarker-%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%85-blue.svg)
 ![image](https://img.shields.io/badge/CodeGenerator-%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%85-blue.svg)
+[![非遗](https://img.shields.io/badge/%E9%9D%9E%E9%81%97-%E5%8F%A4%E6%B3%95%E7%BC%96%E7%A8%8B%E4%BC%A0%E6%89%BF%E8%80%85-8B4513.svg)](#description)
 [![Java CI with Maven](https://github.com/moshowgame/SpringBootCodeGenerator/actions/workflows/maven.yml/badge.svg)](https://github.com/moshowgame/SpringBootCodeGenerator/actions/workflows/maven.yml)
 
 # Author
@@ -34,11 +35,20 @@
 > 📦 **One-click ZIP download** — package all generated code into a structured ZIP in one click\
 > 📦 **一键 ZIP 打包下载** — 按模板分组自动归档，告别逐个文件复制
 
-> 🙏 Thanks for your continued support! BeJSON once peaked at 1.5K daily PV 👀, and now maintains a steady flow of around 600 visits — plus 2K+ GitHub Stars ✨. Your feedback remains our greatest motivation to keep improving!
-> ❤️ 感谢大家一直以来的支持！BeJSON 曾创下日均访问量 1.5K 👀 的高峰，目前稳定在约 600 左右，GitHub Star 数也已突破 2K ✨。你们的反馈始终是我们不断前进的最大动力！
+> 🏺 In the age of AI vibe coding, every line of these templates is still handcrafted — traditional code craft, certified intangible cultural heritage\
+> 🏺 AI vibe coding 时代，本项目的模板依然坚持手搓：开启「🏺 古法印章」，生成的每份代码都会带上一枚非遗传承手作印章，ZIP 包内附《手工代码认证书》——致敬每一位古法编程非遗传承者！
 
-> 🌈 Wishing everyone balance, health, and success — may your code be bug-free and your coffee strong ☕\
-> 💬 祝大家工作顺利，生活平衡，身体健康，步步高升，代码无 bug，咖啡够劲！
+> ### 🐺 写在 AI 时代
+>
+> 大狼狗代码生成器诞生于 2018 年，彼时 AI 写代码还是科幻。数万开发者使用过它，数千颗 Star 见证了它的成长。
+>
+> 如今 AI 浪潮滚滚而来，我们选择不追逐风口，而是回归本质：
+>
+> - **工具的价值**，在于服务人，而非替代人；
+> - **代码的价值**，在于解决问题，而非堆砌行数；
+> - **开发者的价值**，在于思考与判断，而非手速与复制。
+>
+> 感谢每一位使用过大狼狗的朋友。愿你在 AI 时代，既有工具的效率，也有匠人的定力。🙏
 
 > 📬 Feel free to submit issues, share useful templates, or contribute your brilliant ideas via PR\
 > 🤝 欢迎提交问题、分享常用模板，或将你的灵感通过 PR 实现！
@@ -309,7 +319,7 @@ ResultVo.error(message);
 
 | 更新日期       | 更新内容                                                                                                                                                                                                                                                              |
 | :--------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 2026.09.09 | 🎨 前端全面重构为 jQuery3 + Bootstrap 5.3 + CodeMirror 5：全新 `newui3` 现代化界面，`data-bs-theme` 原生深/浅色模式（CodeMirror 双主题跟随），输出区按模板类型动态切换语法高亮（Java/XML/SQL/JSON/JS）；新增 `app.js` 独立命名空间 `CodeGenApp`（与旧版 main.js 零冲突），补齐本地 mode 文件（sql/clike/xml/javascript）；新增🏺古法印章开关（isHeritage，致敬古法编程非遗传承者）；模板选择区改为组内联布局，`template.json` 支持 `tier` 字段分级（main 常驻 / legacy 折叠），折叠与选中状态 localStorage 记忆；修复 JDK23+ 下 Lombok 注解处理不生效的编译问题； |
+| 2026.09.09 | 🎨 前端全面重构为 jQuery3 + Bootstrap 5.3 + CodeMirror 5：全新 `newui3` 现代化界面，`data-bs-theme` 原生深/浅色模式（CodeMirror 双主题跟随），输出区按模板类型动态切换语法高亮（Java/XML/SQL/JSON/JS）；新增 `app.js` 独立命名空间 `CodeGenApp`（与旧版 main.js 零冲突），补齐本地 mode 文件（sql/clike/xml/javascript）；新增🏺古法印章开关（isHeritage，致敬古法编程非遗传承者）；模板选择区改为组内联布局，`template.json` 支持 `tier` 字段分级（main 常驻 / legacy 折叠），折叠与选中状态 localStorage 记忆；修复 JDK23+ 下 Lombok 注解处理不生效的编译问题；🏺非遗传承后端落地：`HeritageUtil` 按内容嗅探+后缀适配注释语法盖章（Java/JS/QVS 用 `//`，SQL 用 `--`，YAML 用 `#`，XML/Vue/HTML 在声明后插 `<!-- -->`，JSON 不盖章），ZIP 首条目附《手工代码认证书》；修正 `template.json` 中 `swagger-ui`/`beanutil`/`qliksense` 三个模板 fileName 后缀与实际内容类型不符的问题，并修复 ZIP 包误将 `tableName` 字段打成伪文件的 bug； |
 | 2026.06.02 | 📦 新增"一键 ZIP 打包下载"功能：在生成按钮旁新增独立下载按钮，按模板 group 自动分目录打包成 ZIP；<br>支持 `template.json` 中 `fileName` 字段（含 `${className}` 占位符），智能推断文件后缀；                                                                                                                                |
 | 2025.12.09 | 优化Mybatis和Mybatis-Plus模板                                                                                                                                                                                                                                          |
 | 2025.12.08 | 引入单元测试和JaCoCo测试覆盖率，优化代码覆盖率  [UNIT\_TEST\_DOCUMENT.md](UNIT_TEST_DOCUMENT.md)                                                                                                                                                                                      |

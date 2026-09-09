@@ -6,6 +6,8 @@ import com.softdev.system.generator.entity.dto.ParamInfo;
 import com.softdev.system.generator.entity.vo.ResultVo;
 import com.softdev.system.generator.service.CodeGenService;
 import com.softdev.system.generator.service.ZipService;
+import com.softdev.system.generator.util.HeritageUtil;
+import com.softdev.system.generator.util.MapUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -66,7 +68,7 @@ public class CodeGenController {
                 result.getFileNameTemplates(),
                 result.getGroupByTemplate(),
                 zipName,
-                buildContext(result)
+                buildContext(result, paramInfo.getOptions())
         );
 
         String encoded = URLEncoder.encode(zipName + ".zip", StandardCharsets.UTF_8)
@@ -95,12 +97,14 @@ public class CodeGenController {
     }
 
     /**
-     * 构造 ZIP 解析占位符所需的上下文
+     * 构造 ZIP 解析占位符所需的上下文（含非遗传承印章开关与作者）
      */
-    private Map<String, Object> buildContext(CodeGenResult result) {
+    private Map<String, Object> buildContext(CodeGenResult result, Map<String, Object> options) {
         Map<String, Object> ctx = new HashMap<>();
         ctx.put("className", result.getClassName() == null ? "" : result.getClassName());
         ctx.put("tableName", result.getTableName() == null ? "" : result.getTableName());
+        ctx.put("isHeritage", HeritageUtil.isEnabled(options));
+        ctx.put("author", MapUtil.getString(options, "authorName"));
         return ctx;
     }
 }
