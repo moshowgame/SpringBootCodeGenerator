@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-bs-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <#include "/newui3-header.html">
+  <title>${(value.title)!!}</title>
+  <style>
+    :root {
+      --cg-radius: 12px;
+      --cg-shadow: 0 1px 2px rgba(var(--bs-emphasis-color-rgb), .06), 0 2px 8px rgba(var(--bs-emphasis-color-rgb), .04);
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--bs-tertiary-bg);
+    }
+
+    main { flex: 1 0 auto; }
+
+    /* ===== navbar ===== */
+    .cg-navbar {
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background-color: color-mix(in srgb, var(--bs-body-bg) 85%, transparent);
+      border-bottom: 1px solid var(--bs-border-color-translucent);
+    }
+    .cg-navbar .navbar-brand {
+      font-weight: 700;
+      letter-spacing: .3px;
+    }
+    .cg-navbar .cg-links a {
+      color: var(--bs-secondary-color);
+      text-decoration: none;
+      margin-left: var(--bs-spacer-3, 1rem);
+      transition: color .15s ease;
+    }
+    .cg-navbar .cg-links a:hover { color: var(--bs-link-color); }
+
+    /* ===== cards ===== */
+    .card {
+      border: none;
+      border-radius: var(--cg-radius);
+      box-shadow: var(--cg-shadow);
+    }
+    .card-header {
+      background-color: transparent;
+      border-bottom: 1px solid var(--bs-border-color-translucent);
+      font-weight: 600;
+      padding: .75rem 1rem;
+    }
+
+    /* ===== callout for OEM description ===== */
+    .cg-callout {
+      border-left: 3px solid var(--bs-primary);
+      border-radius: .5rem;
+      background-color: var(--bs-secondary-bg);
+      padding: .75rem 1rem;
+      font-size: .875rem;
+      color: var(--bs-secondary-color);
+    }
+
+    /* ===== form ===== */
+    .cg-opt-label {
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--bs-secondary-color);
+      margin-bottom: .25rem;
+      display: block;
+    }
+    .form-select, .form-control { font-size: .875rem; }
+    .form-switch .form-check-input { cursor: pointer; }
+
+    /* ===== template groups (inline label + foldable legacy) ===== */
+    .cg-template-row {
+      display: flex;
+      gap: .75rem;
+      padding: .2rem 0;
+      align-items: flex-start;
+    }
+    .cg-template-label {
+      flex: 0 0 92px;
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--bs-secondary-color);
+      padding-top: .25rem;
+    }
+    .cg-template-btn {
+      --bs-btn-font-size: .8125rem;
+      --bs-btn-padding-x: .6rem;
+      --bs-btn-padding-y: .18rem;
+    }
+    .cg-fold {
+      margin-top: .6rem;
+      border-top: 1px dashed var(--bs-border-color);
+      padding-top: .5rem;
+    }
+    .cg-fold summary {
+      cursor: pointer;
+      font-size: .8125rem;
+      font-weight: 600;
+      color: var(--bs-secondary-color);
+      user-select: none;
+      list-style: none;
+    }
+    .cg-fold summary::-webkit-details-marker { display: none; }
+    .cg-fold summary::before { content: '\25B8\00a0'; }
+    .cg-fold[open] summary::before { content: '\25BE\00a0'; }
+    .cg-fold summary:hover { color: var(--bs-primary); }
+    .cg-fold-body { padding-top: .4rem; }
+
+    /* ===== history chips ===== */
+    .cg-chip {
+      --bs-btn-font-size: .75rem;
+      --bs-btn-padding-x: .55rem;
+      --bs-btn-padding-y: .1rem;
+      border-radius: 50rem;
+    }
+
+    /* ===== CodeMirror ===== */
+    .CodeMirror {
+      height: 360px;
+      font-family: var(--bs-font-monospace);
+      font-size: 13px;
+      border-radius: .5rem;
+      border: 1px solid var(--bs-border-color);
+    }
+
+    /* 输入区编辑器：flex 填满整个卡片，min-height 保底（小屏单列时） */
+    .cg-input-card .card-body {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .cg-input-card .card-body .CodeMirror {
+      height: auto;
+      flex: 1 1 auto;
+      min-height: 320px;
+    }
+    .CodeMirror-gutters {
+      border-right: 1px solid var(--bs-border-color-translucent);
+      background-color: var(--bs-secondary-bg);
+    }
+    .CodeMirror-cursor { border-left: 2px solid var(--bs-primary); }
+
+    /* ===== footer ===== */
+    .cg-footer {
+      padding: 1rem 0;
+      text-align: center;
+      font-size: .8125rem;
+      color: var(--bs-secondary-color);
+    }
+
+    [v-cloak] { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- ===== Navbar ===== -->
+<nav class="navbar navbar-expand sticky-top cg-navbar">
+  <div class="container-xxl">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+      <i class="bi bi-braces-asterisk fs-4 text-primary"></i>
+      <span>${(value.title)!!}</span>
+    </a>
+    <div class="d-none d-md-block ms-3 small text-body-secondary">${(value.slogan)!!}</div>
+    <div class="ms-auto d-flex align-items-center">
+      <div class="cg-links d-none d-sm-block">
+        <a href="https://github.com/moshowgame/SpringBootCodeGenerator/" target="_blank"><i class="bi bi-github me-1"></i>GitHub</a>
+        <a href="https://zhengkai.blog.csdn.net/" target="_blank"><i class="bi bi-journal-text me-1"></i>CSDN</a>
+      </div>
+      <button type="button" class="btn btn-outline-secondary btn-sm ms-3" id="cgThemeBtn"
+              data-action="toggle-theme" title="切换深色/浅色模式" aria-label="切换主题">
+        <i class="bi bi-moon-stars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main class="container-xxl py-4">
+
+  <!-- OEM description -->
+  <div class="cg-callout mb-4">${(value.description)!!}</div>
+
+  <div class="row g-4">
+
+    <!-- ===== Input & actions ===== -->
+    <div class="col-lg-8">
+      <div class="card h-100 cg-input-card">
+        <div class="card-header d-flex flex-wrap align-items-center gap-2">
+          <span><i class="bi bi-terminal me-2 text-primary"></i>输入 SQL / JSON</span>
+          <div class="ms-auto d-flex flex-wrap gap-2">
+            <button type="button" class="btn btn-primary btn-sm px-3" data-action="generate">
+              <i class="bi bi-play-fill me-1"></i>生成
+            </button>
+            <button type="button" class="btn btn-outline-primary btn-sm" data-action="copy">
+              <i class="bi bi-clipboard me-1"></i>复制
+            </button>
+            <button type="button" class="btn btn-outline-success btn-sm" data-action="download-zip">
+              <i class="bi bi-file-earmark-zip me-1"></i>下载 ZIP
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <textarea id="cg-input" class="d-none"
+                    placeholder="粘贴建表 DDL / INSERT SQL / SELECT SQL 或 JSON 表结构..."></textarea>
+        </div>
+        <div class="card-footer bg-transparent d-flex flex-wrap align-items-center gap-2"
+             id="cgHistoryBar" style="display:none;">
+          <span class="text-body-secondary small"><i class="bi bi-clock-history me-1"></i>历史记录</span>
+          <div class="d-flex flex-wrap gap-1" id="cgHistoryChips"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Options ===== -->
+    <div class="col-lg-4">
+      <div class="card h-100">
+        <div class="card-header"><i class="bi bi-sliders me-2 text-primary"></i>生成设置</div>
+        <div class="card-body">
+          <div class="row g-3">
+
+            <div class="col-12">
+              <label class="cg-opt-label" for="opt-dataType">解析引擎</label>
+              <select id="opt-dataType" class="form-select" data-cg-opt="dataType">
+                <option value="sql" selected>DDL SQL · 自研解析引擎</option>
+                <option value="select-sql">SELECT SQL · JSqlParser</option>
+                <option value="create-sql">CREATE SQL · JSqlParser</option>
+                <option value="json">JSON (Beta)</option>
+                <option value="insert-sql">INSERT SQL</option>
+              </select>
+            </div>
+
+            <div class="col-6">
+              <label class="cg-opt-label" for="opt-authorName">作者</label>
+              <input id="opt-authorName" type="text" class="form-control" data-cg-opt="authorName" placeholder="author">
+            </div>
+            <div class="col-6">
+              <label class="cg-opt-label" for="opt-packageName">包名</label>
+              <input id="opt-packageName" type="text" class="form-control" data-cg-opt="packageName" placeholder="com.example">
+            </div>
+
+            <div class="col-6">
+              <label class="cg-opt-label" for="opt-returnUtilSuccess">返回 (成功)</label>
+              <input id="opt-returnUtilSuccess" type="text" class="form-control" data-cg-opt="returnUtilSuccess" placeholder="ResponseUtil.success">
+            </div>
+            <div class="col-6">
+              <label class="cg-opt-label" for="opt-returnUtilFailure">返回 (失败)</label>
+              <input id="opt-returnUtilFailure" type="text" class="form-control" data-cg-opt="returnUtilFailure" placeholder="ResponseUtil.error">
+            </div>
+
+            <div class="col-6">
+              <label class="cg-opt-label" for="opt-ignorePrefix">忽略前缀</label>
+              <input id="opt-ignorePrefix" type="text" class="form-control" data-cg-opt="ignorePrefix" placeholder="sys_">
+            </div>
+            <div class="col-6">
+              <label class="cg-opt-label" for="opt-tinyintTransType">TinyInt 转换</label>
+              <select id="opt-tinyintTransType" class="form-select" data-cg-opt="tinyintTransType">
+                <option value="int" selected>int</option>
+                <option value="Integer">Integer</option>
+                <option value="boolean">boolean</option>
+                <option value="Boolean">Boolean</option>
+                <option value="String">String</option>
+                <option value="Short">Short</option>
+              </select>
+            </div>
+
+            <div class="col-6">
+              <label class="cg-opt-label" for="opt-timeTransType">时间类型</label>
+              <select id="opt-timeTransType" class="form-select" data-cg-opt="timeTransType">
+                <option value="Date" selected>Date</option>
+                <option value="DateTime">DateTime</option>
+                <option value="Time">Time</option>
+                <option value="Timestamp">Timestamp</option>
+                <option value="Calendar">Calendar</option>
+                <option value="LocalDate">LocalDate</option>
+                <option value="LocalDateTime">LocalDateTime</option>
+                <option value="LocalTime">LocalTime</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <label class="cg-opt-label" for="opt-nameCaseType">命名类型</label>
+              <select id="opt-nameCaseType" class="form-select" data-cg-opt="nameCaseType">
+                <option value="CamelCase" selected>驼峰</option>
+                <option value="UnderScoreCase">下划线</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <hr class="my-1">
+            </div>
+
+            <div class="col-6">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="opt-isPackageType" data-cg-opt="isPackageType" checked>
+                <label class="form-check-label small" for="opt-isPackageType">包装类型</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="opt-isComment" data-cg-opt="isComment" checked>
+                <label class="form-check-label small" for="opt-isComment">字段注释</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="opt-isLombok" data-cg-opt="isLombok" checked>
+                <label class="form-check-label small" for="opt-isLombok">Lombok</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="opt-isSwagger" data-cg-opt="isSwagger">
+                <label class="form-check-label small" for="opt-isSwagger">Swagger UI</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="opt-isAutoImport" data-cg-opt="isAutoImport">
+                <label class="form-check-label small" for="opt-isAutoImport">自动引包</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="opt-isWithPackage" data-cg-opt="isWithPackage">
+                <label class="form-check-label small" for="opt-isWithPackage">带包路径</label>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="opt-isHeritage" data-cg-opt="isHeritage" checked>
+                <label class="form-check-label small" for="opt-isHeritage">🏺 古法印章 · 非遗传承</label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Templates ===== -->
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header"><i class="bi bi-collection me-2 text-primary"></i>模板选择</div>
+        <div class="card-body" id="cgTemplates">
+          <div class="text-body-secondary small">模板加载中...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Output ===== -->
+    <div class="col-12">
+      <div class="card cg-output-card">
+        <div class="card-header d-flex align-items-center gap-2">
+          <span><i class="bi bi-filetype-java me-2 text-primary"></i>输出代码</span>
+          <span class="badge text-bg-primary" id="cgCurrentTemplate" style="display:none;"></span>
+          <button type="button" class="btn btn-outline-primary btn-sm ms-auto" data-action="copy">
+            <i class="bi bi-clipboard me-1"></i>复制
+          </button>
+        </div>
+        <div class="card-body">
+          <textarea id="cg-output" class="d-none" placeholder="点击上方模板，查看生成的代码..."></textarea>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="cg-footer border-top border-opacity-10">
+  <div class="container-xxl">${(value.copyright)!!}</div>
+</footer>
+
+<script src="${request.contextPath}/statics/js/app.js?v=20260909"></script>
+<script>
+  CodeGenApp.boot({
+    author: "${(value.author)!!}",
+    packageName: "${(value.packageName)!!}",
+    returnUtilSuccess: "${(value.returnUtilSuccess)!!}",
+    returnUtilFailure: "${(value.returnUtilFailure)!!}",
+    outputStr: "${(value.outputStr)!!}"
+  });
+</script>
+</body>
+</html>

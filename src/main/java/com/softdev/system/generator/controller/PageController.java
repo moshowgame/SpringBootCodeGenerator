@@ -19,12 +19,12 @@ public class PageController {
 
     @GetMapping("/")
     public ModelAndView defaultPage() {
-        return new ModelAndView("newui2").addObject("value", valueUtil);
+        return new ModelAndView("newui3").addObject("value", valueUtil);
     }
     
     @GetMapping("/index")
     public ModelAndView indexPage() {
-        return new ModelAndView("newui2").addObject("value", valueUtil);
+        return new ModelAndView("newui3").addObject("value", valueUtil);
     }
 
 }

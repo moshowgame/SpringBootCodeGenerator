@@ -1,5 +1,6 @@
 [{
   "group": "ui",
+  "tier": "main",
   "templates": [{
     "id": "10",
     "name": "swagger-ui",
@@ -34,6 +35,7 @@
 },
   {
     "group": "mybatis",
+    "tier": "main",
     "templates": [{
       "id": "20",
       "name": "controller",
@@ -80,6 +82,7 @@
   },
   {
     "group": "jpa",
+    "tier": "main",
     "templates": [{
       "id": "30",
       "name": "entity",
@@ -103,6 +106,7 @@
 
   {
     "group": "jdbc-template",
+    "tier": "main",
     "templates": [{
       "id": "40",
       "name": "jtdao",
@@ -120,6 +124,7 @@
 
   {
     "group": "beetlsql",
+    "tier": "legacy",
     "templates": [{
       "id": "50",
       "name": "beetlmd",
@@ -143,6 +148,7 @@
 
   {
     "group": "mybatis-plus",
+    "tier": "main",
     "templates": [{
       "id": "60",
       "name": "pluscontroller",
@@ -172,6 +178,7 @@
 
   {
     "group": "util",
+    "tier": "main",
     "templates": [{
       "id": "70",
       "name": "beanutil",
@@ -207,6 +214,7 @@
 
   {
     "group": "common-mapper",
+    "tier": "legacy",
     "templates": [{
       "id": "81",
       "name": "tkentity",
@@ -224,6 +232,7 @@
 
   {
     "group": "renren-fast",
+    "tier": "legacy",
     "templates": [{
       "id": "91",
       "name": "menu-sql",
@@ -276,6 +285,7 @@
   },
   {
     "group": "jpa-starp",
+    "tier": "legacy",
     "templates": [{
       "id": "101",
       "name": "starp-entity",
@@ -298,6 +308,7 @@
   },
   {
     "group": "bi",
+    "tier": "legacy",
     "templates": [{
       "id": "201",
       "name": "qliksense",
@@ -307,6 +318,7 @@
   },
   {
     "group": "cloud",
+    "tier": "legacy",
     "templates": [
       {
       "id": "301",
@@ -324,6 +336,7 @@
   },
   {
     "group": "tk-mybatis",
+    "tier": "legacy",
     "templates": [
       {
         "id": "401",
