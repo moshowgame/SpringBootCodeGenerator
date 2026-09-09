@@ -55,7 +55,7 @@
 
 > 🙌 Special thanks to BeJSON 前站长 `三叔` 的慧眼与支持，让项目得以脱颖而出，感恩！
 
-<img src="./newui_version_2.png" width="600px">
+<img src="./newui_version_3.png" width="600px">
 
 ## 功能特性
 

@@ -508,6 +508,10 @@
     if (state.oemOutputStr) {
       setOutput(state.oemOutputStr);
     }
+    // ?autogen=1：进入页面即自动生成一次，可用于演示链接与整页截图
+    if (/[?&]autogen=1\b/.test(window.location.search)) {
+      setTimeout(function () { generate(); }, 600);
+    }
   }
 
   /* ============================== public api ============================== */
